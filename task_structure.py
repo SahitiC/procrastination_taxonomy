@@ -216,7 +216,7 @@ def binomial_pmf(n, p, k):
     success and n = number of trials, k = number of successes
     """
 
-    if not isinstance(n, (int, np.int32)):
+    if not isinstance(n, (int, np.int32, np.int64)):
         raise TypeError("Input must be an integer.")
 
     binomial_prob = comb(n, k) * p**k * (1-p)**(n-k)
