@@ -119,7 +119,7 @@ plt.xlabel('efficacy_assumed')
 # nonlinearity in effort function
 
 discounts = np.linspace(0.1, 1, 10)
-nonlinearitys = [1, 1.5, 2.2, 0.8]
+nonlinearitys = [0.8, 1, 1.5, 2.2]
 plt.figure()
 for exponent in nonlinearitys:
 
