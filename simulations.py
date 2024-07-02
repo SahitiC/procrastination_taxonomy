@@ -146,3 +146,33 @@ plt.xlabel('discount factor')
 
 # %%
 # different discount factors for effort and reward
+
+discounts_reward = [0.5, 0.7, 0.8, 0.9] 
+discounts_cost = np.linspace(0.2, 1, 10)
+
+plt.figure()
+for discount_factor_reward in discounts_reward:
+
+    delay_mn = []
+    delay_sem = []
+    for discount_factor_cost in discounts_cost:
+
+        trajectories = gen_data.gen_data_diff_discounts(
+            constants.STATES, constants.ACTIONS, constants.HORIZON,
+            constants.REWARD_THR_DIFF_DISCOUNTS,
+            constants.REWARD_EXTRA_DIFF_DISCOUNTS, constants.REWARD_SHIRK, 
+            constants.BETA_DIFF_DISCOUNTS, discount_factor_reward,
+            discount_factor_cost, constants.EFFICACY, constants.EFFORT_WORK,
+            1000, constants.THR, constants.STATES_NO)
+
+        delays = time_to_cross_thr(trajectories)
+        delay_mn.append(np.nanmean(delays))
+        delay_sem.append(sem(delays, nan_policy='omit'))
+
+    plt.errorbar(discounts, delay_mn, yerr=delay_sem, linewidth=3,
+                 marker='o', linestyle='--')
+sns.despine()
+plt.ylabel('time to cross \n 14 units (in weeks)')
+plt.xlabel('discount factor cost')
+
+#%% 
