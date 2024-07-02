@@ -239,7 +239,7 @@ def gen_data_no_commitment(states, actions_base, horizon, reward_thr,
     # immediate interest rewards
     reward_func_interest = task_structure.reward_immediate(
         states[:int(states_no/2)], actions_base, 0, reward_interest,
-        reward_interest, thr, states_no)
+        reward_interest)
 
     # effort costs
     effort_func = task_structure.effort(states[:int(states_no/2)],

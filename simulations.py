@@ -1,3 +1,7 @@
+"""
+simulations of the five models (reproducing Figs 2-4)
+"""
+
 import constants
 import gen_data
 import matplotlib.pyplot as plt
@@ -13,6 +17,16 @@ mpl.rcParams['axes.linewidth'] = 2
 
 
 def time_to_cross_thr(trajectories):
+    """
+    find when threshold number of units is first reached for each trajectory
+    (of work) inputted; if threshold is never reached, returns NaN
+
+    params:
+        trajectories (list): list of trajectories
+
+    returns:
+        times (list): list of timesteps when threshold is first reached
+    """
 
     times = []
     for trajectory in trajectories:
@@ -30,8 +44,8 @@ def time_to_cross_thr(trajectories):
 # discounting delayed rewards
 
 # delays with
-efficacies = np.linspace(0.3, 1.0, 10)
-discounts = [0.3, 0.6, 0.9, 0.98]
+efficacies = np.linspace(0.3, 0.98, 10)
+discounts = [0.3, 0.6, 0.95, 1]
 
 for discount_factor in discounts:
 
@@ -114,12 +128,13 @@ plt.ylabel('time to cross \n 14 units (in weeks)')
 plt.xlabel('efficacy_assumed')
 
 # %%
-# immediate rewrad cases
+# immediate reward cases
 
 # nonlinearity in effort function
 
 discounts = np.linspace(0.1, 1, 10)
 nonlinearitys = [0.8, 1, 1.5, 2.2]
+
 plt.figure()
 for exponent in nonlinearitys:
 
@@ -144,10 +159,9 @@ sns.despine()
 plt.ylabel('time to cross \n 14 units (in weeks)')
 plt.xlabel('discount factor')
 
-# %%
 # different discount factors for effort and reward
 
-discounts_reward = [0.5, 0.7, 0.8, 0.9] 
+discounts_reward = [0.5, 0.7, 0.8, 0.9]
 discounts_cost = np.linspace(0.2, 1, 10)
 
 plt.figure()
@@ -160,7 +174,7 @@ for discount_factor_reward in discounts_reward:
         trajectories = gen_data.gen_data_diff_discounts(
             constants.STATES, constants.ACTIONS, constants.HORIZON,
             constants.REWARD_THR_DIFF_DISCOUNTS,
-            constants.REWARD_EXTRA_DIFF_DISCOUNTS, constants.REWARD_SHIRK, 
+            constants.REWARD_EXTRA_DIFF_DISCOUNTS, constants.REWARD_SHIRK,
             constants.BETA_DIFF_DISCOUNTS, discount_factor_reward,
             discount_factor_cost, constants.EFFICACY, constants.EFFORT_WORK,
             1000, constants.THR, constants.STATES_NO)
@@ -175,4 +189,33 @@ sns.despine()
 plt.ylabel('time to cross \n 14 units (in weeks)')
 plt.xlabel('discount factor cost')
 
-#%% 
+# %%
+# waiting for interesting rewards
+
+rewards_interest = np.linspace(0.0, 6, 10)
+discounts = [0.6, 0.9, 1]
+
+plt.figure()
+for discount_factor in discounts:
+
+    delay_mn = []
+    delay_sem = []
+    for reward_interest in rewards_interest:
+
+        trajectories = gen_data.gen_data_no_commitment(
+            constants.STATES_NO_COMMIT, constants.ACTIONS_BASE,
+            constants.HORIZON, constants.REWARD_THR, constants.REWARD_EXTRA,
+            constants.REWARD_SHIRK, constants.BETA, constants.P_STAY_LOW,
+            constants.P_STAY_HIGH, discount_factor, constants.EFFICACY,
+            constants.EFFORT_WORK, reward_interest, 1000, constants.THR,
+            constants.STATES_NO_NO_COMMIT)
+
+        delays = time_to_cross_thr(trajectories)
+        delay_mn.append(np.nanmean(delays))
+        delay_sem.append(sem(delays, nan_policy='omit'))
+
+    plt.errorbar(rewards_interest, delay_mn, yerr=delay_sem, linewidth=3,
+                 marker='o', linestyle='--')
+sns.despine()
+plt.ylabel('time to cross \n 14 units (in weeks)')
+plt.xlabel('reward interest')

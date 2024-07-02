@@ -11,7 +11,7 @@ STATES = np.arange(STATES_NO)
 ACTIONS = [np.arange(STATES_NO-i) for i in range(STATES_NO)]
 
 HORIZON = 16  # no. of weeks for task
-DISCOUNT_FACTOR = 0.95  # discounting factor
+DISCOUNT_FACTOR = 0.9  # discounting factor
 EFFICACY = 0.8  # self-efficacy (probability of progress for each unit)
 
 # utilities :
@@ -29,6 +29,7 @@ N_TRIALS = 20  # no. of trajectories per dataeset for recovery
 # N = 1000  # no of params sets to recover
 
 # params for no commitment model
+STATES_NO_NO_COMMIT = (22+1) * 2
 STATES_NO_COMMIT = np.arange((22+1) * 2)
 ACTIONS_BASE = [np.arange(23-i) for i in range(23)]
 INTEREST_STATES = np.array([0, 1])

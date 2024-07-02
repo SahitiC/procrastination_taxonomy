@@ -1,4 +1,3 @@
-# is evaluating a likelihood actually so intractable?
 import task_structure
 import mdp_algms
 import numpy as np
@@ -87,7 +86,7 @@ def calculate_likelihood_interest_rewards(data, Q_values, beta, T, p_stay,
 def likelihood_basic_model(x,
                            states, actions, horizon,
                            reward_thr, reward_extra, reward_shirk,
-                           beta, data):
+                           beta, thr, states_no, data):
     """
     x = free params of model
     """
@@ -102,7 +101,7 @@ def likelihood_basic_model(x,
     effort_func = task_structure.effort(states, actions, effort_work)
 
     total_reward_func_last = task_structure.reward_final(
-        states, reward_thr, reward_extra)
+        states, reward_thr, reward_extra, thr, states_no)
 
     total_reward_func = []
     for state_current in range(len(states)):
@@ -125,7 +124,7 @@ def likelihood_basic_model(x,
 def likelihood_efficacy_gap_model(x,
                                   states, actions, horizon,
                                   reward_thr, reward_extra, reward_shirk,
-                                  beta, data):
+                                  beta, thr, states_no, data):
     """
     x = free params of model
     """
@@ -141,7 +140,7 @@ def likelihood_efficacy_gap_model(x,
     effort_func = task_structure.effort(states, actions, effort_work)
 
     total_reward_func_last = task_structure.reward_final(
-        states, reward_thr, reward_extra)
+        states, reward_thr, reward_extra, thr, states_no)
 
     total_reward_func = []
     for state_current in range(len(states)):
@@ -166,7 +165,7 @@ def likelihood_efficacy_gap_model(x,
 def likelihood_convex_concave_model(x,
                                     states, actions, horizon,
                                     reward_thr, reward_extra, reward_shirk,
-                                    beta, data):
+                                    beta, thr, states_no, data):
     """
     x = free params of model
     """
@@ -183,7 +182,7 @@ def likelihood_convex_concave_model(x,
                                                        effort_work, exponent)
 
     total_reward_func_last = task_structure.reward_final(
-        states, reward_thr, reward_extra)
+        states, reward_thr, reward_extra, thr, states_no)
 
     total_reward_func = []
     for state_current in range(len(states)):
@@ -206,7 +205,7 @@ def likelihood_convex_concave_model(x,
 def likelihood_immediate_basic_model(x,
                                      states, actions, horizon,
                                      reward_thr, reward_extra, reward_shirk,
-                                     beta, data):
+                                     beta, thr, states_no, data):
     """
     x = free params of model
     """
@@ -217,7 +216,8 @@ def likelihood_immediate_basic_model(x,
 
     # define task structure
     reward_func = task_structure.reward_threshold(
-        states, actions, reward_shirk, reward_thr, reward_extra)
+        states, actions, reward_shirk, reward_thr, reward_extra, thr,
+        states_no)
 
     effort_func = task_structure.effort_convex_concave(states, actions,
                                                        effort_work, exponent)
@@ -244,7 +244,7 @@ def likelihood_immediate_basic_model(x,
 
 def likelihood_diff_discounts_model(
         x, states, actions, horizon, reward_thr, reward_extra,
-        reward_shirk, beta, data):
+        reward_shirk, beta, thr, states_no, data):
 
     discount_factor_reward = x[0]
     discount_factor_cost = x[1]
@@ -253,7 +253,8 @@ def likelihood_diff_discounts_model(
     # reward_shirk = x[2]
 
     reward_func = task_structure.reward_threshold(
-        states, actions, reward_shirk, reward_thr, reward_extra)
+        states, actions, reward_shirk, reward_thr, reward_extra, thr,
+        states_no)
 
     effort_func = task_structure.effort(states, actions, effort_work)
 
@@ -284,7 +285,7 @@ def likelihood_diff_discounts_model(
 def likelihood_no_commitment_model(
         x, states, interest_states, actions_base, horizon, p_stay_low,
         p_stay_high, reward_thr, reward_extra, reward_shirk,
-        beta, data):
+        beta, thr, states_no, data):
 
     discount_factor = x[0]
     efficacy = x[1]
@@ -296,7 +297,7 @@ def likelihood_no_commitment_model(
     # reward for completion
     reward_func_base = task_structure.reward_threshold(
         states[:int(states_no/2)], actions_base, reward_shirk,
-        reward_thr, reward_extra)
+        reward_thr, reward_extra, thr, states_no)
 
     # immediate interest rewards
     reward_func_interest = task_structure.reward_immediate(
@@ -376,7 +377,8 @@ def likelihood_no_commitment_model(
 
 
 def maximum_likelihood_estimate_basic(states, actions, horizon, reward_thr,
-                                      reward_extra, reward_shirk, beta, data,
+                                      reward_extra, reward_shirk, beta,
+                                      thr, states_no, data,
                                       true_params=None, initial_real=0,
                                       verbose=0):
     """
@@ -393,7 +395,7 @@ def maximum_likelihood_estimate_basic(states, actions, horizon, reward_thr,
                                 x0=true_params,
                                 args=(states, actions, horizon,
                                       reward_thr, reward_extra, reward_shirk,
-                                      beta, data),
+                                      beta, thr, states_no, data),
                                 bounds=((0, 1), (0, 1), (None, 0)))
         nllkhd = likelihood_basic_model(
             final_result.x, states, actions, horizon, reward_thr, reward_extra,
@@ -421,13 +423,13 @@ def maximum_likelihood_estimate_basic(states, actions, horizon, reward_thr,
                           x0=[discount_factor, efficacy, effort_work],
                           args=(states, actions, horizon,
                                 reward_thr, reward_extra, reward_shirk,
-                                beta, data),
+                                beta, thr, states_no, data),
                           bounds=((0, 1), (0, 1), (None, 0)))
 
         # whats the neg log likelhood of data under param estimate
         nllkhd_result = likelihood_basic_model(
             result.x, states, actions, horizon, reward_thr, reward_extra,
-            reward_shirk, beta, data)
+            reward_shirk, beta, thr, states_no, data)
 
         # is it better than previous estimate
         if nllkhd_result < nllkhd:
@@ -445,7 +447,7 @@ def maximum_likelihood_estimate_basic(states, actions, horizon, reward_thr,
 
 def maximum_likelihood_estimate_efficacy_gap(
         states, actions, horizon, reward_thr, reward_extra, reward_shirk, beta,
-        data, true_params=None, initial_real=0, verbose=0):
+        thr, states_no, data, true_params=None, initial_real=0, verbose=0):
     """
     inputs - fixed parameters, data
     initial_real: whether to include true parameter as an initial point
@@ -460,11 +462,11 @@ def maximum_likelihood_estimate_efficacy_gap(
                                 x0=true_params,
                                 args=(states, actions, horizon,
                                       reward_thr, reward_extra, reward_shirk,
-                                      beta, data),
+                                      beta, thr, states_no, data),
                                 bounds=((0, 1), (0, 1), (0, 1), (None, 0)))
         nllkhd = likelihood_efficacy_gap_model(
             final_result.x, states, actions, horizon, reward_thr, reward_extra,
-            reward_shirk, beta, data)
+            reward_shirk, beta, thr, states_no, data)
         if verbose == 1:
             print("with initial point = true param "
                   "current estimate for discount_factor, efficacy_assumed,"
@@ -486,13 +488,13 @@ def maximum_likelihood_estimate_efficacy_gap(
                               efficacy_actual, effort_work],
                           args=(states, actions, horizon,
                                 reward_thr, reward_extra, reward_shirk,
-                                beta, data),
+                                beta, thr, states_no, data),
                           bounds=((0, 1), (0, 1), (0, 1), (None, 0)))
 
         # whats the neg log likelhood of data under param estimate
         nllkhd_result = likelihood_efficacy_gap_model(
             result.x, states, actions, horizon, reward_thr, reward_extra,
-            reward_shirk, beta, data)
+            reward_shirk, beta, thr, states_no, data)
 
         # is it better than previous estimate
         if nllkhd_result < nllkhd:
@@ -510,7 +512,8 @@ def maximum_likelihood_estimate_efficacy_gap(
 
 def maximum_likelihood_estimate_convex_concave(
         states, actions, horizon, reward_thr, reward_extra, reward_shirk,
-        beta, data, true_params=None, initial_real=0, verbose=0):
+        beta, thr, states_no, data, true_params=None, initial_real=0,
+        verbose=0):
     """
     inputs - fixed parameters, data
     initial_real: whether to include true parameter as an initial point
@@ -525,12 +528,12 @@ def maximum_likelihood_estimate_convex_concave(
                                 x0=true_params,
                                 args=(states, actions, horizon,
                                       reward_thr, reward_extra, reward_shirk,
-                                      beta, data),
+                                      beta, thr, states_no, data),
                                 bounds=((0, 1), (None, 0), (0, None),
                                         (0, 1)))
         nllkhd = likelihood_convex_concave_model(
             final_result.x, states, actions, horizon, reward_thr,
-            reward_extra, reward_shirk, beta, data)
+            reward_extra, reward_shirk, beta, thr, states_no, data)
         if verbose == 1:
             print("with initial point = true param "
                   "current estimate for discount_factor, effort_work,"
@@ -552,13 +555,13 @@ def maximum_likelihood_estimate_convex_concave(
                               efficacy],
                           args=(states, actions, horizon,
                                 reward_thr, reward_extra, reward_shirk,
-                                beta, data),
+                                beta, thr, states_no, data),
                           bounds=((0, 1), (None, 0), (0, None), (0, 1)))
 
         # whats the neg log likelhood of data under param estimate
         nllkhd_result = likelihood_convex_concave_model(
             result.x, states, actions, horizon, reward_thr,
-            reward_extra, reward_shirk, beta, data)
+            reward_extra, reward_shirk, beta, thr, states_no, data)
 
         # is it better than previous estimate
         if nllkhd_result < nllkhd:
@@ -576,7 +579,8 @@ def maximum_likelihood_estimate_convex_concave(
 
 def maximum_likelihood_estimate_immediate_basic(
         states, actions, horizon, reward_thr, reward_extra, reward_shirk,
-        beta, data, true_params=None, initial_real=0, verbose=0):
+        beta, thr, states_no, data, true_params=None, initial_real=0,
+        verbose=0):
     """
     inputs - fixed parameters, data
     initial_real: whether to include true parameter as an initial point
@@ -591,12 +595,12 @@ def maximum_likelihood_estimate_immediate_basic(
                                 x0=true_params,
                                 args=(states, actions, horizon,
                                       reward_thr, reward_extra, reward_shirk,
-                                      beta, data),
+                                      beta, thr, states_no, data),
                                 bounds=((0, 1), (None, 0), (0, None),
                                         (0, 1)))
         nllkhd = likelihood_immediate_basic_model(
             final_result.x, states, actions, horizon, reward_thr,
-            reward_extra, reward_shirk, beta, data)
+            reward_extra, reward_shirk, beta, thr, states_no, data)
         if verbose == 1:
             print("with initial point = true param "
                   "current estimate for discount_factor, effort_work,"
@@ -618,13 +622,13 @@ def maximum_likelihood_estimate_immediate_basic(
                               efficacy],
                           args=(states, actions, horizon,
                                 reward_thr, reward_extra, reward_shirk,
-                                beta, data),
+                                beta, thr, states_no, data),
                           bounds=((0, 1), (None, 0), (0, None), (0, 1)))
 
         # whats the neg log likelhood of data under param estimate
         nllkhd_result = likelihood_immediate_basic_model(
             result.x, states, actions, horizon, reward_thr,
-            reward_extra, reward_shirk, beta, data)
+            reward_extra, reward_shirk, beta, thr, states_no, data)
 
         # is it better than previous estimate
         if nllkhd_result < nllkhd:
@@ -642,8 +646,8 @@ def maximum_likelihood_estimate_immediate_basic(
 
 def maximum_likelihood_estimate_diff_discounts(
         states, actions, horizon, reward_thr, reward_extra,
-        reward_shirk, beta, data, true_params=None, initial_real=0,
-        verbose=0):
+        reward_shirk, beta, thr, states_no, data, true_params=None,
+        initial_real=0, verbose=0):
     """
     inputs - fixed parameters, data
     initial_real: whether to include true parameter as an initial point
@@ -658,11 +662,11 @@ def maximum_likelihood_estimate_diff_discounts(
                                 x0=true_params,
                                 args=(states, actions, horizon,
                                       reward_thr, reward_extra, reward_shirk,
-                                      beta, data),
+                                      beta, thr, states_no, data),
                                 bounds=((0, 1), (0, 1), (0, 1), (None, 0)))
         nllkhd = likelihood_diff_discounts_model(
             final_result.x, states, actions, horizon, reward_thr, reward_extra,
-            reward_shirk, beta, data)
+            reward_shirk, beta, thr, states_no, data)
         if verbose == 1:
             print("with initial point = true param "
                   "current estimate for discount_factor_reward, "
@@ -686,13 +690,13 @@ def maximum_likelihood_estimate_diff_discounts(
                               efficacy, effort_work],
                           args=(states, actions, horizon,
                                 reward_thr, reward_extra, reward_shirk,
-                                beta, data),
+                                beta, thr, states_no, data),
                           bounds=((0, 1), (0, 1), (0, 1), (None, 0)))
 
         # whats the neg log likelhood of data under param estimate
         nllkhd_result = likelihood_diff_discounts_model(
             result.x, states, actions, horizon, reward_thr, reward_extra,
-            reward_shirk, beta, data)
+            reward_shirk, beta, thr, states_no, data)
 
         # is it better than previous estimate
         if nllkhd_result < nllkhd:
@@ -711,8 +715,8 @@ def maximum_likelihood_estimate_diff_discounts(
 
 def maximum_likelihood_estimate_no_commitment(
         states, interest_states, actions_base, horizon, reward_thr,
-        reward_extra, reward_shirk, beta, p_stay_low, p_stay_high, data,
-        true_params=None, initial_real=0, verbose=0):
+        reward_extra, reward_shirk, beta, p_stay_low, p_stay_high, thr,
+        states_no, data, true_params=None, initial_real=0, verbose=0):
 
     nllkhd = np.inf
 
@@ -723,13 +727,14 @@ def maximum_likelihood_estimate_no_commitment(
                                 args=(states, interest_states, actions_base,
                                       horizon, p_stay_low, p_stay_high,
                                       reward_thr, reward_extra,
-                                      reward_shirk, beta, data),
+                                      reward_shirk, beta, thr, states_no,
+                                      data),
                                 bounds=((0, 1), (0, 1), (None, 0), (0, None)))
         # method='Powell')
         nllkhd = likelihood_no_commitment_model(
             final_result.x, states, interest_states, actions_base, horizon,
             p_stay_low, p_stay_high, reward_thr, reward_extra,
-            reward_shirk, beta, data)
+            reward_shirk, beta, thr, states_no, data)
         if verbose == 1:
             print("with initial point = true param "
                   "current estimate for discount_factor,"
@@ -751,15 +756,15 @@ def maximum_likelihood_estimate_no_commitment(
                           args=(states, interest_states, actions_base,
                                 horizon, p_stay_low, p_stay_high,
                                 reward_thr, reward_extra,  # reward_interest,
-                                reward_shirk, beta, data),
+                                reward_shirk, beta, thr, states_no, data),
                           bounds=((0, 1), (0, 1), (None, 0), (0, None)))
         # method='Powell')
 
         # whats the neg log likelhood of data under param estimate
         nllkhd_result = likelihood_no_commitment_model(
             result.x, states, interest_states, actions_base, horizon,
-            p_stay_low, p_stay_high, reward_thr,  # reward_extra,
-            reward_interest, reward_shirk, beta, data)
+            p_stay_low, p_stay_high, reward_thr, reward_extra,
+            reward_interest, reward_shirk, beta, thr, states_no, data)
 
         # is it better than previous estimate
         if nllkhd_result < nllkhd:
