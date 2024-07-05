@@ -33,52 +33,6 @@ def plot_clustered_data(data, labels, **kwargs):
         plt.yticks([0, 5, 11])
 
 
-def silhoutte_plots(data, labels, n_clusters, **kwargs):
-    """
-    plot silhouette score for each sample (in a sorted order) given data
-    and labels
-    (code adapted from sklearn example:
-     https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html)
-    """
-
-    sample_silhouette_values = silhouette_samples(timeseries_to_cluster,
-                                                  labels)
-    y_lower = 10
-    plt.figure()
-    for i in range(n_clusters):
-        # Aggregate the silhouette scores for samples belonging to
-        # cluster i, and sort them
-        ith_cluster_silhouette_values = sample_silhouette_values[labels == i]
-
-        ith_cluster_silhouette_values.sort()
-
-        size_cluster_i = ith_cluster_silhouette_values.shape[0]
-        y_upper = y_lower + size_cluster_i
-
-        color = cm.nipy_spectral(float(i) / n_clusters)
-        plt.fill_betweenx(
-            np.arange(y_lower, y_upper),
-            0,
-            ith_cluster_silhouette_values,
-            facecolor=color,
-            edgecolor=color,
-            alpha=0.7,
-        )
-        plt.ylim([0, len(timeseries_to_cluster) + (n_clusters + 1) * 10])
-        # Label the silhouette plots with their cluster numbers at the middle
-        plt.text(-0.05, y_lower + 0.5 * size_cluster_i, str(i))
-        # Compute the new y_lower for next plot
-        y_lower = y_upper + 10  # 10 for the 0 samples
-
-    # slihoutte score
-    silhouette_avg = silhouette_score(timeseries_to_cluster, labels)
-    # The vertical line for average silhouette score of all the values
-    plt.axvline(x=silhouette_avg, color="red", linestyle="--")
-    plt.yticks([])
-    plt.ylabel('cluster label')
-    plt.xlabel('silhouette value')
-
-
 # %%
 
 if __name__ == "__main__":
@@ -104,9 +58,6 @@ if __name__ == "__main__":
                     random_state=0)
         labels = km.fit_predict(timeseries_to_cluster)
         inertia.append(km.inertia_)
-        silhouette_scores.append(silhouette_score(timeseries_to_cluster,
-                                                  labels))
-        silhoutte_plots(timeseries_to_cluster, labels, cluster_size+1)
 
     plt.figure(figsize=(7, 6))
     plt.plot(inertia)
@@ -114,16 +65,9 @@ if __name__ == "__main__":
     plt.xlabel('cluster number')
     plt.ylabel('k-means sum of squares')
 
-    plt.figure(figsize=(7, 6))
-    plt.plot(silhouette_scores)
-    plt.xticks(np.arange(14), labels=np.arange(2, 16))
-    plt.xlabel('cluster number')
-    plt.ylabel('silhouette score')
 
     # final k means clustering using the best cluster size
     # best cluster size = around the elbow in inertia plot (around 6, 7, 8)
-    # choose one with similar cluster sizes and silhoutte scores across
-    # samples and clusters (cluster_size=8)
     km = KMeans(n_clusters=8, n_init=10, random_state=0, verbose=True)
     labels = km.fit_predict(timeseries_to_cluster)
     data_relevant['labels'] = labels

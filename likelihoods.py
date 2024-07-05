@@ -764,7 +764,7 @@ def maximum_likelihood_estimate_no_commitment(
         nllkhd_result = likelihood_no_commitment_model(
             result.x, states, interest_states, actions_base, horizon,
             p_stay_low, p_stay_high, reward_thr, reward_extra,
-            reward_interest, reward_shirk, beta, thr, states_no, data)
+            reward_shirk, beta, thr, states_no, data)
 
         # is it better than previous estimate
         if nllkhd_result < nllkhd:
