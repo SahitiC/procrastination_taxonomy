@@ -4,6 +4,8 @@ simulations of the five models (reproducing Figs 2-4)
 
 import constants
 import gen_data
+import task_structure
+import mdp_algms
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import sem
@@ -112,14 +114,15 @@ for discount_factor in discounts:
 
 sns.despine(ax=ax1)
 ax1.set_ylabel('Avg. time to cross \n 14 units (in weeks)')
-ax1.set_xlabel('efficacy')
+ax1.set_xlabel(r'$\eta$')
 ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
+fig1.text(0.09, 0.95, r'$\gamma$', ha='center', va='center')
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
-ax2.set_xlabel('efficacy', fontsize=20)
+ax2.set_xlabel(r'$\eta$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
 
@@ -164,14 +167,15 @@ for discount_factor in discounts:
 
 sns.despine(ax=ax1)
 ax1.set_ylabel('Avg. time to cross \n 14 units (in weeks)')
-ax1.set_xlabel('efforts')
+ax1.set_xlabel('$r_{effort}$')
 ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
+fig1.text(0.09, 0.95, r'$\gamma$', ha='center', va='center')
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
-ax2.set_xlabel('efforts', fontsize=20)
+ax2.set_xlabel('$r_{effort}$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
 
@@ -217,14 +221,15 @@ for efficacy_real in efficacys_real:
 
 sns.despine(ax=ax1)
 ax1.set_ylabel('Avg. time to cross \n 14 units (in weeks)')
-ax1.set_xlabel('efficacy assumed')
+ax1.set_xlabel(r'$\eta_{assumed}$')
 ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
+fig1.text(0.12, 0.95, r'$\eta_{real}$', ha='center', va='center')
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
-ax2.set_xlabel('efficacy assumed', fontsize=20)
+ax2.set_xlabel(r'$\eta_{assumed}$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
 
@@ -271,19 +276,54 @@ for exponent in nonlinearitys:
 
 sns.despine(ax=ax1)
 ax1.set_ylabel('Avg. time to cross \n 14 units (in weeks)')
-ax1.set_xlabel('discount factors')
+ax1.set_xlabel(r'$\gamma$')
 ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
+fig1.text(0.09, 0.95, r'$k$', ha='center', va='center')
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
-ax2.set_xlabel('discount factors', fontsize=20)
+ax2.set_xlabel(r'$\gamma$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
 
 # %%
 # different discount factors for effort and reward
+
+# plot example policy
+
+reward_func = task_structure.reward_threshold(
+    constants.STATES, constants.ACTIONS, constants.REWARD_SHIRK,
+    constants.REWARD_THR_DIFF_DISCOUNTS, constants.REWARD_EXTRA_DIFF_DISCOUNTS,
+    constants.THR, constants.STATES_NO)
+
+effort_func = task_structure.effort(
+    constants.STATES, constants.ACTIONS, constants.EFFORT_WORK)
+
+reward_func_last = np.zeros(len(constants.STATES))
+effort_func_last = np.zeros(len(constants.STATES))
+T = task_structure.T_binomial(constants.STATES, constants.ACTIONS,
+                              constants.EFFICACY)
+
+V_opt_full, policy_opt_full, Q_values_full = (
+    mdp_algms.find_optimal_policy_diff_discount_factors(
+        constants.STATES, constants.ACTIONS, constants.HORIZON,
+        0.9, 0.5,
+        reward_func, effort_func, reward_func_last, effort_func_last, T)
+)
+
+policy_init_state = [policy_opt_full[i][0] for i in range(constants.HORIZON)]
+policy_init_state = np.array(policy_init_state)
+f, ax = plt.subplots(figsize=(5, 4), dpi=300)
+cmap = mpl.colormaps['winter']
+sns.heatmap(policy_init_state, linewidths=.5, cmap=cmap, cbar=True)
+ax.set_xlabel('timestep')
+ax.set_ylabel('horizon')
+ax.tick_params(axis='x', labelrotation=90)
+colorbar = ax.collections[0].colorbar
+colorbar.set_label('actions:\n no. of units', rotation=270, labelpad=45)
+
 
 discounts_reward = [0.5, 0.7, 0.8, 0.9]
 discounts_cost = np.linspace(0.2, 1, 10)
@@ -323,21 +363,22 @@ for discount_factor_reward in discounts_reward:
 
 sns.despine(ax=ax1)
 ax1.set_ylabel('Avg. time to cross \n 14 units (in weeks)')
-ax1.set_xlabel('discount factor cost')
+ax1.set_xlabel(r'$\gamma_{c}$')
 ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
+fig1.text(0.08, 0.95, r'$\gamma_{r}$', ha='center', va='center')
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion \n rate', fontsize=20)
-ax2.set_xlabel('discount factor cost', fontsize=20)
+ax2.set_xlabel(r'$\gamma_{c}$', fontsize=20)
 ax2.set_yticks([1])
 ax2.set_xticks([])
 
 # %%
 # waiting for interesting rewards
 
-rewards_interest = np.linspace(0.0, 6, 10)
+rewards_interest = np.linspace(0.0, 5, 10)
 discounts = [0.6, 0.95, 1]
 cycle_colors = cycler('color',
                       cmap_blues(np.linspace(0.3, 1, 3)))
@@ -375,13 +416,14 @@ for discount_factor in discounts:
 
 sns.despine(ax=ax1)
 ax1.set_ylabel('Avg. time to cross \n 14 units (in weeks)')
-ax1.set_xlabel('reward interest')
+ax1.set_xlabel(r'$r_{interest}$')
 ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
+fig1.text(0.2, 0.95, r'$\gamma$', ha='center', va='center')
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion \n rate', fontsize=20)
-ax2.set_xlabel('reward interest', fontsize=20)
+ax2.set_xlabel(r'$r_{interest}$', fontsize=20)
 ax2.set_yticks([1])
 ax2.set_xticks([])

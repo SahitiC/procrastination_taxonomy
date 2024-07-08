@@ -53,6 +53,9 @@ def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample):
     for i in range(len(trajectories)):
         plt.plot(trajectories[i], color=color,
                  linewidth=lwidth_sample, linestyle='dashed')
+    plt.xticks([0, 7, 15])
+    plt.yticks([0, 11, 22])
+    plt.ylim(-1, 22)
     sns.despine()
 
 
@@ -63,28 +66,24 @@ result_fit = np.load('result.npy', allow_pickle=True)
 data_to_fit_lst = np.load('data_to_fit_lst.npy', allow_pickle=True)
 
 # %%
-for i in range(len(data_to_fit_lst)):
-    plt.figure(figsize=(5, 4))
-    for j in range(len(data_to_fit_lst[i])):
-        plt.plot(data_to_fit_lst[i][j])
-
-# %%
 # get fitted parameters, calculate AIC, BIC, pseudo-R2
+random.seed(0)
+metrics = np.zeros((8, 6, 3))
 for cluster in range(len(data_to_fit_lst)):
 
     nllkhd_null = calculate_likelihood_null(
         data_to_fit_lst[cluster], constants.STATES, constants.ACTIONS)
 
     # pseudo-R2
-    print(f'pseudo-r2={1 - (result_fit[cluster, 0, :] / nllkhd_null)}')
+    metrics[cluster, :, 0] = 1 - (result_fit[cluster, 0, :] / nllkhd_null)
 
     # BIC
-    print(
-        f'BIC={2*result_fit[cluster, 0, :] + np.array(free_param_no) * np.log(len(data_to_fit_lst[cluster]))}')
-
+    metrics[cluster, :, 1] = (2*result_fit[cluster, 0, :]
+                              + np.array(free_param_no)
+                              * np.log(len(data_to_fit_lst[cluster])))
     # AIC
-    print(
-        f'AIC={2*result_fit[cluster, 0, :] + np.array(free_param_no) * 2}')
+    metrics[cluster, :, 2] = (2*result_fit[cluster, 0, :]
+                              + np.array(free_param_no) * 2)
 
 # %%
 # save the fitted params
@@ -96,37 +95,19 @@ fit_params = fit_params.T
 np.save('fit_params.npy', fit_params)
 
 # %%
-# code for average trajectory plots
-# plt.errorbar(np.arange(constants.HORIZON),
-#              np.mean(data, axis=0)[1:]/2,
-#              yerr=np.std(data, axis=0)[1:]/2,
-#              marker='o',
-#              linestyle='--',
-#              label='model')
-
-# plt.errorbar(np.arange(constants.HORIZON),
-#              np.mean(data_to_fit_lst[cluster], axis=0)[1:]/2,
-#              yerr=np.std(data_to_fit_lst[cluster], axis=0)[1:]/2,
-#              marker='o',
-#              linestyle='--',
-#              label='data')
-# plt.xlabel('time (weeks)')
-# plt.ylabel('rearch houurs \n completed')
-# plt.legend(loc='upper left', fontsize=18)
-# sns.despine()
-
-
-# %%
 # compare cluster trajectories with trajectories simulated from fitted models
-random.seed(0)
+
 
 cluster = 7
+
 # no. of trials = no. of trajectories in the cluster
 n = len(data_to_fit_lst[cluster])
 
 # plot cluster
 plt.figure(figsize=(4, 4), dpi=300)
 plot_trajectories(data_to_fit_lst[cluster], 'gray', 2, 0.5)
+# plt.xlabel('time (weeks)')
+# plt.ylabel('research units \n completed')
 
 # basic
 plt.figure(figsize=(4, 4), dpi=300)
@@ -138,6 +119,8 @@ data = gen_data.gen_data_basic(
     effort_work=params[2], n_trials=n, thr=constants.THR,
     states_no=constants.STATES_NO)
 plot_trajectories(data, 'gray', 2, 0.5)
+plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 0, 0],2)}',
+         fontsize=16)
 
 # efficacy gap
 plt.figure(figsize=(4, 4), dpi=300)
@@ -149,6 +132,8 @@ data = gen_data.gen_data_efficacy_gap(
     efficacy_actual=params[2], effort_work=params[3], n_trials=n,
     thr=constants.THR, states_no=constants.STATES_NO)
 plot_trajectories(data, 'gray', 2, 0.5)
+plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 1, 0],2)}',
+         fontsize=16)
 
 # convex concav
 plt.figure(figsize=(4, 4), dpi=300)
@@ -160,6 +145,8 @@ data = gen_data.gen_data_convex_concave(
     effort_work=params[1], exponent=params[2], n_trials=n, thr=constants.THR,
     states_no=constants.STATES_NO)
 plot_trajectories(data, 'gray', 2, 0.5)
+plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 2, 0],2)}',
+         fontsize=16)
 
 # imm basic
 plt.figure(figsize=(4, 4), dpi=300)
@@ -171,6 +158,8 @@ data = gen_data.gen_data_immediate_basic(
     effort_work=params[1], exponent=params[2], n_trials=n, thr=constants.THR,
     states_no=constants.STATES_NO)
 plot_trajectories(data, 'gray', 2, 0.5)
+plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 3, 0],2)}',
+         fontsize=16)
 
 # different discount
 plt.figure(figsize=(4, 4), dpi=300)
@@ -183,6 +172,8 @@ data = gen_data.gen_data_diff_discounts(
     efficacy=params[2], effort_work=params[3], n_trials=n, thr=constants.THR,
     states_no=constants.STATES_NO)
 plot_trajectories(data, 'gray', 2, 0.5)
+plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 4, 0],2)}',
+         fontsize=16)
 
 # no commit
 plt.figure(figsize=(4, 4), dpi=300)
@@ -195,3 +186,5 @@ data = gen_data.gen_data_no_commitment(
     reward_interest=params[3], n_trials=n, thr=constants.THR,
     states_no=constants.STATES_NO)
 plot_trajectories(data, 'gray', 2, 0.5)
+plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 5, 0],2)}',
+         fontsize=16)
