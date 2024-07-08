@@ -31,6 +31,14 @@ def plot_clustered_data(data, labels, **kwargs):
         sns.despine()
         plt.xticks([0, 7, 15])
         plt.yticks([0, 5, 11])
+        plt.xlabel('time (weeks)')
+        plt.ylabel('research units \n completed')
+        # add tick at threshold=14
+        plt.yticks(list(plt.yticks()[0][1:-1]) + [14])
+
+        plt.savefig(
+            f'plots/vectors/cluster_{label}.svg',
+            format='svg', dpi=300)
 
 
 # %%
@@ -64,7 +72,6 @@ if __name__ == "__main__":
     plt.xticks(np.arange(14), labels=np.arange(2, 16))
     plt.xlabel('cluster number')
     plt.ylabel('k-means sum of squares')
-
 
     # final k means clustering using the best cluster size
     # best cluster size = around the elbow in inertia plot (around 6, 7, 8)
