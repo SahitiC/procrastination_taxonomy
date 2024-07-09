@@ -1,5 +1,5 @@
 """
-simulations of the five models (reproducing Figs 2-4)
+simulations of the five models (reproducing Figs 3-5)
 """
 
 import constants
@@ -68,11 +68,30 @@ def did_it_cross_thr(trajectories):
     return completed
 
 
+def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample,
+                      number_samples):
+    """
+    """
+    mean = np.mean(trajectories, axis=0)
+
+    plt.plot(mean, color=color, linewidth=lwidth_mean)
+    for i in range(number_samples):
+        plt.plot(trajectories[i], color=color,
+                 linewidth=lwidth_sample, linestyle='dashed')
+    plt.xticks([0, 7, 15])
+    plt.yticks([0, 11, 22])
+    plt.ylim(-1, 22)
+    plt.xlabel('time (weeks)')
+    plt.ylabel('Research units \n completed')
+    sns.despine()
+
+
 # %%
 cmap_blues = plt.get_cmap('Blues')
 cmap_greens = plt.get_cmap('Greens')
 cmap_RdPu = plt.get_cmap('RdPu')
 cmap_oranges = plt.get_cmap('Oranges')
+np.random.seed(0)
 
 # %%
 # discounting delayed rewards
@@ -120,13 +139,53 @@ ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.09, 0.95, r'$\gamma$', ha='center', va='center')
 
+fig1.savefig(
+    'plots/vectors/basic_efficacies_delays.svg',
+    format='svg', dpi=300)
+
+
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel(r'$\eta$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
 
-# example trajectories
+fig2.savefig(
+    'plots/vectors/basic_efficacies_rates.svg',
+    format='svg', dpi=300)
+
+# plot example trajectories
+discount_factor, efficacy = 1, efficacies[-2]
+
+trajectories = gen_data.gen_data_basic(
+    constants.STATES, constants.ACTIONS, constants.HORIZON,
+    constants.REWARD_THR, constants.REWARD_EXTRA,
+    constants.REWARD_SHIRK, constants.BETA, discount_factor, efficacy,
+    constants.EFFORT_WORK, 1000, constants.THR, constants.STATES_NO)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $\eta$={np.round(efficacy,2)}',
+          fontsize=24)
+plt.savefig(
+    'plots/vectors/basic_efficacies_ex1.svg',
+    format='svg', dpi=300)
+
+discount_factor, efficacy = 0.3, efficacies[-3]
+
+trajectories = gen_data.gen_data_basic(
+    constants.STATES, constants.ACTIONS, constants.HORIZON,
+    constants.REWARD_THR, constants.REWARD_EXTRA,
+    constants.REWARD_SHIRK, constants.BETA, discount_factor, efficacy,
+    constants.EFFORT_WORK, 1000, constants.THR, constants.STATES_NO)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $\eta$={np.round(efficacy,2)}',
+          fontsize=24)
+plt.savefig(
+    'plots/vectors/basic_efficacies_ex2.svg',
+    format='svg', dpi=300)
 
 # %%
 # delays with efforts
@@ -172,13 +231,19 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.09, 0.95, r'$\gamma$', ha='center', va='center')
+fig1.savefig(
+    'plots/vectors/basic_efforts_delays.svg',
+    format='svg', dpi=300)
+
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel('$r_{effort}$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
-
+fig2.savefig(
+    'plots/vectors/basic_efforts_rates.svg',
+    format='svg', dpi=300)
 
 # %%
 # gap between real and assumed efficacies
@@ -226,12 +291,34 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.12, 0.95, r'$\eta_{real}$', ha='center', va='center')
+fig1.savefig(
+    'plots/vectors/eff_gap_delays.svg',
+    format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel(r'$\eta_{assumed}$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
+fig2.savefig(
+    'plots/vectors/eff_gap_rates.svg',
+    format='svg', dpi=300)
+
+# example trajectories
+efficacy_assumed, efficacy_real = efficacys_assumed[1], 0.9
+
+trajectories = gen_data.gen_data_efficacy_gap(
+    constants.STATES, constants.ACTIONS, constants.HORIZON,
+    constants.REWARD_THR, constants.REWARD_EXTRA,
+    constants.REWARD_SHIRK, constants.BETA,
+    discount_factor, efficacy_assumed, efficacy_real,
+    constants.EFFORT_WORK, 1000, constants.THR, constants.STATES_NO)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.savefig(
+    'plots/vectors/eff_gap_ex1.svg',
+    format='svg', dpi=300)
 
 # %%
 # nonlinearity in effort function (with delayed rewards)
@@ -279,12 +366,49 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=5, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.03, 0.95, r'$k$', ha='center', va='center')
+fig1.savefig(
+    'plots/vectors/conv_conc_delays.svg',
+    format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel(r'$\gamma$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
+fig2.savefig(
+    'plots/vectors/conv_conc_rates.svg',
+    format='svg', dpi=300)
+
+# example trajectories
+discount_factor, exponent = discounts[-1], 1.5
+
+trajectories = gen_data.gen_data_convex_concave(
+    constants.STATES, constants.ACTIONS, constants.HORIZON,
+    constants.REWARD_THR, constants.REWARD_EXTRA,
+    constants.REWARD_SHIRK, constants.BETA,
+    discount_factor, constants.EFFICACY, constants.EFFORT_WORK,
+    exponent, 1000, constants.THR, constants.STATES_NO)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.savefig(
+    'plots/vectors/conv_conc_ex1.svg',
+    format='svg', dpi=300)
+
+discount_factor, exponent = discounts[2], 0.8
+
+trajectories = gen_data.gen_data_convex_concave(
+    constants.STATES, constants.ACTIONS, constants.HORIZON,
+    constants.REWARD_THR, constants.REWARD_EXTRA,
+    constants.REWARD_SHIRK, constants.BETA,
+    discount_factor, constants.EFFICACY, constants.EFFORT_WORK,
+    exponent, 1000, constants.THR, constants.STATES_NO)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.savefig(
+    'plots/vectors/conv_conc_ex2.svg',
+    format='svg', dpi=300)
 
 # %%
 # immediate reward cases
@@ -334,12 +458,31 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.09, 0.95, r'$k$', ha='center', va='center')
+fig1.savefig(
+    'plots/vectors/imm_basic_delays.svg',
+    format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel(r'$\gamma$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
+fig2.savefig(
+    'plots/vectors/imm_basic_rates.svg',
+    format='svg', dpi=300)
+
+# example trajectories
+discount_factor, exponent = discounts[4], 2.2
+
+trajectories = gen_data.gen_data_immediate_basic(
+    constants.STATES, constants.ACTIONS, constants.HORIZON,
+    constants.REWARD_THR, constants.REWARD_EXTRA,
+    constants.REWARD_SHIRK, constants.BETA,
+    discount_factor, constants.EFFICACY, constants.EFFORT_WORK,
+    exponent, 1000, constants.THR, constants.STATES_NO)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
 
 # %%
 # different discount factors for effort and reward
@@ -428,6 +571,34 @@ ax2.set_xlabel(r'$\gamma_{c}$', fontsize=20)
 ax2.set_yticks([1])
 ax2.set_xticks([])
 
+# example trajectories
+discount_factor_reward, discount_factor_cost = 0.9, discounts_cost[-2]
+
+trajectories = gen_data.gen_data_diff_discounts(
+    constants.STATES, constants.ACTIONS, constants.HORIZON,
+    constants.REWARD_THR_DIFF_DISCOUNTS,
+    constants.REWARD_EXTRA_DIFF_DISCOUNTS, constants.REWARD_SHIRK,
+    constants.BETA_DIFF_DISCOUNTS, discount_factor_reward,
+    discount_factor_cost, constants.EFFICACY, constants.EFFORT_WORK,
+    1000, constants.THR, constants.STATES_NO)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+
+
+discount_factor_reward, discount_factor_cost = 0.9, discounts_cost[3]
+
+trajectories = gen_data.gen_data_diff_discounts(
+    constants.STATES, constants.ACTIONS, constants.HORIZON,
+    constants.REWARD_THR_DIFF_DISCOUNTS,
+    constants.REWARD_EXTRA_DIFF_DISCOUNTS, constants.REWARD_SHIRK,
+    constants.BETA_DIFF_DISCOUNTS, discount_factor_reward,
+    discount_factor_cost, constants.EFFICACY, constants.EFFORT_WORK,
+    1000, constants.THR, constants.STATES_NO)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+
 # %%
 # waiting for interesting rewards
 
@@ -480,3 +651,30 @@ ax2.set_ylabel('Completion \n rate', fontsize=20)
 ax2.set_xlabel(r'$r_{interest}$', fontsize=20)
 ax2.set_yticks([1])
 ax2.set_xticks([])
+
+# example trajectories
+reward_interest, discount_factor = rewards_interest[4], 0.95
+
+trajectories = gen_data.gen_data_no_commitment(
+    constants.STATES_NO_COMMIT, constants.ACTIONS_BASE,
+    constants.HORIZON, constants.REWARD_THR, constants.REWARD_EXTRA,
+    constants.REWARD_SHIRK, constants.BETA, constants.P_STAY_LOW,
+    constants.P_STAY_HIGH, discount_factor, constants.EFFICACY,
+    constants.EFFORT_WORK, reward_interest, 1000, constants.THR,
+    constants.STATES_NO_NO_COMMIT)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+
+reward_interest, discount_factor = rewards_interest[4], 1
+
+trajectories = gen_data.gen_data_no_commitment(
+    constants.STATES_NO_COMMIT, constants.ACTIONS_BASE,
+    constants.HORIZON, constants.REWARD_THR, constants.REWARD_EXTRA,
+    constants.REWARD_SHIRK, constants.BETA, constants.P_STAY_LOW,
+    constants.P_STAY_HIGH, discount_factor, constants.EFFICACY,
+    constants.EFFORT_WORK, reward_interest, 1000, constants.THR,
+    constants.STATES_NO_NO_COMMIT)
+
+plt.figure(figsize=(3, 3), dpi=300)
+plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
