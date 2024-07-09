@@ -60,7 +60,7 @@ def model_fit(data_to_fit):
 # %%
 if __name__ == "__main__":
 
-    random.seed(0)
+    np.random.seed(0)
 
     # import clustered data
     data_relevant = pd.read_csv(

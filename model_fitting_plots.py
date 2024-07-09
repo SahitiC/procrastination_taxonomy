@@ -67,7 +67,7 @@ data_to_fit_lst = np.load('data_to_fit_lst.npy', allow_pickle=True)
 
 # %%
 # get fitted parameters, calculate AIC, BIC, pseudo-R2
-random.seed(0)
+np.random.seed(0)
 metrics = np.zeros((8, 6, 3))
 for cluster in range(len(data_to_fit_lst)):
 
