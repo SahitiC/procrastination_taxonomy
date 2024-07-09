@@ -234,6 +234,59 @@ ax2.set_yticks([0, 1])
 ax2.set_xticks([])
 
 # %%
+# nonlinearity in effort function (with delayed rewards)
+
+discounts = np.linspace(0.2, 1, 10)
+nonlinearitys = [0.5, 0.8, 1, 1.5, 2.2]
+cycle_colors = cycler('color',
+                      cmap_RdPu(np.linspace(0.3, 1, 5)))
+
+fig1, ax1 = plt.subplots(figsize=(6, 4), dpi=300)
+fig2, ax2 = plt.subplots(figsize=(4, 3), dpi=300)
+ax1.set_prop_cycle(cycle_colors)
+ax2.set_prop_cycle(cycle_colors)
+
+plt.figure()
+for exponent in nonlinearitys:
+
+    delay_mn = []
+    delay_sem = []
+    completion_rate = []
+    for discount_factor in discounts:
+
+        trajectories = gen_data.gen_data_convex_concave(
+            constants.STATES, constants.ACTIONS, constants.HORIZON,
+            constants.REWARD_THR, constants.REWARD_EXTRA,
+            constants.REWARD_SHIRK, constants.BETA,
+            discount_factor, constants.EFFICACY, constants.EFFORT_WORK,
+            exponent, 1000, constants.THR, constants.STATES_NO)
+
+        delays = time_to_cross_thr(trajectories)
+        delay_mn.append(np.nanmean(delays))
+        delay_sem.append(sem(delays, nan_policy='omit'))
+        completions = did_it_cross_thr(trajectories)
+        completion_rate.append(np.nanmean(completions))
+
+    ax1.errorbar(discounts, delay_mn, yerr=delay_sem, linewidth=3,
+                 marker='o', linestyle='--', label=f'{exponent}')
+
+    ax2.plot(completion_rate, linewidth=3, marker='o', linestyle='--')
+
+sns.despine(ax=ax1)
+ax1.set_ylabel('Avg. time to cross \n 14 units (in weeks)')
+ax1.set_xlabel(r'$\gamma$')
+ax1.set_yticks([0, 5, 10, 15])
+ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=5, frameon=False, fontsize=18,
+           loc='upper center', columnspacing=0.5)
+fig1.text(0.03, 0.95, r'$k$', ha='center', va='center')
+
+sns.despine(ax=ax2)
+ax2.set_ylabel('Completion rate', fontsize=20)
+ax2.set_xlabel(r'$\gamma$', fontsize=20)
+ax2.set_yticks([0, 1])
+ax2.set_xticks([])
+
+# %%
 # immediate reward cases
 
 # nonlinearity in effort function
