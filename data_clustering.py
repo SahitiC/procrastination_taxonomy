@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 mpl.rcParams['font.size'] = 24
 mpl.rcParams['lines.linewidth'] = 3
-
+mpl.rcParams['axes.linewidth'] = 2
 
 # %%
 

@@ -174,7 +174,7 @@ for cluster in range(8):
 
     # plot cluster
     plt.figure(figsize=(4, 4), dpi=300)
-    plot_trajectories(data_to_fit_lst[cluster], 'gray', 2, 0.5)
+    plot_trajectories(data_to_fit_lst[cluster], 'gray', 3, 1)
     # plt.xlabel('time (weeks)')
     # plt.ylabel('research units \n completed')
     plt.savefig(
@@ -190,7 +190,7 @@ for cluster in range(8):
         constants.BETA, discount_factor=params[0], efficacy=params[1],
         effort_work=params[2], n_trials=n, thr=constants.THR,
         states_no=constants.STATES_NO)
-    plot_trajectories(data, 'gray', 2, 0.5)
+    plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 0, 0],2)}',
              fontsize=16)
     plt.savefig(
@@ -206,7 +206,7 @@ for cluster in range(8):
         constants.BETA, discount_factor=params[0], efficacy_assumed=params[1],
         efficacy_actual=params[2], effort_work=params[3], n_trials=n,
         thr=constants.THR, states_no=constants.STATES_NO)
-    plot_trajectories(data, 'gray', 2, 0.5)
+    plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 1, 0],2)}',
              fontsize=16)
     plt.savefig(
@@ -222,7 +222,7 @@ for cluster in range(8):
         constants.BETA, discount_factor=params[0], efficacy=params[3],
         effort_work=params[1], exponent=params[2], n_trials=n,
         thr=constants.THR, states_no=constants.STATES_NO)
-    plot_trajectories(data, 'gray', 2, 0.5)
+    plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 2, 0],2)}',
              fontsize=16)
     plt.savefig(
@@ -238,7 +238,7 @@ for cluster in range(8):
         constants.BETA, discount_factor=params[0], efficacy=params[3],
         effort_work=params[1], exponent=params[2], n_trials=n,
         thr=constants.THR, states_no=constants.STATES_NO)
-    plot_trajectories(data, 'gray', 2, 0.5)
+    plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 3, 0],2)}',
              fontsize=16)
     plt.savefig(
@@ -256,7 +256,7 @@ for cluster in range(8):
         discount_factor_cost=params[1], efficacy=params[2],
         effort_work=params[3], n_trials=n, thr=constants.THR,
         states_no=constants.STATES_NO)
-    plot_trajectories(data, 'gray', 2, 0.5)
+    plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 4, 0],2)}',
              fontsize=16)
     plt.savefig(
@@ -273,7 +273,7 @@ for cluster in range(8):
         discount_factor=params[0], efficacy=params[1], effort_work=params[2],
         reward_interest=params[3], n_trials=n, thr=constants.THR,
         states_no=constants.STATES_NO)
-    plot_trajectories(data, 'gray', 2, 0.5)
+    plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 5, 0],2)}',
              fontsize=16)
     plt.savefig(
