@@ -26,15 +26,13 @@ def plot_clustered_data(data, labels, **kwargs):
 
             if labels[i] == label:
 
-                plt.plot(ast.literal_eval(data[i]), alpha=0.5)
+                plt.plot(np.array(ast.literal_eval(data[i])) * 2, alpha=0.5)
 
         sns.despine()
         plt.xticks([0, 7, 15])
-        plt.yticks([0, 5, 11])
+        plt.yticks([0, 11, 14, 22])
         plt.xlabel('time (weeks)')
         plt.ylabel('research units \n completed')
-        # add tick at threshold=14
-        plt.yticks(list(plt.yticks()[0][1:-1]) + [14])
 
         plt.savefig(
             f'plots/vectors/cluster_{label}.svg',
@@ -59,7 +57,6 @@ if __name__ == "__main__":
     # plot inertia vs cluster number
     # plot silhoutte score for each cluster number
     inertia = []
-    silhouette_scores = []
     for cluster_size in range(1, 15):
         print(cluster_size+1)
         km = KMeans(n_clusters=cluster_size+1, n_init=10,

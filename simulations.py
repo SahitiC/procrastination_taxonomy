@@ -316,6 +316,8 @@ trajectories = gen_data.gen_data_efficacy_gap(
 
 plt.figure(figsize=(3, 3), dpi=300)
 plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $\eta$={np.round(efficacy_assumed,2)}',
+          fontsize=24)
 plt.savefig(
     'plots/vectors/eff_gap_ex1.svg',
     format='svg', dpi=300)
@@ -391,23 +393,10 @@ trajectories = gen_data.gen_data_convex_concave(
 
 plt.figure(figsize=(3, 3), dpi=300)
 plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $k$={np.round(exponent,2)}',
+          fontsize=24)
 plt.savefig(
     'plots/vectors/conv_conc_ex1.svg',
-    format='svg', dpi=300)
-
-discount_factor, exponent = discounts[2], 0.8
-
-trajectories = gen_data.gen_data_convex_concave(
-    constants.STATES, constants.ACTIONS, constants.HORIZON,
-    constants.REWARD_THR, constants.REWARD_EXTRA,
-    constants.REWARD_SHIRK, constants.BETA,
-    discount_factor, constants.EFFICACY, constants.EFFORT_WORK,
-    exponent, 1000, constants.THR, constants.STATES_NO)
-
-plt.figure(figsize=(3, 3), dpi=300)
-plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-plt.savefig(
-    'plots/vectors/conv_conc_ex2.svg',
     format='svg', dpi=300)
 
 # %%
@@ -483,6 +472,11 @@ trajectories = gen_data.gen_data_immediate_basic(
 
 plt.figure(figsize=(3, 3), dpi=300)
 plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $k$={np.round(exponent,2)}',
+          fontsize=24)
+plt.savefig(
+    'plots/vectors/imm_basic_ex1.svg',
+    format='svg', dpi=300)
 
 # %%
 # different discount factors for effort and reward
@@ -511,7 +505,7 @@ V_opt_full, policy_opt_full, Q_values_full = (
 
 policy_init_state = [policy_opt_full[i][0] for i in range(constants.HORIZON)]
 policy_init_state = np.array(policy_init_state)
-f, ax = plt.subplots(figsize=(5, 4), dpi=300)
+fig, ax = plt.subplots(figsize=(5, 4), dpi=300)
 cmap = mpl.colormaps['winter']
 sns.heatmap(policy_init_state, linewidths=.5, cmap=cmap, cbar=True)
 ax.set_xlabel('timestep')
@@ -519,7 +513,9 @@ ax.set_ylabel('horizon')
 ax.tick_params(axis='x', labelrotation=90)
 colorbar = ax.collections[0].colorbar
 colorbar.set_label('actions:\n no. of units', rotation=270, labelpad=45)
-
+fig.savefig(
+    'plots/vectors/diff_disc_policy.svg',
+    format='svg', dpi=300)
 
 discounts_reward = [0.5, 0.7, 0.8, 0.9]
 discounts_cost = np.linspace(0.2, 1, 10)
@@ -564,28 +560,22 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.08, 0.95, r'$\gamma_{r}$', ha='center', va='center')
+fig1.savefig(
+    'plots/vectors/diff_disc_delays.svg',
+    format='svg', dpi=300)
+
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion \n rate', fontsize=20)
 ax2.set_xlabel(r'$\gamma_{c}$', fontsize=20)
 ax2.set_yticks([1])
 ax2.set_xticks([])
+fig2.savefig(
+    'plots/vectors/diff_disc_rates.svg',
+    format='svg', dpi=300)
+
 
 # example trajectories
-discount_factor_reward, discount_factor_cost = 0.9, discounts_cost[-2]
-
-trajectories = gen_data.gen_data_diff_discounts(
-    constants.STATES, constants.ACTIONS, constants.HORIZON,
-    constants.REWARD_THR_DIFF_DISCOUNTS,
-    constants.REWARD_EXTRA_DIFF_DISCOUNTS, constants.REWARD_SHIRK,
-    constants.BETA_DIFF_DISCOUNTS, discount_factor_reward,
-    discount_factor_cost, constants.EFFICACY, constants.EFFORT_WORK,
-    1000, constants.THR, constants.STATES_NO)
-
-plt.figure(figsize=(3, 3), dpi=300)
-plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-
-
 discount_factor_reward, discount_factor_cost = 0.9, discounts_cost[3]
 
 trajectories = gen_data.gen_data_diff_discounts(
@@ -598,6 +588,11 @@ trajectories = gen_data.gen_data_diff_discounts(
 
 plt.figure(figsize=(3, 3), dpi=300)
 plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.title(fr'$\gamma_r$={np.round(discount_factor_reward,2)}, $\gamma_c$={np.round(discount_factor_cost,2)}',
+          fontsize=24)
+plt.savefig(
+    'plots/vectors/diff_disc_ex1.svg',
+    format='svg', dpi=300)
 
 # %%
 # waiting for interesting rewards
@@ -645,12 +640,20 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.2, 0.95, r'$\gamma$', ha='center', va='center')
+fig1.savefig(
+    'plots/vectors/no_commit_delays.svg',
+    format='svg', dpi=300)
+
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion \n rate', fontsize=20)
 ax2.set_xlabel(r'$r_{interest}$', fontsize=20)
 ax2.set_yticks([1])
 ax2.set_xticks([])
+fig2.savefig(
+    'plots/vectors/no_commit_rates.svg',
+    format='svg', dpi=300)
+
 
 # example trajectories
 reward_interest, discount_factor = rewards_interest[4], 0.95
@@ -665,6 +668,12 @@ trajectories = gen_data.gen_data_no_commitment(
 
 plt.figure(figsize=(3, 3), dpi=300)
 plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.title(fr'$\gamma_r$={np.round(discount_factor,2)}, $r$={np.round(reward_interest,2)}',
+          fontsize=24)
+plt.savefig(
+    'plots/vectors/no_commit_ex1.svg',
+    format='svg', dpi=300)
+
 
 reward_interest, discount_factor = rewards_interest[4], 1
 
@@ -678,3 +687,8 @@ trajectories = gen_data.gen_data_no_commitment(
 
 plt.figure(figsize=(3, 3), dpi=300)
 plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+plt.title(fr'$\gamma_r$={np.round(discount_factor,2)}, $r$={np.round(reward_interest,2)}',
+          fontsize=24)
+plt.savefig(
+    'plots/vectors/no_commit_ex2.svg',
+    format='svg', dpi=300)
