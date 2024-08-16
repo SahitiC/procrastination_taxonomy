@@ -96,8 +96,7 @@ def get_distance_matrix(vectors):
     return distance_matrix
 
 
-# %%
-# import results
+# %% import results
 free_param_no = [3, 4, 4, 4, 4, 4]  # no. of free params for each model
 result_fit = np.load('result.npy', allow_pickle=True)
 data_to_fit_lst = np.load('data_to_fit_lst.npy', allow_pickle=True)
@@ -128,14 +127,12 @@ result_basic = likelihoods.maximum_likelihood_estimate_basic(
 result_fit[7, 0, 0] = result_basic.fun
 result_fit[7, 1, 0] = result_basic.x
 
-# %%
-# rearrange order of clusters to the order in the paper
+# %% rearrange order of clusters to the order in the paper
 new_order = [1, 7, 4, 6, 0, 5, 2, 3]
 data_to_fit_lst = data_to_fit_lst[new_order]
 result_fit = result_fit[new_order]
 
-# %%
-# get fitted parameters, calculate AIC, BIC, pseudo-R2
+# %% get fitted parameters, calculate AIC, BIC, pseudo-R2
 
 metrics = np.zeros((8, 6, 3))
 for cluster in range(len(data_to_fit_lst)):
@@ -154,8 +151,8 @@ for cluster in range(len(data_to_fit_lst)):
     metrics[cluster, :, 2] = (2*result_fit[cluster, 0, :]
                               + np.array(free_param_no) * 2)
 
-# %%
-# save the fitted params
+# %% save the fitted params
+
 fit_params = result_fit[:, 1, :].flatten()
 # 6 models, 8 clusters
 fit_params = np.vstack((fit_params,
@@ -163,9 +160,7 @@ fit_params = np.vstack((fit_params,
 fit_params = fit_params.T
 np.save('fit_params.npy', fit_params)
 
-# %%
-# compare cluster trajectories with trajectories simulated from fitted models
-
+# %% compare cluster trajectories with trajectories simulated from fitted models
 
 for cluster in range(8):
 
