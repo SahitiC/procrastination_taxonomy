@@ -63,6 +63,24 @@ models = ['basic', 'effic_gap', 'conv_conc', 'imm_basic',
 model_no = [0, 1, 2, 3, 4, 5]
 free_param_no = [3, 4, 4, 4, 4, 4]
 
+# parameters of each model
+model_params = [
+    ['$\gamma$', '$\eta$', '$r_{effort}$'],
+    ['$\gamma$', '$\eta_{assumed}$', '$\eta_{real}$', '$r_{effort}$'],
+    ['$\gamma$', '$\eta$', '$r_{effort}$', 'k'],
+    ['$\gamma$', '$\eta$', '$r_{effort}$', 'k'],
+    ['$\gamma_{reward}$', '$\gamma_{effort}$', '$\eta$', '$r_{effort}$'],
+    ['$\gamma$', '$\eta$', '$r_{effort}$', '$r_{interest}$']]
+
+# parameter limits for each model
+param_lim = [
+    [(-0.05, 1.05), (-0.05, 1.05), (-3, 0.05)],
+    [(-0.05, 1.05), (-0.05, 1.05), (-0.05, 1.05), (-3, 0.05)],
+    [(-0.05, 1.05), (-0.05, 1.05), (-3, 0.05), (-0.05, 1.55)],
+    [(-0.05, 1.05), (-0.05, 1.05), (-3.2, 0.05), (-0.05, 1.55)],
+    [(-0.05, 1.05), (-0.05, 1.05), (0, 1.05), (-1, 0.05)],
+    [(-0.05, 1.05), (-0.05, 1.05), (-1.65, 0), (-0.05, 15)]]
+
 # %% choose best fit model
 
 # for randomly chosen parameters
@@ -92,6 +110,7 @@ for i in range(len(models_recovered)):
         index.append(i)
 final_result = np.delete(models_recovered, index, axis=0)
 final_inputs = np.delete(input_recovery, index, axis=0)
+result_recovery_trimmed = np.delete(result_recovery, index, axis=0)
 
 # plot counts of returned models for each input model type
 freq_recovered = []
@@ -121,4 +140,62 @@ sns.heatmap(freq_recovered_fit_params, cmap='vlag')
 plt.xlabel('model')
 plt.yticks([])
 
-# %% parameter recovery lots
+# %% extract free parameters from input parameters
+params = []
+for model in range(len(models)):
+
+    temp = final_inputs[np.where(final_inputs[:, 1] == model), 0].T
+
+    for i in range(len(temp)):
+
+        params.append(temp[i, 0][-3-free_param_no[model]:-3])
+
+final_inputs[:, 0] = np.array(params, dtype=object)
+
+# %% parameter recovery plots
+# regardless of whether model as recovered, what were the params recovered from
+# fitting the correct model
+
+
+for model in range(len(models)):
+
+    # choose input fitted params correspnding to model = model
+    input_params_fit = fit_params[np.where(fit_params[:, 1] == model), 0]
+    input_params_fit = np.vstack(np.hstack(input_params_fit))
+
+    # choose the params recovered when fitting the same model
+    result_params_fit = result_recovery_fit_params[
+        np.where(fit_params[:, 1] == model), 1, model]
+    result_params_fit = np.vstack(np.hstack(result_params_fit))
+
+    # choose input fitted params correspnding to model = model
+    input_params = final_inputs[np.where(final_inputs[:, 1] == model), 0]
+    input_params = np.vstack(np.hstack(input_params))
+
+    # choose the params recovered when fitting the same model
+    result_params = result_recovery_trimmed[
+        np.where(final_inputs[:, 1] == model), 1, model]
+    result_params = np.vstack(np.hstack(result_params))
+
+    for param in range(len(model_params[model])):
+
+        plt.figure(figsize=(4, 4), dpi=300)
+
+        plt.scatter(input_params[:, param], result_params[:, param])
+        plt.scatter(input_params_fit[:, param], result_params_fit[:, param],
+                    marker='x')
+
+        lim = param_lim[model][param]
+
+        plt.plot(
+            np.linspace(lim[0], lim[1], 10),
+            np.linspace(lim[0], lim[1], 10),
+            linewidth=1, color='black')  # x=y line
+
+        plt.xlim(lim)
+        plt.ylim(lim)
+
+        plt.xlabel(fr'true {model_params[model][param]}')
+        plt.ylabel(fr'estimated {model_params[model][param]}')
+
+        sns.despine()

@@ -61,9 +61,9 @@ if __name__ == "__main__":
         elif fit_params[i, 1] == 2:
 
             (discount_factor,
+             efficacy,
              effort_work,
-             exponent,
-             efficacy) = fit_params[i, 0]
+             exponent) = fit_params[i, 0]
 
             input_lst.append([[constants.STATES, constants.ACTIONS,
                                constants.HORIZON, constants.REWARD_THR,
@@ -76,9 +76,9 @@ if __name__ == "__main__":
         elif fit_params[i, 1] == 3:
 
             (discount_factor,
+             efficacy,
              effort_work,
-             exponent,
-             efficacy) = fit_params[i, 0]
+             exponent) = fit_params[i, 0]
 
             input_lst.append([[constants.STATES, constants.ACTIONS,
                                constants.HORIZON, constants.REWARD_THR,

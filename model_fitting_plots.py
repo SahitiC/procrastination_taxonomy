@@ -98,12 +98,12 @@ def get_distance_matrix(vectors):
 
 # %% import results
 free_param_no = [3, 4, 4, 4, 4, 4]  # no. of free params for each model
-result_fit = np.load('result.npy', allow_pickle=True)
+result_fit = np.load('result_fit.npy', allow_pickle=True)
 data_to_fit_lst = np.load('data_to_fit_lst.npy', allow_pickle=True)
 
 np.random.seed(0)
 
-# %%
+# %% rerun some badly fit models
 # since conv-conc did not fit well to cluster 5 (it should do atleast as
 # good as basic), re-run fitting for this
 
@@ -214,8 +214,8 @@ for cluster in range(8):
     data = gen_data.gen_data_convex_concave(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
         constants.REWARD_THR, constants.REWARD_EXTRA, constants.REWARD_SHIRK,
-        constants.BETA, discount_factor=params[0], efficacy=params[3],
-        effort_work=params[1], exponent=params[2], n_trials=n,
+        constants.BETA, discount_factor=params[0], efficacy=params[1],
+        effort_work=params[2], exponent=params[3], n_trials=n,
         thr=constants.THR, states_no=constants.STATES_NO)
     plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 2, 0],2)}',
@@ -230,8 +230,8 @@ for cluster in range(8):
     data = gen_data.gen_data_immediate_basic(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
         constants.REWARD_THR, constants.REWARD_EXTRA, constants.REWARD_SHIRK,
-        constants.BETA, discount_factor=params[0], efficacy=params[3],
-        effort_work=params[1], exponent=params[2], n_trials=n,
+        constants.BETA, discount_factor=params[0], efficacy=params[1],
+        effort_work=params[2], exponent=params[3], n_trials=n,
         thr=constants.THR, states_no=constants.STATES_NO)
     plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 3, 0],2)}',
@@ -275,8 +275,7 @@ for cluster in range(8):
         f'plots/vectors/fit_no_commit_cluster_{cluster}.svg',
         format='svg', dpi=300)
 
-# %%
-# calculate distance between parameters
+# %% calculate distance between parameters
 for model in range(6):
     vectors = np.vstack(result_fit[:, 1, model])
     distance_matrix = get_distance_matrix(vectors)
@@ -286,6 +285,6 @@ for model in range(6):
                 vmin=0, vmax=41)
     plt.xlabel('cluster')
     plt.ylabel('cluster')
-    # plt.savefig(
-    #     f'plots/vectors/distance_matrix_model_{model}.svg',
-    #     format='svg', dpi=300)
+    plt.savefig(
+        f'plots/vectors/distance_matrix_model_{model}.svg',
+        format='svg', dpi=300)

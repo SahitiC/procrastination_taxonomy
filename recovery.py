@@ -93,7 +93,6 @@ if __name__ == "__main__":
         discount_factor = np.random.uniform(0.2, 1)
         efficacy = np.random.uniform(0.35, 1)
         effort_work = -1 * np.random.exponential(0.5)
-        # reward_shirk = np.random.exponential(0.5)
 
         # all input params and model identity
         input_lst.append([[constants.STATES, constants.ACTIONS,
@@ -107,10 +106,10 @@ if __name__ == "__main__":
     for i in range(N):
         # generate random parameters
         discount_factor = np.random.uniform(0.2, 1)
-        efficacy_assumed = np.random.uniform(0.35, 0.9)
+        efficacy_assumed = np.random.uniform(0.25, 0.9)
         # sample actual efficacies such that they are diff from effic assumed
-        prob_coin_flip = ((efficacy_assumed-0.35)
-                          / (efficacy_assumed-0.35 + 1-efficacy_assumed-0.1))
+        prob_coin_flip = ((efficacy_assumed-0.25)
+                          / (efficacy_assumed-0.25 + 1-efficacy_assumed-0.1))
         coin_flip = np.random.binomial(1, prob_coin_flip)
         if coin_flip == 1:
             efficacy_actual = np.random.uniform(0.25, efficacy_assumed-0.1)
@@ -130,7 +129,7 @@ if __name__ == "__main__":
     for i in range(N):
         # generate random parameters
         discount_factor = np.random.uniform(0.2, 1)
-        efficacy = np.random.uniform(0.35, 1)
+        efficacy = np.random.uniform(0.25, 1)
         effort_work = -1 * np.random.exponential(0.5)
         exponent = np.random.gamma(2.5, 0.5)
 
@@ -145,7 +144,7 @@ if __name__ == "__main__":
     for i in range(N):
         # generate random parameters
         discount_factor = np.random.uniform(0.2, 1)
-        efficacy = np.random.uniform(0.35, 1)
+        efficacy = np.random.uniform(0.2, 1)
         effort_work = -1 * np.random.exponential(0.5)
         exponent = np.random.gamma(2.5, 0.5)
 
@@ -180,7 +179,7 @@ if __name__ == "__main__":
     for i in range(N):
         # generate random parameters
         discount_factor = np.random.uniform(0.6, 1)
-        efficacy = np.random.uniform(0.55, 1)
+        efficacy = np.random.uniform(0.35, 1)
         effort_work = -1 * np.random.exponential(0.67)
         reward_interest = np.random.gamma(3, 1)
 

@@ -170,9 +170,9 @@ def likelihood_convex_concave_model(x,
     x = free params of model
     """
     discount_factor = x[0]
-    effort_work = x[1]
-    exponent = x[2]
-    efficacy = x[3]
+    efficacy = x[1]
+    effort_work = x[2]
+    exponent = x[3]
 
     # define task structure
     reward_func = task_structure.reward_no_immediate(
@@ -210,9 +210,9 @@ def likelihood_immediate_basic_model(x,
     x = free params of model
     """
     discount_factor = x[0]
-    effort_work = x[1]
-    exponent = x[2]
-    efficacy = x[3]
+    efficacy = x[1]
+    effort_work = x[2]
+    exponent = x[3]
 
     # define task structure
     reward_func = task_structure.reward_threshold(
@@ -529,8 +529,7 @@ def maximum_likelihood_estimate_convex_concave(
                                 args=(states, actions, horizon,
                                       reward_thr, reward_extra, reward_shirk,
                                       beta, thr, states_no, data),
-                                bounds=((0, 1), (None, 0), (0, None),
-                                        (0, 1)))
+                                bounds=((0, 1), (0, 1), (None, 0), (0, None)))
         nllkhd = likelihood_convex_concave_model(
             final_result.x, states, actions, horizon, reward_thr,
             reward_extra, reward_shirk, beta, thr, states_no, data)
@@ -551,12 +550,11 @@ def maximum_likelihood_estimate_convex_concave(
 
         # minimise nllkhd with initial value to get param estimate
         result = minimize(likelihood_convex_concave_model,
-                          x0=[discount_factor, effort_work, exponent,
-                              efficacy],
+                          x0=[discount_factor, efficacy, effort_work, exponent],
                           args=(states, actions, horizon,
                                 reward_thr, reward_extra, reward_shirk,
                                 beta, thr, states_no, data),
-                          bounds=((0, 1), (None, 0), (0, None), (0, 1)))
+                          bounds=((0, 1), (0, 1), (None, 0), (0, None)))
 
         # whats the neg log likelhood of data under param estimate
         nllkhd_result = likelihood_convex_concave_model(
@@ -596,8 +594,7 @@ def maximum_likelihood_estimate_immediate_basic(
                                 args=(states, actions, horizon,
                                       reward_thr, reward_extra, reward_shirk,
                                       beta, thr, states_no, data),
-                                bounds=((0, 1), (None, 0), (0, None),
-                                        (0, 1)))
+                                bounds=((0, 1), (0, 1), (None, 0), (0, None)))
         nllkhd = likelihood_immediate_basic_model(
             final_result.x, states, actions, horizon, reward_thr,
             reward_extra, reward_shirk, beta, thr, states_no, data)
@@ -618,12 +615,11 @@ def maximum_likelihood_estimate_immediate_basic(
 
         # minimise nllkhd with initial value to get param estimate
         result = minimize(likelihood_immediate_basic_model,
-                          x0=[discount_factor, effort_work, exponent,
-                              efficacy],
+                          x0=[discount_factor, efficacy, effort_work, exponent],
                           args=(states, actions, horizon,
                                 reward_thr, reward_extra, reward_shirk,
                                 beta, thr, states_no, data),
-                          bounds=((0, 1), (None, 0), (0, None), (0, 1)))
+                          bounds=((0, 1), (0, 1), (None, 0), (0, None)))
 
         # whats the neg log likelhood of data under param estimate
         nllkhd_result = likelihood_immediate_basic_model(
