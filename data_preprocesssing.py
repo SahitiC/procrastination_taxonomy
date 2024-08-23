@@ -82,7 +82,7 @@ for i in range(len(data_relevant)):
 
 data_relevant['cumulative progress weeks'] = cumulative_progress_weeks
 
-# choose completion trajectories to save
+# choose columns to save
 data_subset = data_relevant[['SUB_INDEX_194', 'Total credits',
                              'delta progress', 'cumulative progress',
                              'cumulative progress normalised',

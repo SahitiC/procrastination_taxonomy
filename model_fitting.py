@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     result_lst = [*result_lst]
     result = np.array(result_lst, dtype=object)
-    np.save('result.npy', result)
+    np.save('result_fit.npy', result)
 
     data_to_fit_lst = np.array(data_to_fit_lst, dtype=object)
     np.save('data_to_fit_lst.npy', data_to_fit_lst)

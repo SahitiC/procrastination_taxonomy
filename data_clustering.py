@@ -1,4 +1,3 @@
-from sklearn.metrics import silhouette_samples, silhouette_score
 import numpy as np
 import pandas as pd
 import ast
@@ -6,7 +5,6 @@ from sklearn.cluster import KMeans
 import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 mpl.rcParams['font.size'] = 24
 mpl.rcParams['lines.linewidth'] = 3
 mpl.rcParams['axes.linewidth'] = 2
@@ -33,10 +31,10 @@ def plot_clustered_data(data, labels, **kwargs):
         plt.yticks([0, 11, 14, 22])
         plt.xlabel('time (weeks)')
         plt.ylabel('research units \n completed')
-
         plt.savefig(
             f'plots/vectors/cluster_{label}.svg',
             format='svg', dpi=300)
+        plt.show()
 
 
 # %%
@@ -57,18 +55,21 @@ if __name__ == "__main__":
     # plot inertia vs cluster number
     # plot silhoutte score for each cluster number
     inertia = []
-    for cluster_size in range(1, 15):
+    for cluster_size in range(1, 14):
         print(cluster_size+1)
         km = KMeans(n_clusters=cluster_size+1, n_init=10,
                     random_state=0)
         labels = km.fit_predict(timeseries_to_cluster)
         inertia.append(km.inertia_)
 
-    plt.figure(figsize=(7, 6))
+    plt.figure(figsize=(8, 6), dpi=300)
     plt.plot(inertia)
-    plt.xticks(np.arange(14), labels=np.arange(2, 16))
+    plt.xticks(np.arange(0, 13, 2), labels=np.arange(2, 15, 2))
     plt.xlabel('cluster number')
-    plt.ylabel('k-means sum of squares')
+    plt.ylabel('total within-cluster \n sum of squares')
+    plt.savefig(
+        'plots/vectors/inertia.svg', format='svg', dpi=300)
+    plt.show()
 
     # final k means clustering using the best cluster size
     # best cluster size = around the elbow in inertia plot (around 6, 7, 8)

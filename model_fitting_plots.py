@@ -96,15 +96,14 @@ def get_distance_matrix(vectors):
     return distance_matrix
 
 
-# %%
-# import results
+# %% import results
 free_param_no = [3, 4, 4, 4, 4, 4]  # no. of free params for each model
-result_fit = np.load('result.npy', allow_pickle=True)
+result_fit = np.load('result_fit.npy', allow_pickle=True)
 data_to_fit_lst = np.load('data_to_fit_lst.npy', allow_pickle=True)
 
 np.random.seed(0)
 
-# %%
+# %% rerun some badly fit models
 # since conv-conc did not fit well to cluster 5 (it should do atleast as
 # good as basic), re-run fitting for this
 
@@ -128,14 +127,12 @@ result_basic = likelihoods.maximum_likelihood_estimate_basic(
 result_fit[7, 0, 0] = result_basic.fun
 result_fit[7, 1, 0] = result_basic.x
 
-# %%
-# rearrange order of clusters to the order in the paper
+# %% rearrange order of clusters to the order in the paper
 new_order = [1, 7, 4, 6, 0, 5, 2, 3]
 data_to_fit_lst = data_to_fit_lst[new_order]
 result_fit = result_fit[new_order]
 
-# %%
-# get fitted parameters, calculate AIC, BIC, pseudo-R2
+# %% get fitted parameters, calculate AIC, BIC, pseudo-R2
 
 metrics = np.zeros((8, 6, 3))
 for cluster in range(len(data_to_fit_lst)):
@@ -154,8 +151,8 @@ for cluster in range(len(data_to_fit_lst)):
     metrics[cluster, :, 2] = (2*result_fit[cluster, 0, :]
                               + np.array(free_param_no) * 2)
 
-# %%
-# save the fitted params
+# %% save the fitted params
+
 fit_params = result_fit[:, 1, :].flatten()
 # 6 models, 8 clusters
 fit_params = np.vstack((fit_params,
@@ -163,9 +160,7 @@ fit_params = np.vstack((fit_params,
 fit_params = fit_params.T
 np.save('fit_params.npy', fit_params)
 
-# %%
-# compare cluster trajectories with trajectories simulated from fitted models
-
+# %% compare cluster trajectories with trajectories simulated from fitted models
 
 for cluster in range(8):
 
@@ -219,8 +214,8 @@ for cluster in range(8):
     data = gen_data.gen_data_convex_concave(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
         constants.REWARD_THR, constants.REWARD_EXTRA, constants.REWARD_SHIRK,
-        constants.BETA, discount_factor=params[0], efficacy=params[3],
-        effort_work=params[1], exponent=params[2], n_trials=n,
+        constants.BETA, discount_factor=params[0], efficacy=params[1],
+        effort_work=params[2], exponent=params[3], n_trials=n,
         thr=constants.THR, states_no=constants.STATES_NO)
     plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 2, 0],2)}',
@@ -235,8 +230,8 @@ for cluster in range(8):
     data = gen_data.gen_data_immediate_basic(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
         constants.REWARD_THR, constants.REWARD_EXTRA, constants.REWARD_SHIRK,
-        constants.BETA, discount_factor=params[0], efficacy=params[3],
-        effort_work=params[1], exponent=params[2], n_trials=n,
+        constants.BETA, discount_factor=params[0], efficacy=params[1],
+        effort_work=params[2], exponent=params[3], n_trials=n,
         thr=constants.THR, states_no=constants.STATES_NO)
     plot_trajectories(data, 'gray', 3, 1)
     plt.text(11, 0, f'$R^2$ = {np.round(metrics[cluster, 3, 0],2)}',
@@ -280,8 +275,7 @@ for cluster in range(8):
         f'plots/vectors/fit_no_commit_cluster_{cluster}.svg',
         format='svg', dpi=300)
 
-# %%
-# calculate distance between parameters
+# %% calculate distance between parameters
 for model in range(6):
     vectors = np.vstack(result_fit[:, 1, model])
     distance_matrix = get_distance_matrix(vectors)
@@ -291,6 +285,6 @@ for model in range(6):
                 vmin=0, vmax=41)
     plt.xlabel('cluster')
     plt.ylabel('cluster')
-    # plt.savefig(
-    #     f'plots/vectors/distance_matrix_model_{model}.svg',
-    #     format='svg', dpi=300)
+    plt.savefig(
+        f'plots/vectors/distance_matrix_model_{model}.svg',
+        format='svg', dpi=300)
