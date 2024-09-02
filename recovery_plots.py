@@ -130,15 +130,33 @@ for i in range(len(models)):
         full_counts(model_no, frequency_fit_params[0],
                     frequency_fit_params[1]))
 
-plt.figure(figsize=(5, 4), dpi=300)
+plt.figure(figsize=(6, 5), dpi=300)
 sns.heatmap(freq_recovered, cmap='vlag')
-plt.xlabel('model')
-plt.yticks([])
+plt.xlabel('model recovered')
+plt.ylabel('model input')
+plt.yticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
+           ['basic', 'eff-gap', 'conv-conc', 'imm-basic', 'diff-disc',
+            'no-commit'], rotation=0, fontsize=16)
+plt.xticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
+           ['basic', 'eff-gap', 'conv-conc', 'imm-basic', 'diff-disc',
+            'no-commit'], rotation=70, fontsize=16)
+plt.savefig(
+    'plots/vectors/recovery_model.svg',
+    format='svg', dpi=300)
 
-plt.figure(figsize=(5, 4), dpi=300)
+plt.figure(figsize=(6, 5), dpi=300)
 sns.heatmap(freq_recovered_fit_params, cmap='vlag')
-plt.xlabel('model')
-plt.yticks([])
+plt.xlabel('model recovered')
+plt.ylabel('model input')
+plt.yticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
+           ['basic', 'eff-gap', 'conv-conc', 'imm-basic', 'diff-disc',
+            'no-commit'], rotation=0, fontsize=16)
+plt.xticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
+           ['basic', 'eff-gap', 'conv-conc', 'imm-basic', 'diff-disc',
+            'no-commit'], rotation=70, fontsize=16)
+plt.savefig(
+    f'plots/vectors/recovery_model_fits.svg',
+    format='svg', dpi=300)
 
 # %% extract free parameters from input parameters
 params = []
@@ -199,3 +217,7 @@ for model in range(len(models)):
         plt.ylabel(fr'estimated {model_params[model][param]}')
 
         sns.despine()
+
+        plt.savefig(
+            f'plots/vectors/recover_params_{model}_{param}.svg',
+            format='svg', dpi=300)

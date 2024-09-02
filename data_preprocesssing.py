@@ -1,3 +1,4 @@
+import seaborn as sns
 import numpy as np
 import pandas as pd
 import ast
@@ -40,6 +41,7 @@ data_relevant = data_relevant.reset_index(drop=True)
 mask = np.where(data_relevant['Total credits'] <= 11)[0]
 data_relevant = data_relevant.loc[mask]
 data_relevant['Total credits']
+data_relevant = data_relevant.reset_index(drop=True)
 
 # %%
 
@@ -86,4 +88,5 @@ data_subset = data_relevant[['SUB_INDEX_194', 'Total credits',
                              'cumulative progress normalised',
                              'delta progress weeks',
                              'cumulative progress weeks']]
+
 data_subset.to_csv('data/data_preprocessed.csv', index=False)
