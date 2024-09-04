@@ -285,6 +285,8 @@ for model in range(6):
                 vmin=0, vmax=41)
     plt.xlabel('cluster')
     plt.ylabel('cluster')
+    plt.xticks(np.arange(0, 8), labels=np.arange(1, 9))
+    plt.yticks(np.arange(0, 8), labels=np.arange(1, 9))
     plt.savefig(
         f'plots/vectors/distance_matrix_model_{model}.svg',
         format='svg', dpi=300)

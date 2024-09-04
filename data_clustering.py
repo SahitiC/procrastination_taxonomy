@@ -5,6 +5,7 @@ from sklearn.cluster import KMeans
 import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from scipy.spatial import distance_matrix
 mpl.rcParams['font.size'] = 24
 mpl.rcParams['lines.linewidth'] = 3
 mpl.rcParams['axes.linewidth'] = 2
@@ -82,3 +83,24 @@ if __name__ == "__main__":
                         data_relevant['labels'])
 
     data_relevant.to_csv('data/data_clustered.csv', index=False)
+
+# %% distance matrix
+
+# rename clusters according to order in paper
+old_cluster_nos = [0, 1, 2, 3, 4, 5, 6, 7]
+new_mapping = {0: 1,
+               1: 7,
+               2: 4,
+               3: 6,
+               4: 0,
+               5: 5,
+               6: 2,
+               7: 3}
+
+labels_new = np.array([new_mapping[label] for label in labels])
+
+# sort labels and corresponding trajectories by cluster membership
+sorted_indices = np.argsort(labels_new)
+sorted_timeseries = timeseries_to_cluster[sorted_indices]
+distance_mat = distance_matrix(sorted_timeseries, sorted_timeseries)
+sns.heatmap(distance_mat, cmap='viridis')
