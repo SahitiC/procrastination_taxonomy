@@ -55,7 +55,8 @@ result_recovery_fit_params = np.load('result_recovery_fit_params.npy',
                                      allow_pickle=True)
 result_recovery = np.load('result_recovery.npy', allow_pickle=True)
 input_recovery = np.load('inputs_recovery.npy', allow_pickle=True)
-fit_params = np.load('fit_params.npy', allow_pickle=True)
+input_recovery_fit_params = np.load('input_recovery_fit_params.npy',
+                                    allow_pickle=True)
 
 # model names, params
 models = ['basic', 'effic_gap', 'conv_conc', 'imm_basic',
@@ -123,7 +124,7 @@ for i in range(len(models)):
     freq_recovered.append(full_counts(model_no, frequency[0], frequency[1]))
 
     # for params from model fits
-    index_fit_params = np.where(fit_params[:, 1] == i)[0]
+    index_fit_params = np.where(input_recovery_fit_params[:, 1] == i)[0]
     frequency_fit_params = np.unique(
         models_recovered_fit_params[index_fit_params, 1], return_counts=True)
     freq_recovered_fit_params.append(
@@ -140,9 +141,9 @@ plt.yticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
 plt.xticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
            ['basic', 'eff-gap', 'conv-conc', 'imm-basic', 'diff-disc',
             'no-commit'], rotation=70, fontsize=16)
-plt.savefig(
-    'plots/vectors/recovery_model.svg',
-    format='svg', dpi=300)
+# plt.savefig(
+#     'plots/vectors/recovery_model.svg',
+#     format='svg', dpi=300)
 
 plt.figure(figsize=(6, 5), dpi=300)
 sns.heatmap(freq_recovered_fit_params, cmap='vlag')
@@ -154,11 +155,13 @@ plt.yticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
 plt.xticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
            ['basic', 'eff-gap', 'conv-conc', 'imm-basic', 'diff-disc',
             'no-commit'], rotation=70, fontsize=16)
-plt.savefig(
-    f'plots/vectors/recovery_model_fits.svg',
-    format='svg', dpi=300)
+# plt.savefig(
+#     f'plots/vectors/recovery_model_fits.svg',
+#     format='svg', dpi=300)
 
 # %% extract free parameters from input parameters
+
+# for random params
 params = []
 for model in range(len(models)):
 
@@ -170,6 +173,16 @@ for model in range(len(models)):
 
 final_inputs[:, 0] = np.array(params, dtype=object)
 
+# for fitted params
+final_inputs_fit = []
+for i in range(len(input_recovery_fit_params)):
+
+    model = input_recovery_fit_params[i, 1]
+    temp = input_recovery_fit_params[i, 0]
+    final_inputs_fit.append([temp[-3-free_param_no[model]:-3], model])
+
+final_inputs_fit = np.array(final_inputs_fit, dtype=object)
+
 # %% parameter recovery plots
 # regardless of whether model as recovered, what were the params recovered from
 # fitting the correct model
@@ -178,12 +191,13 @@ final_inputs[:, 0] = np.array(params, dtype=object)
 for model in range(len(models)):
 
     # choose input fitted params correspnding to model = model
-    input_params_fit = fit_params[np.where(fit_params[:, 1] == model), 0]
+    input_params_fit = final_inputs_fit[
+        np.where(final_inputs_fit[:, 1] == model), 0]
     input_params_fit = np.vstack(np.hstack(input_params_fit))
 
     # choose the params recovered when fitting the same model
     result_params_fit = result_recovery_fit_params[
-        np.where(fit_params[:, 1] == model), 1, model]
+        np.where(final_inputs_fit[:, 1] == model), 1, model]
     result_params_fit = np.vstack(np.hstack(result_params_fit))
 
     # choose input fitted params correspnding to model = model
@@ -201,7 +215,7 @@ for model in range(len(models)):
 
         plt.scatter(input_params[:, param], result_params[:, param])
         plt.scatter(input_params_fit[:, param], result_params_fit[:, param],
-                    marker='x')
+                    marker='x', s=100)
 
         lim = param_lim[model][param]
 
@@ -218,6 +232,13 @@ for model in range(len(models)):
 
         sns.despine()
 
-        plt.savefig(
-            f'plots/vectors/recover_params_{model}_{param}.svg',
-            format='svg', dpi=300)
+        corr = np.corrcoef(np.concatenate((input_params[:, param],
+                                           input_params_fit[:, param])),
+                           np.concatenate((result_params[:, param],
+                                           result_params_fit[:, param])))[0, 1]
+        plt.text(lim[0], lim[1], fr'$\rho$ = {np.round(corr,2)}',
+                 fontsize=16)
+
+        # plt.savefig(
+        #     f'plots/vectors/recover_params_{model}_{param}.svg',
+        #     format='svg', dpi=300)
