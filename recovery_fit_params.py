@@ -7,6 +7,7 @@ import numpy as np
 import concurrent.futures
 import constants
 import recovery
+import random
 
 # %%
 if __name__ == "__main__":
@@ -132,6 +133,11 @@ if __name__ == "__main__":
                                    discount_factor, efficacy, effort_work,
                                    reward_interest, N_TRIALS, constants.THR,
                                    constants.STATES_NO_NO_COMMIT], 5])
+                
+    # shuffle input list so that identical inputs are not in a row
+    # when generating data parallely with seed, identical inputs generate same
+    # trajectories
+    random.Random(0).shuffle(input_lst)
 
     # recover model and params, parallelised
     with concurrent.futures.ProcessPoolExecutor() as executor:
