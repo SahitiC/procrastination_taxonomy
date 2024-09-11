@@ -156,7 +156,7 @@ plt.xticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
            ['basic', 'eff-gap', 'conv-conc', 'imm-basic', 'diff-disc',
             'no-commit'], rotation=70, fontsize=16)
 plt.savefig(
-    f'plots/vectors/recovery_model_fits.svg',
+    'plots/vectors/recovery_model_fits.svg',
     format='svg', dpi=300)
 
 # %% extract free parameters from input parameters
