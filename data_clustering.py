@@ -104,12 +104,16 @@ if __name__ == "__main__":
     sorted_timeseries = timeseries_to_cluster[sorted_indices]
     distance_mat = distance_matrix(sorted_timeseries, sorted_timeseries)
     
-    fig, ax = plt.subplots(figsize=(5, 4), dpi=300)
+    mask = np.tri(distance_mat.shape[0], k=0)
+    mask = np.where(mask==1, 1, np.nan)
+    distance_mat = mask * distance_mat
+    
+    fig, ax = plt.subplots(figsize=(6, 5), dpi=500)
     sns.heatmap(distance_mat, cmap='viridis')
     ax.set_xticks([])
     ax.set_yticks([])
     colorbar = ax.collections[0].colorbar
     colorbar.set_label('Euclidean distance', rotation=270, labelpad=30)
     plt.savefig(
-        'plots/vectors/distance_matrix_clusters.svg',
-        format='svg', dpi=300)
+        'plots/vectors/distance_matrix_clusters.png',
+        format='png', dpi=500)
