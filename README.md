@@ -55,7 +55,7 @@ Why do today, what you can fail to do tomorrow? Pacing, postponing, and ultimate
 
 ## Description
 
-1. data/ - folder containing original data from Zhang and Ma 2024 and intermediate pre-processed, clustered data files; also contains output data from model fitting and recovery
+1. data/ - folder containing original data from Zhang and Ma 2024 and intermediate pre-processed, clustered data files; also contains output data from model fitting and recovery analyses
 2. plots/ - folder containing all plots as vector images and final figures in the paper
 The following modules contain some helper functions for further steps: 
 3. mdp_algms.py - functions for algorithms that find the optimal policy in MDPs, based on dynamic programming
@@ -64,7 +64,17 @@ The following modules contain some helper functions for further steps:
 6. likelihoods.py - functions for calculating and maximising log likelihood (minimising negative log likelihood) of data under different models
 7. constants.py - define few shared constants over all the models (states, actions, horizon, effort, shirk reward)
 The following scripts implement various steps of the analyses:
-8. 
+8. data_preprocessing.py - remove unwanted columns, apply exclusion criteria, normalise data
+9. data_clustering.py - apply k-means to cluster trajectories
+10. simulations.py - simulate six models that formalise various delay mechanisms, plot delays and completion rates with varying parameters
+11. model_fitting.py - fit models to data using maximum likelihoood estimates
+12. model_fitting_plots.py - plot simulated trajectories from model fits, calculate model fit metrics
+13. recovery.py - parameter and model recovery with randomly chosen parameters
+14. recovery_fit_params.py - parameter and model recovery with fitted parameters
+15. recovery_plots.py - plot results of recovery analysis
+16. .gitignore - tell git to ignore some local files, please change this based on your local repo
+17. requirements.txt - python packages required to run these files
+18. CheboluDayan2024b.pdf - final pdf of the paper
 
 ## Citation
 
