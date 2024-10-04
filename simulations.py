@@ -1,5 +1,6 @@
 """
-simulations of the five models (reproducing Figs 3-5)
+simulations of the five models 
+Reproduces Figs 4-5
 """
 
 import constants
@@ -16,7 +17,7 @@ mpl.rcParams['font.size'] = 24
 mpl.rcParams['lines.linewidth'] = 2
 mpl.rcParams['axes.linewidth'] = 2
 
-# %%
+# %% functions
 
 
 def time_to_cross_thr(trajectories):
@@ -86,15 +87,14 @@ def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample,
     sns.despine()
 
 
-# %%
+# %% set seed, define color maps
 cmap_blues = plt.get_cmap('Blues')
 cmap_greens = plt.get_cmap('Greens')
 cmap_RdPu = plt.get_cmap('RdPu')
 cmap_oranges = plt.get_cmap('Oranges')
 np.random.seed(0)
 
-# %%
-# discounting delayed rewards
+# %% discounting delayed rewards
 
 # delays and completion rates with efficacy
 efficacies = np.linspace(0.3, 0.98, 10)
@@ -142,6 +142,7 @@ fig1.text(0.09, 0.95, r'$\gamma$', ha='center', va='center')
 fig1.savefig(
     'plots/vectors/basic_efficacies_delays.svg',
     format='svg', dpi=300)
+fig1.show()
 
 
 sns.despine(ax=ax2)
@@ -153,6 +154,7 @@ ax2.set_xticks([])
 fig2.savefig(
     'plots/vectors/basic_efficacies_rates.svg',
     format='svg', dpi=300)
+fig2.show()
 
 # plot example trajectories
 discount_factor, efficacy = 1, efficacies[-2]
@@ -170,6 +172,7 @@ plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $\eta$={np.round(efficacy,2
 plt.savefig(
     'plots/vectors/basic_efficacies_ex1.svg',
     format='svg', dpi=300)
+plt.show()
 
 discount_factor, efficacy = 0.3, efficacies[-3]
 
@@ -186,9 +189,10 @@ plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $\eta$={np.round(efficacy,2
 plt.savefig(
     'plots/vectors/basic_efficacies_ex2.svg',
     format='svg', dpi=300)
+plt.show()
 
-# %%
-# delays with efforts
+# %% delays with efforts
+
 efforts = np.linspace(-1, -0.3, 10)
 discounts = [0.3, 0.6, 0.95, 1]
 cycle_colors = cycler('color',
@@ -234,7 +238,7 @@ fig1.text(0.09, 0.95, r'$\gamma$', ha='center', va='center')
 fig1.savefig(
     'plots/vectors/basic_efforts_delays.svg',
     format='svg', dpi=300)
-
+fig1.show()
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
@@ -244,9 +248,9 @@ ax2.set_xticks([])
 fig2.savefig(
     'plots/vectors/basic_efforts_rates.svg',
     format='svg', dpi=300)
+fig2.show()
 
-# %%
-# gap between real and assumed efficacies
+# %% gap between real and assumed efficacies
 
 discount_factor = 0.9
 efficacys_assumed = np.linspace(0.2, 1, 10)
@@ -294,6 +298,7 @@ fig1.text(0.12, 0.95, r'$\eta_{real}$', ha='center', va='center')
 fig1.savefig(
     'plots/vectors/eff_gap_delays.svg',
     format='svg', dpi=300)
+fig1.show()
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
@@ -303,6 +308,7 @@ ax2.set_xticks([])
 fig2.savefig(
     'plots/vectors/eff_gap_rates.svg',
     format='svg', dpi=300)
+fig2.show()
 
 # example trajectories
 efficacy_assumed, efficacy_real = efficacys_assumed[1], 0.9
@@ -321,9 +327,9 @@ plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $\eta$={np.round(efficacy_a
 plt.savefig(
     'plots/vectors/eff_gap_ex1.svg',
     format='svg', dpi=300)
+plt.show()
 
-# %%
-# nonlinearity in effort function (with delayed rewards)
+# %% nonlinearity in effort function (with delayed rewards)
 
 discounts = np.linspace(0.2, 1, 10)
 nonlinearitys = [0.5, 0.8, 1, 1.5, 2.2]
@@ -371,6 +377,7 @@ fig1.text(0.03, 0.95, r'$k$', ha='center', va='center')
 fig1.savefig(
     'plots/vectors/conv_conc_delays.svg',
     format='svg', dpi=300)
+fig1.show()
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
@@ -380,6 +387,7 @@ ax2.set_xticks([])
 fig2.savefig(
     'plots/vectors/conv_conc_rates.svg',
     format='svg', dpi=300)
+fig2.show()
 
 # example trajectories
 discount_factor, exponent = discounts[-1], 1.5
@@ -398,9 +406,9 @@ plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $k$={np.round(exponent,2)}'
 plt.savefig(
     'plots/vectors/conv_conc_ex1.svg',
     format='svg', dpi=300)
+plt.show()
 
-# %%
-# immediate reward cases
+# %% immediate reward cases
 
 # nonlinearity in effort function
 
@@ -450,6 +458,7 @@ fig1.text(0.09, 0.95, r'$k$', ha='center', va='center')
 fig1.savefig(
     'plots/vectors/imm_basic_delays.svg',
     format='svg', dpi=300)
+fig1.show()
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
@@ -459,6 +468,7 @@ ax2.set_xticks([])
 fig2.savefig(
     'plots/vectors/imm_basic_rates.svg',
     format='svg', dpi=300)
+fig2.show()
 
 # example trajectories
 discount_factor, exponent = discounts[4], 2.2
@@ -477,9 +487,9 @@ plt.title(fr'$\gamma$={np.round(discount_factor,2)}, $k$={np.round(exponent,2)}'
 plt.savefig(
     'plots/vectors/imm_basic_ex1.svg',
     format='svg', dpi=300)
+plt.show()
 
-# %%
-# different discount factors for effort and reward
+# %% different discount factors for effort and reward
 
 # plot example policy
 
@@ -516,6 +526,7 @@ colorbar.set_label('actions:\n no. of units', rotation=270, labelpad=45)
 fig.savefig(
     'plots/vectors/diff_disc_policy.svg',
     format='svg', dpi=300)
+fig.show()
 
 discounts_reward = [0.5, 0.7, 0.8, 0.9]
 discounts_cost = np.linspace(0.2, 1, 10)
@@ -563,7 +574,7 @@ fig1.text(0.08, 0.95, r'$\gamma_{r}$', ha='center', va='center')
 fig1.savefig(
     'plots/vectors/diff_disc_delays.svg',
     format='svg', dpi=300)
-
+fig1.show()
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion \n rate', fontsize=20)
@@ -573,7 +584,7 @@ ax2.set_xticks([])
 fig2.savefig(
     'plots/vectors/diff_disc_rates.svg',
     format='svg', dpi=300)
-
+fig2.show()
 
 # example trajectories
 discount_factor_reward, discount_factor_cost = 0.9, discounts_cost[3]
@@ -593,9 +604,9 @@ plt.title(fr'$\gamma_r$={np.round(discount_factor_reward,2)}, $\gamma_c$={np.rou
 plt.savefig(
     'plots/vectors/diff_disc_ex1.svg',
     format='svg', dpi=300)
+plt.show()
 
-# %%
-# waiting for interesting rewards
+# %% waiting for interesting rewards
 
 rewards_interest = np.linspace(0.0, 5, 10)
 discounts = [0.6, 0.95, 1]
@@ -643,7 +654,7 @@ fig1.text(0.2, 0.95, r'$\gamma$', ha='center', va='center')
 fig1.savefig(
     'plots/vectors/no_commit_delays.svg',
     format='svg', dpi=300)
-
+fig1.show()
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion \n rate', fontsize=20)
@@ -653,7 +664,7 @@ ax2.set_xticks([])
 fig2.savefig(
     'plots/vectors/no_commit_rates.svg',
     format='svg', dpi=300)
-
+fig2.show()
 
 # example trajectories
 reward_interest, discount_factor = rewards_interest[4], 0.95
@@ -673,7 +684,7 @@ plt.title(fr'$\gamma_r$={np.round(discount_factor,2)}, $r$={np.round(reward_inte
 plt.savefig(
     'plots/vectors/no_commit_ex1.svg',
     format='svg', dpi=300)
-
+plt.show()
 
 reward_interest, discount_factor = rewards_interest[4], 1
 
@@ -692,3 +703,4 @@ plt.title(fr'$\gamma_r$={np.round(discount_factor,2)}, $r$={np.round(reward_inte
 plt.savefig(
     'plots/vectors/no_commit_ex2.svg',
     format='svg', dpi=300)
+plt.show()
