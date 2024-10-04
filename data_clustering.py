@@ -1,3 +1,8 @@
+"""
+cluster data using k-means (and select k)
+Reproduces Fig 2 and Supplementary Fig 8
+"""
+
 import numpy as np
 import pandas as pd
 import ast
@@ -10,7 +15,7 @@ mpl.rcParams['font.size'] = 24
 mpl.rcParams['lines.linewidth'] = 3
 mpl.rcParams['axes.linewidth'] = 2
 
-# %%
+# %% functions
 
 
 def plot_clustered_data(data, labels, **kwargs):
@@ -19,7 +24,7 @@ def plot_clustered_data(data, labels, **kwargs):
     """
 
     for label in set(labels):
-        plt.figure(figsize=(4, 4), dpi=100)
+        plt.figure(figsize=(4, 4), dpi=300)
 
         for i in range(len(data)):
 
@@ -38,23 +43,24 @@ def plot_clustered_data(data, labels, **kwargs):
         plt.show()
 
 
+def get_timeseries_to_cluster(row):
+    """
+    get trajectories consisting of normalised cumulative progress
+    """
+    return ast.literal_eval(row['cumulative progress normalised'])
+
+
 # %%
 
 if __name__ == "__main__":
 
     data_relevant = pd.read_csv('data/data_preprocessed.csv')
 
-    # cluster normalised trajectories
-    timeseries_to_cluster = []
-    for i in range(len(data_relevant)):
-        timeseries_to_cluster.append((ast.literal_eval(
-            data_relevant['cumulative progress normalised'][i])))
-
-    timeseries_to_cluster = np.array(timeseries_to_cluster)
+    timeseries_to_cluster = list(data_relevant.apply(
+        get_timeseries_to_cluster, axis=1))
 
     # cluster trajectories using k means for a range of cluster numbers: 2-15
     # plot inertia vs cluster number
-    # plot silhoutte score for each cluster number
     inertia = []
     for cluster_size in range(1, 14):
         print(cluster_size+1)
@@ -101,6 +107,7 @@ if __name__ == "__main__":
     
     # sort labels and corresponding trajectories by cluster membership
     sorted_indices = np.argsort(labels_new)
+    timeseries_to_cluster = np.array(timeseries_to_cluster)
     sorted_timeseries = timeseries_to_cluster[sorted_indices]
     distance_mat = distance_matrix(sorted_timeseries, sorted_timeseries)
     
@@ -108,7 +115,7 @@ if __name__ == "__main__":
     mask = np.where(mask==1, 1, np.nan)
     distance_mat = mask * distance_mat
     
-    fig, ax = plt.subplots(figsize=(6, 5), dpi=500)
+    fig, ax = plt.subplots(figsize=(6, 5), dpi=300)
     sns.heatmap(distance_mat, cmap='viridis')
     ax.set_xticks([])
     ax.set_yticks([])
@@ -116,4 +123,5 @@ if __name__ == "__main__":
     colorbar.set_label('Euclidean distance', rotation=270, labelpad=30)
     plt.savefig(
         'plots/vectors/distance_matrix_clusters.png',
-        format='png', dpi=500)
+        format='png', dpi=300)
+    plt.show()
