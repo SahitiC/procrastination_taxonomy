@@ -65,7 +65,7 @@ The following modules contain some helper functions for further steps:
 7. constants.py - define few shared constants over all the models (states, actions, horizon, effort, shirk reward)
 The following scripts implement various steps of the analyses:
 8. data_preprocessing.py - remove unwanted columns, apply exclusion criteria, normalise data
-9. data_clustering.py - apply k-means to cluster trajectories
+9. data_clustering.py - apply k-means to cluster trajectories, plot trajectories in each cluster and distance matrix; order of plots not same as in paper
 10. simulations.py - simulate six models that formalise various delay mechanisms, plot delays and completion rates with varying parameters
 11. model_fitting.py - fit models to data using maximum likelihoood estimates
 12. model_fitting_plots.py - plot simulated trajectories from model fits, calculate model fit metrics
