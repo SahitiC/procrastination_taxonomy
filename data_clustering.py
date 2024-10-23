@@ -1,6 +1,6 @@
 """
 cluster data using k-means (and select k)
-Reproduces Fig 2 and Supplementary Fig 8
+reproduces Fig 2 and Supplementary Fig 8
 """
 
 import numpy as np

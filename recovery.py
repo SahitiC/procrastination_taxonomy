@@ -15,7 +15,11 @@ import constants
 
 
 def model_recovery(inputs):
-
+    """
+    fit all models to trajectories generated from known parameters, find best
+    model and parameters
+    """
+    
     models = ['basic', 'efficacy_gap', 'convex_concave', 'immediate_basic',
               'diff_discounts', 'no_commitment']
     # model and params to generate data
@@ -198,8 +202,8 @@ if __name__ == "__main__":
 
     result_lst = [*result_lst]
     result = np.array(result_lst, dtype=object)
-    np.save('result_recovery.npy', result)
+    np.save('data/result_recovery.npy', result)
 
     input_lst = [*input_lst]
     inputs = np.array(input_lst, dtype=object)
-    np.save('inputs_recovery.npy', inputs)
+    np.save('data/inputs_recovery.npy', inputs)

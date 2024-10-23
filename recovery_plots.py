@@ -1,3 +1,9 @@
+"""
+plot results of recovery analysis, namely frequency of model recvoery and 
+parameter recovery plots for each model
+reproduces Supplementary Figs 9-10
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
@@ -12,20 +18,8 @@ mpl.rcParams['axes.linewidth'] = 2
 
 def choose_best_model(fits, free_param_no):
     """
-    description
-
-    Parameters
-    ----------
-    fits : TYPE
-        DESCRIPTION.
-    free_param_no : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    list
-        DESCRIPTION.
-
+    choose best model based on AIC, what were the fitted parameters for this
+    model?
     """
 
     likelihoods, params = fits[0], fits[1]
@@ -37,6 +31,9 @@ def choose_best_model(fits, free_param_no):
 
 
 def full_counts(target_numbers, unique_values, counts):
+    """
+    count number of times each model was recovered
+    """
 
     # Create an array of zeros for all target numbers
     full_counts = np.zeros(len(target_numbers), dtype=int)
@@ -51,11 +48,11 @@ def full_counts(target_numbers, unique_values, counts):
 
 
 # %% load recovery results
-result_recovery_fit_params = np.load('result_recovery_fit_params.npy',
+result_recovery_fit_params = np.load('data/result_recovery_fit_params.npy',
                                      allow_pickle=True)
-result_recovery = np.load('result_recovery.npy', allow_pickle=True)
-input_recovery = np.load('inputs_recovery.npy', allow_pickle=True)
-input_recovery_fit_params = np.load('input_recovery_fit_params.npy',
+result_recovery = np.load('data/result_recovery.npy', allow_pickle=True)
+input_recovery = np.load('data/inputs_recovery.npy', allow_pickle=True)
+input_recovery_fit_params = np.load('data/input_recovery_fit_params.npy',
                                     allow_pickle=True)
 
 # model names, params
@@ -144,6 +141,7 @@ plt.xticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
 plt.savefig(
     'plots/vectors/recovery_model.svg',
     format='svg', dpi=300)
+plt.show()
 
 plt.figure(figsize=(6, 5), dpi=300)
 sns.heatmap(freq_recovered_fit_params, cmap='vlag')
@@ -158,6 +156,7 @@ plt.xticks([0.5, 1.5, 2.5, 3.5, 4.5, 5.5],
 plt.savefig(
     'plots/vectors/recovery_model_fits.svg',
     format='svg', dpi=300)
+plt.show()
 
 # %% extract free parameters from input parameters
 
@@ -242,3 +241,5 @@ for model in range(len(models)):
         plt.savefig(
             f'plots/vectors/recover_params_{model}_{param}.svg',
             format='svg', dpi=300)
+        
+        plt.show()
