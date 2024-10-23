@@ -14,10 +14,13 @@ def softmax_policy(a, beta):
     return p
 
 
-# function to generate a trajctory given parameters using basic model
 def gen_data_basic(states, actions, horizon, reward_thr, reward_extra,
                    reward_shirk, beta, discount_factor, efficacy, effort_work,
                    n_trials, thr, states_no):
+    """
+    function to generate a trajectory of state and action sequences given 
+    parameters and reward, transition models of the basic model
+    """
 
     # get reward function
     reward_func = task_structure.reward_no_immediate(
@@ -60,6 +63,10 @@ def gen_data_efficacy_gap(states, actions, horizon, reward_thr, reward_extra,
                           reward_shirk, beta, discount_factor,
                           efficacy_assumed, efficacy_actual, effort_work,
                           n_trials, thr, states_no):
+    """
+    function to generate a trajectory of state and action sequences given 
+    parameters and reward, transition models of the efficacy gap model
+    """
 
     # get reward function
     reward_func = task_structure.reward_no_immediate(
@@ -104,6 +111,10 @@ def gen_data_efficacy_gap(states, actions, horizon, reward_thr, reward_extra,
 def gen_data_convex_concave(states, actions, horizon, reward_thr, reward_extra,
                             reward_shirk, beta, discount_factor, efficacy,
                             effort_work, exponent, n_trials, thr, states_no):
+    """
+    function to generate a trajectory of state and action sequences given 
+    parameters and reward, transition models of the convex concave model
+    """
 
     # get reward function
     reward_func = task_structure.reward_no_immediate(
@@ -147,6 +158,11 @@ def gen_data_immediate_basic(states, actions, horizon, reward_thr,
                              reward_extra, reward_shirk, beta, discount_factor,
                              efficacy, effort_work, exponent, n_trials, thr,
                              states_no):
+    """
+    function to generate a trajectory of state and action sequences given 
+    parameters and reward, transition models of the immediate basic model
+    """
+
 
     reward_func = task_structure.reward_threshold(
         states, actions, reward_shirk, reward_thr, reward_extra, thr,
@@ -185,6 +201,11 @@ def gen_data_diff_discounts(states, actions, horizon, reward_thr, reward_extra,
                             reward_shirk, beta, discount_factor_reward,
                             discount_factor_cost, efficacy, effort_work,
                             n_trials, thr, states_no):
+    """
+    function to generate a trajectory of state and action sequences given 
+    parameters and reward, transition models of the diff-disc model
+    """
+
 
     reward_func = task_structure.reward_threshold(
         states, actions, reward_shirk, reward_thr, reward_extra, thr,
@@ -228,6 +249,10 @@ def gen_data_no_commitment(states, actions_base, horizon, reward_thr,
                            reward_extra, reward_shirk, beta, p_stay_low,
                            p_stay_high, discount_factor, efficacy, effort_work,
                            reward_interest, n_trials, thr, states_no):
+    """
+    function to generate a trajectory of state and action sequences given 
+    parameters and reward, transition models of the no commitment model
+    """
 
     states_no = len(states)
 

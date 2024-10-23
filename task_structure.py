@@ -2,8 +2,8 @@
 Functions for constructing the reward functions and transition matrices for
 Zhang and Ma (2023) NYU study
 """
+
 import numpy as np
-# from scipy.stats import binom
 from scipy.special import comb
 
 
@@ -40,7 +40,7 @@ def reward_threshold(states, actions, reward_shirk, reward_thr,
         # rewards for shirk based on the action
         for action in range(len(actions[state_current])):
 
-            reward_temp[action, 0:state_current+action+1] = (
+            reward_temp[action, state_current:state_current+action+1] = (
                 (len(states)-1-action) * reward_shirk)
 
         # if less than thr credits have been completed, then thresholded reward
@@ -66,7 +66,7 @@ def reward_threshold(states, actions, reward_shirk, reward_thr,
                 reward_temp[action, states_no:action+state_current+1] += (
                     thr*reward_thr + (states_no-1-thr)*reward_extra)
 
-        # if more than 14 units completed, extra reward unitl 22 is reached
+        # if more than 14 units completed, extra reward until 22 is reached
         # and then nothing
         elif state_current >= thr and state_current < states_no-1:
 
@@ -86,6 +86,22 @@ def reward_threshold(states, actions, reward_shirk, reward_thr,
 
 def reward_immediate(states, actions, reward_shirk,
                      reward_unit, reward_extra):
+    """
+    construct reward function where units are rewarded immediately (compensated
+    at reward_unit per unit); reward for shirking is also immediate
+
+    params:
+        states (ndarray): states of an MDP
+        actions (list): actions available in each state
+        reward_shirk (float): reward for doing an alternate task (i.e., for
+        each unit that is not used for work)
+        reward_unit (float): reward for each unit of work completed
+
+    returns:
+        reward_func (list): rewards at each time point on taking each action at
+        each state
+
+    """
 
     reward_func = []
 
@@ -96,7 +112,7 @@ def reward_immediate(states, actions, reward_shirk,
         # rewards for shirk based on the action
         for action in range(len(actions[state_current])):
 
-            reward_temp[action, 0:state_current+action+1] = (
+            reward_temp[action, state_current:state_current+action+1] = (
                 (len(states)-1-action) * reward_shirk)
 
         # immediate rewards for units completed
@@ -113,7 +129,18 @@ def reward_immediate(states, actions, reward_shirk,
 
 def reward_no_immediate(states, actions, reward_shirk):
     """
-    The only immediate rewards are from shirk
+    construct reward function where only reward for shirking is immediate
+
+    params:
+        states (ndarray): states of an MDP
+        actions (list): actions available in each state
+        reward_shirk (float): reward for doing an alternate task (i.e., for
+        each unit that is not used for work)
+
+    returns:
+        reward_func (list): rewards at each time point on taking each action at
+        each state
+
     """
 
     reward_func = []
@@ -124,7 +151,7 @@ def reward_no_immediate(states, actions, reward_shirk):
         # rewards for shirk based on the action
         for action in range(len(actions[state_current])):
 
-            reward_temp[action, 0:state_current+action+1] = (
+            reward_temp[action, state_current:state_current+action+1] = (
                 (len(states)-1-action) * reward_shirk)
 
         reward_func.append(reward_temp)
@@ -134,9 +161,20 @@ def reward_no_immediate(states, actions, reward_shirk):
 
 def reward_final(states, reward_thr, reward_extra, thr, states_no):
     """
-    when reward comes at final step -- again threshold at thr and extra rewards
-    uptil states_NO (max number of states)
-    in the course, thr=14 and max no of units = 22
+    construct reward function where units are rewarded at end of task
+    (compensated at reward_thr per unit)
+
+    params:
+        states (ndarray): states of an MDP
+        reward_thr (float): reward for each unit of work completed until thr
+        reward_extra (float): reward for each unit completed beyond thr
+        thr (int): threshold number of units until which no reward is obtained
+        states_no (int): max. no of units that can be completed
+
+    returns:
+        reward_func (list): rewards at each time point on taking each action at
+        each state
+
     """
     total_reward_func_last = np.zeros(len(states))
     # np.zeros(len(states))
@@ -151,7 +189,16 @@ def reward_final(states, reward_thr, reward_extra, thr, states_no):
 
 def effort(states, actions, effort_work):
     """
-    immediate effort from actions
+    construct effort function (effort is always immediate)
+
+    params:
+        states (ndarray): states of an MDP
+        actions (list): actions available in each state
+        effort_work (float): cost for working per unit work
+
+    returns:
+        effort_func (list): effort at each time point on taking each action at
+        each state
     """
 
     effort_func = []
@@ -161,7 +208,8 @@ def effort(states, actions, effort_work):
 
         for i, action in enumerate(actions[state_current]):
 
-            effort_temp[action, :] = action * effort_work
+            effort_temp[action, state_current:state_current +
+                        action+1] = action * effort_work
 
         effort_func.append(effort_temp)
 
@@ -170,8 +218,18 @@ def effort(states, actions, effort_work):
 
 def effort_convex_concave(states, actions, effort_work, exponent):
     """
-    immediate effort from actions, allowing not only linear but also concave
-    and convex costs as functions of number of units done
+    construct effort function where cost per unit changes as an exponent in
+    no. of units (e = effort_work * actions^exponent)
+
+    params:
+        states (ndarray): states of an MDP
+        actions (list): actions available in each state
+        effort_work (float): cost for working per unit work
+        exponent (float): >1, defines convexity of effort function
+
+    returns:
+        effort_func (list): effort at each time point on taking each action at
+        each state
     """
 
     effort_func = []
@@ -181,7 +239,8 @@ def effort_convex_concave(states, actions, effort_work, exponent):
 
         for i, action in enumerate(actions[state_current]):
 
-            effort_temp[action, :] = (action**exponent) * effort_work
+            effort_temp[action, state_current:state_current +
+                        action+1] = (action**exponent) * effort_work
 
         effort_func.append(effort_temp)
 
@@ -192,6 +251,13 @@ def T_uniform(states, actions):
     """
     transition function as a uniformly random process
     equal probability of next state for each action
+
+    params:
+        states (ndarray): states of an MDP
+        actions (list): actions available in each state
+
+    returns:
+        T (list): transition function
     """
 
     T = []
@@ -212,8 +278,15 @@ def T_uniform(states, actions):
 
 def binomial_pmf(n, p, k):
     """
-    returns binomial probability mass function given p = probability of
-    success and n = number of trials, k = number of successes
+    calculates binomial probability mass function
+
+    params:
+        n (int): number of trials
+        p (float) = (0<=p<=1) probability of success
+        k (int)= number of successes
+
+    returns:
+        binomial_prob: binomail probability given parameters
     """
 
     if not isinstance(n, (int, np.int32, np.int64)):
@@ -227,8 +300,16 @@ def binomial_pmf(n, p, k):
 def T_binomial(states, actions, efficacy):
     """
     transition function as binomial number of successes with
-    probability of success = efficacy and number of trials =
-    number of units worked  (i.e., action)
+    probability=efficacy for number of units worked  (=action)
+
+    params:
+        states (ndarray): states of an MDP
+        actions (list): actions available in each states
+        efficacy (float): (0<=efficacy<=1) binomial probability of success on
+                          doing some units of work (action)
+
+    returns:
+        T (list): transition matrix
     """
 
     T = []
@@ -249,37 +330,30 @@ def T_binomial(states, actions, efficacy):
     return T
 
 
-def T_binomial_decreasing(states, actions, horizon, efficacy):
-    """
-    time-decreasing binomial transition probabilities
-    """
-
-    T = []
-    for i_timestep in range(horizon):
-        T_t = []
-        efficacy_t = efficacy * (1 - (i_timestep / horizon))
-
-        for state_current in range(len(states)):
-
-            T_temp = np.zeros((len(actions[state_current]), len(states)))
-
-            for i, action in enumerate(actions[state_current]):
-
-                T_temp[action, state_current:state_current+action+1] = (
-                    binomial_pmf(action, efficacy_t, np.arange(action))
-                )
-
-            T_t.append(T_temp)
-        T.append(T_t)
-    return T
-
-
 def deterministic_policy(a):
+    """
+    output determinsitic policy by choosing action with max q-value
+
+    params:
+        a (ndarray): q-values
+
+    returns:
+        (ndarray): larray where chosen action is marked with 1
+    """
     p = np.where(a == np.max(a), 1, 0)
     return p / sum(p)
 
 
 def softmax_policy(a, beta):
+    """
+    output softmax policy given q-values
+
+    params:
+        a (ndarray): q-values
+
+    returns:
+        p (ndarray): probabilities of choosing each action
+    """
     c = a - np.max(a)
     p = np.exp(beta*c) / np.sum(np.exp(beta*c))
     return p

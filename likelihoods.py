@@ -1,3 +1,8 @@
+"""
+module to calculate likelihood of data under each of the models and maximise
+log likelihood (minimise negative log likelihood) to find best fitting params
+"""
+
 import task_structure
 import mdp_algms
 import numpy as np
@@ -39,6 +44,9 @@ def calculate_likelihood(data, Q_values, beta, T, actions):
 def calculate_likelihood_interest_rewards(data, Q_values, beta, T, p_stay,
                                           actions, interest_states):
     """
+    calculate likelihood of data under interest reward model given 
+    optimal Q_values, beta, transitions, probability of staying in low and
+    high states, and actions available
     """
     nllkhd = 0
 
@@ -88,8 +96,9 @@ def likelihood_basic_model(x,
                            reward_thr, reward_extra, reward_shirk,
                            beta, thr, states_no, data):
     """
-    x = free params of model
+    implement likelihood calculation for basic model
     """
+
     discount_factor = x[0]
     efficacy = x[1]
     effort_work = x[2]
@@ -126,8 +135,9 @@ def likelihood_efficacy_gap_model(x,
                                   reward_thr, reward_extra, reward_shirk,
                                   beta, thr, states_no, data):
     """
-    x = free params of model
+    implement likelihood calculation for efficacy gap model
     """
+
     discount_factor = x[0]
     efficacy_assumed = x[1]
     efficacy_actual = x[2]
@@ -167,8 +177,9 @@ def likelihood_convex_concave_model(x,
                                     reward_thr, reward_extra, reward_shirk,
                                     beta, thr, states_no, data):
     """
-    x = free params of model
+    implement likelihood calculation for convex concave model
     """
+
     discount_factor = x[0]
     efficacy = x[1]
     effort_work = x[2]
@@ -207,8 +218,9 @@ def likelihood_immediate_basic_model(x,
                                      reward_thr, reward_extra, reward_shirk,
                                      beta, thr, states_no, data):
     """
-    x = free params of model
+    implement likelihood calculation for immediate basic model
     """
+
     discount_factor = x[0]
     efficacy = x[1]
     effort_work = x[2]
@@ -245,6 +257,9 @@ def likelihood_immediate_basic_model(x,
 def likelihood_diff_discounts_model(
         x, states, actions, horizon, reward_thr, reward_extra,
         reward_shirk, beta, thr, states_no, data):
+    """
+    implement likelihood calculation for diff discount model
+    """
 
     discount_factor_reward = x[0]
     discount_factor_cost = x[1]
@@ -286,6 +301,9 @@ def likelihood_no_commitment_model(
         x, states, interest_states, actions_base, horizon, p_stay_low,
         p_stay_high, reward_thr, reward_extra, reward_shirk,
         beta, thr, states_no, data):
+    """
+    implement likelihood calculation for no commit model
+    """
 
     discount_factor = x[0]
     efficacy = x[1]
@@ -382,8 +400,10 @@ def maximum_likelihood_estimate_basic(states, actions, horizon, reward_thr,
                                       true_params=None, initial_real=0,
                                       verbose=0):
     """
-    inputs - fixed parameters, data
-    initial_real: whether to include true parameter as an initial point
+    maximise likelihood of data under basic model parameters using 
+    scipy.optimize
+    initial_real: whether to include true parameter as an initial point in 
+    optimisation procedure
     verbose: whether to print current estimate and likelihood
     """
 
@@ -449,8 +469,10 @@ def maximum_likelihood_estimate_efficacy_gap(
         states, actions, horizon, reward_thr, reward_extra, reward_shirk, beta,
         thr, states_no, data, true_params=None, initial_real=0, verbose=0):
     """
-    inputs - fixed parameters, data
-    initial_real: whether to include true parameter as an initial point
+    maximise likelihood of data under efficacy gap model parameters using 
+    scipy.optimize
+    initial_real: whether to include true parameter as an initial point in 
+    optimisation procedure
     verbose: whether to print current estimate and likelihood
     """
 
@@ -515,8 +537,10 @@ def maximum_likelihood_estimate_convex_concave(
         beta, thr, states_no, data, true_params=None, initial_real=0,
         verbose=0):
     """
-    inputs - fixed parameters, data
-    initial_real: whether to include true parameter as an initial point
+    maximise likelihood of data under conv concave model parameters using 
+    scipy.optimize
+    initial_real: whether to include true parameter as an initial point in 
+    optimisation procedure
     verbose: whether to print current estimate and likelihood
     """
 
@@ -580,8 +604,10 @@ def maximum_likelihood_estimate_immediate_basic(
         beta, thr, states_no, data, true_params=None, initial_real=0,
         verbose=0):
     """
-    inputs - fixed parameters, data
-    initial_real: whether to include true parameter as an initial point
+    maximise likelihood of data under  immediate basic model parameters using 
+    scipy.optimize
+    initial_real: whether to include true parameter as an initial point in 
+    optimisation procedure
     verbose: whether to print current estimate and likelihood
     """
 
@@ -645,8 +671,10 @@ def maximum_likelihood_estimate_diff_discounts(
         reward_shirk, beta, thr, states_no, data, true_params=None,
         initial_real=0, verbose=0):
     """
-    inputs - fixed parameters, data
-    initial_real: whether to include true parameter as an initial point
+    maximise likelihood of data under diff-disc model parameters using 
+    scipy.optimize
+    initial_real: whether to include true parameter as an initial point in 
+    optimisation procedure
     verbose: whether to print current estimate and likelihood
     """
 
@@ -713,6 +741,13 @@ def maximum_likelihood_estimate_no_commitment(
         states, interest_states, actions_base, horizon, reward_thr,
         reward_extra, reward_shirk, beta, p_stay_low, p_stay_high, thr,
         states_no, data, true_params=None, initial_real=0, verbose=0):
+    """
+    maximise likelihood of data under bno commit model parameters using 
+    scipy.optimize
+    initial_real: whether to include true parameter as an initial point in 
+    optimisation procedure
+    verbose: whether to print current estimate and likelihood
+    """
 
     nllkhd = np.inf
 
