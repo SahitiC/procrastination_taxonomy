@@ -1,3 +1,8 @@
+"""
+calculate model fit metrics, simulate trajectories from fitted parameters
+reproduces Fig 6-7, Table 1 and Supplementary Table 2
+"""
+
 import gen_data
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,11 +11,10 @@ import constants
 import task_structure
 import likelihoods
 import seaborn as sns
-import random
 mpl.rcParams['font.size'] = 24
 mpl.rcParams['lines.linewidth'] = 3
 
-# %%
+# %% functions
 
 
 def calculate_likelihood_null(data, states, actions):
@@ -47,6 +51,7 @@ def calculate_likelihood_null(data, states, actions):
 
 def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample):
     """
+    plot trajectories
     """
     mean = np.mean(trajectories, axis=0)
 
@@ -61,7 +66,10 @@ def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample):
 
 
 def distance(vector1, vector2, variances):
-
+    """
+    calculate euclidean distance between inputted vectors and normalise by
+    variance in each dimension
+    """
     distance = 0
     for dimension in range(len(vector1)):
 
@@ -75,14 +83,8 @@ def distance(vector1, vector2, variances):
 def get_distance_matrix(vectors):
     """
     finds pairwise distance between vectors in a list of vectors; vectors are
-    weighted by the total variance in each of the vector dimensions
-
-    params:
-        vectors (list): list of vectors for which distance matrix is computed
-
-    returns:
-        distance_matrix(ndarray): matrix of pairwise distances between vectors;
-        is symmetric and diagonal = 0
+    weighted by the total variance in each of the vector dimensions; outputs 
+    a distance matrix
     """
 
     vector_no = len(vectors)  # no. of vectors
@@ -98,8 +100,8 @@ def get_distance_matrix(vectors):
 
 # %% import results
 free_param_no = [3, 4, 4, 4, 4, 4]  # no. of free params for each model
-result_fit = np.load('result_fit.npy', allow_pickle=True)
-data_to_fit_lst = np.load('data_to_fit_lst.npy', allow_pickle=True)
+result_fit = np.load('data/result_fit.npy', allow_pickle=True)
+data_to_fit_lst = np.load('data/data_to_fit_lst.npy', allow_pickle=True)
 
 np.random.seed(0)
 
@@ -158,7 +160,7 @@ fit_params = result_fit[:, 1, :].flatten()
 fit_params = np.vstack((fit_params,
                         np.tile(np.arange(0, 6, 1), 8)))
 fit_params = fit_params.T
-np.save('fit_params.npy', fit_params)
+np.save('data/fit_params.npy', fit_params)
 
 # %% compare cluster trajectories with trajectories simulated from fitted models
 
@@ -175,6 +177,7 @@ for cluster in range(8):
     plt.savefig(
         f'plots/vectors/fit_cluster_{cluster}.svg',
         format='svg', dpi=300)
+    plt.show()
 
     # basic
     plt.figure(figsize=(4, 4), dpi=300)
@@ -191,6 +194,7 @@ for cluster in range(8):
     plt.savefig(
         f'plots/vectors/fit_basic_cluster_{cluster}.svg',
         format='svg', dpi=300)
+    plt.show()
 
     # efficacy gap
     plt.figure(figsize=(4, 4), dpi=300)
@@ -207,6 +211,7 @@ for cluster in range(8):
     plt.savefig(
         f'plots/vectors/fit_eff_gap_cluster_{cluster}.svg',
         format='svg', dpi=300)
+    plt.show()
 
     # convex concav
     plt.figure(figsize=(4, 4), dpi=300)
@@ -223,6 +228,7 @@ for cluster in range(8):
     plt.savefig(
         f'plots/vectors/fit_conv_conc_cluster_{cluster}.svg',
         format='svg', dpi=300)
+    plt.show()
 
     # imm basic
     plt.figure(figsize=(4, 4), dpi=300)
@@ -239,6 +245,7 @@ for cluster in range(8):
     plt.savefig(
         f'plots/vectors/fit_imm_basic_cluster_{cluster}.svg',
         format='svg', dpi=300)
+    plt.show()
 
     # different discount
     plt.figure(figsize=(4, 4), dpi=300)
@@ -257,6 +264,7 @@ for cluster in range(8):
     plt.savefig(
         f'plots/vectors/fit_diff_disc_cluster_{cluster}.svg',
         format='svg', dpi=300)
+    plt.show()
 
     # no commit
     plt.figure(figsize=(4, 4), dpi=300)
@@ -274,6 +282,7 @@ for cluster in range(8):
     plt.savefig(
         f'plots/vectors/fit_no_commit_cluster_{cluster}.svg',
         format='svg', dpi=300)
+    plt.show()
 
 # %% calculate distance between parameters
 for model in range(6):
@@ -290,3 +299,4 @@ for model in range(6):
     plt.savefig(
         f'plots/vectors/distance_matrix_model_{model}.svg',
         format='svg', dpi=300)
+    plt.show()

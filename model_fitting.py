@@ -1,3 +1,7 @@
+"""
+fit models to data, cluster-wise
+"""
+
 import numpy as np
 import likelihoods
 import concurrent.futures
@@ -6,10 +10,14 @@ import pandas as pd
 import ast
 import random
 
-# %%
+# %% functions
 
 
 def model_fit(data_to_fit):
+    """
+    fit each model to inputted data using maximum likelihood estimation
+    store likelihood and fitted parameters
+    """
 
     # fit each model to data and recover params
     result_basic = likelihoods.maximum_likelihood_estimate_basic(
@@ -57,7 +65,16 @@ def model_fit(data_to_fit):
     return [nllkhds, params]
 
 
-# %%
+def convert_string_to_list(row):
+    """
+    convert into list from strings
+    multiply by two to convert hours to units 
+    """
+    return np.array([0]+ast.literal_eval(
+        row['cumulative progress weeks'])) * 2
+
+# %% fit models
+
 if __name__ == "__main__":
 
     np.random.seed(0)
@@ -67,13 +84,8 @@ if __name__ == "__main__":
         'data/data_clustered.csv', index_col=False)
 
     # convert into list from strings
-    # multiply by two to convert hours to units
-    units = []
-    for i in range(len(data_relevant)):
-
-        # append 0 to trajectories since initial state=0
-        units.append(np.array([0]+ast.literal_eval(
-            data_relevant['cumulative progress weeks'][i])) * 2)
+    # multiply by two to convert hours to units        
+    units = list(data_relevant.apply(convert_string_to_list, axis=1))
 
     # list of trajectory sets corresponding to each cluster
     # each model is fit to each of these clusters
@@ -92,7 +104,7 @@ if __name__ == "__main__":
 
     result_lst = [*result_lst]
     result = np.array(result_lst, dtype=object)
-    np.save('result_fit.npy', result)
+    np.save('data/result_fit.npy', result)
 
     data_to_fit_lst = np.array(data_to_fit_lst, dtype=object)
-    np.save('data_to_fit_lst.npy', data_to_fit_lst)
+    np.save('data/data_to_fit_lst.npy', data_to_fit_lst)

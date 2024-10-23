@@ -1,5 +1,8 @@
-import numpy as np
+"""
+define quantities that are held constant across scripts
+"""
 
+import numpy as np
 
 # define some standard params:
 # states of markov chain

@@ -24,12 +24,6 @@ def time_to_cross_thr(trajectories):
     """
     find when threshold number of units is first reached for each trajectory
     (of work) inputted; if threshold is never reached, returns NaN
-
-    params:
-        trajectories (list): list of trajectories
-
-    returns:
-        times (list): list of timesteps when threshold is first reached
     """
 
     times = []
@@ -48,12 +42,6 @@ def time_to_cross_thr(trajectories):
 def did_it_cross_thr(trajectories):
     """
     find if threshold number of units reached for each trajectory inputted
-
-    params:
-        trajectories (list): list of trajectories
-
-    returns:
-        times (list): whether each trajectory reached threshol (1) or not (0)
     """
 
     completed = []
@@ -72,6 +60,7 @@ def did_it_cross_thr(trajectories):
 def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample,
                       number_samples):
     """
+    plot input trajectories 
     """
     mean = np.mean(trajectories, axis=0)
 
