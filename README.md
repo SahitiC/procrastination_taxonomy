@@ -1,6 +1,6 @@
 # Weighting waiting: A decision-theoretic taxonomy of procrastination and delay
 
-This repository contains code and data for 
+This repository contains code and data for the paper 
 
 Authors: [Sahiti Chebolu](https://www.kyb.tuebingen.mpg.de/person/107410/2549) and [Peter Dayan](https://www.mpg.de/12309357/biologische-kybernetik-dayan)
 
@@ -9,16 +9,22 @@ Why do today, what you can fail to do tomorrow? Pacing, postponing, and ultimate
 
 ## Installation
 
-1. clone repository \
-   for https: `git clone https://github.com/SahitiC/procrastination_taxonomy.git` or \
-   for ssh: `git clone git@github.com:SahitiC/procrastination_taxonomy.git`
-2. create and activate python virtual environment using your favourite environment manager (pip, conda etc)
-3. install packages in requirments.txt: \
-   for pip: \
-   `pip install -r requirements.txt` \
-   for conda: \
+1. clone repository 
+   - for https: `git clone https://github.com/SahitiC/procrastination_taxonomy.git` or 
+   - for ssh: `git clone git@github.com:SahitiC/procrastination_taxonomy.git`
+2. create and activate python virtual environment: 
+   - for python virtual environments:\
+   create: `python3 -m venv .env`\
+   activate: for macOS & Linux, `source .env/bin/activate` and for Windows, `.env\Scripts\activate`
+   - for conda environments:\
+   create: `conda create -n env`\
+   activate: `conda activate env`
+3. install packages in requirments.txt: 
+   - for pip: \
+   `pip install -r requirements.txt` 
+   - for conda: \
    `conda config --add channels conda-forge` \
-   `conda install --yes --file requirements.txt
+   `conda install --yes --file requirements.txt`
 
 ## Usage
 
