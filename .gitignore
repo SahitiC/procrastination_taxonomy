@@ -2,3 +2,4 @@ __pycache__/
 *.sh
 schematic.py
 .DS_Store
+minimal_example.py
