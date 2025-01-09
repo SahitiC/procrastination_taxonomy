@@ -25,7 +25,7 @@ def find_optimal_policy(states, actions, horizon, discount_factor,
         T (list): transition probabilities for each action in a state
 
     returns:
-        V_opt (ndarray): optimal values of actions to take at each timestep
+        V_opt (ndarray): values of optimal actions to take at each timestep
         and state
         policy_opt (ndarray): optimal action to take at each timestep and state
         Q_values (list): optimal values for each timestep, action and state
@@ -253,7 +253,7 @@ def forward_runs(policy, V, initial_state, horizon, states, T):
                                              i_timestep]
         # corresponding value
         values_forward[i_timestep] = V[states_forward[i_timestep], i_timestep]
-        # next state given by transition probabilities
+        # sample next state from transition probabilities
         states_forward[i_timestep+1] = np.random.choice(
             len(states),
             p=T[states_forward[i_timestep]][actions_forward[i_timestep]]
@@ -291,6 +291,7 @@ def forward_runs_prob(policy, Q_values, actions, initial_state, horizon,
 
     states_forward[0] = initial_state
 
+    # sample action from probabilistic policy
     for i_timestep in range(horizon):
 
         actions_forward[i_timestep] = np.random.choice(
@@ -299,7 +300,7 @@ def forward_runs_prob(policy, Q_values, actions, initial_state, horizon,
                 Q_values[states_forward[i_timestep]][:, i_timestep], args)
         )
 
-        # next state given by transition probabilities
+        # sample next state from transition probabilities
         states_forward[i_timestep+1] = np.random.choice(
             len(states),
             p=T[states_forward[i_timestep]][actions_forward[i_timestep]]
