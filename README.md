@@ -1,6 +1,6 @@
-# Weighting waiting: A decision-theoretic taxonomy of procrastination and delay
+# Weighting waiting: A decision-theoretic taxonomy of delay, pacing and procrastination
 
-This repository contains code and data for the paper FILL_IN_THE_BLANK
+This repository contains code and data for the paper [Weighting waiting: A decision-theoretic taxonomy of delay, pacing and procrastination](https://doi.org/10.31234/osf.io/jd4ar)
 
 Authors: [Sahiti Chebolu](https://www.kyb.tuebingen.mpg.de/person/107410/2549) and [Peter Dayan](https://www.mpg.de/12309357/biologische-kybernetik-dayan)
 
@@ -84,7 +84,19 @@ The following scripts implement various steps of the analyses:
 
 ## Citation
 
-If you found this code or paper helpful, please cite us as: FILL_IN_THE_BLANK
+If you found this code or paper helpful, please cite us as:
+
+Chebolu, S., & Dayan, P. (2025). Weighting waiting: A decision-theoretic taxonomy of delay, pacing and procrastination. PsyArXiv. https://doi.org/10.31234/osf.io/jd4ar
+
+@misc{chebolu_weighting_2025,
+  title={Weighting Waiting: A Decision-Theoretic Taxonomy of Delay, Pacing and Procrastination},
+  author={Chebolu, Sahiti and Dayan, Peter},
+  year={2025},
+  publisher={PsyArXiv},
+  note={Preprint},
+  doi={10.31234/osf.io/jd4ar},
+  url={https://doi.org/10.31234/osf.io/jd4ar}
+}
 
 ## Contact
 
