@@ -1,15 +1,9 @@
 """
 pre-process data from Zhang and Ma (2024)
 """
-
-import seaborn as sns
 import numpy as np
 import pandas as pd
 import ast
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-mpl.rcParams['font.size'] = 24
-mpl.rcParams['lines.linewidth'] = 3
 
 # %% functions
 
@@ -60,7 +54,6 @@ data_relevant = data_relevant.reset_index(drop=True)
 # we do not consider extra rewards for > 11 hours in our models as well
 mask = np.where(data_relevant['Total credits'] <= 11)[0]
 data_relevant = data_relevant.loc[mask]
-data_relevant['Total credits']
 data_relevant = data_relevant.reset_index(drop=True)
 
 semester_length = len(ast.literal_eval(data_relevant['delta progress'][0]))
