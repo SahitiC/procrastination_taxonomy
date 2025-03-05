@@ -28,6 +28,7 @@ def gen_data_basic(states, actions, horizon, reward_thr, reward_extra,
 
     effort_func = task_structure.effort(states, actions, effort_work)
 
+    # reward delivered at the end of the semester
     total_reward_func_last = task_structure.reward_final(
         states, reward_thr, reward_extra, thr, states_no)
 
@@ -65,7 +66,8 @@ def gen_data_efficacy_gap(states, actions, horizon, reward_thr, reward_extra,
                           n_trials, thr, states_no):
     """
     function to generate a trajectory of state and action sequences given 
-    parameters and reward, transition models of the efficacy gap model
+    parameters and reward, transition models of the efficacy gap model; same as
+    gen_data_basic except planning is based on assumed efficacy
     """
 
     # get reward function
@@ -113,7 +115,8 @@ def gen_data_convex_concave(states, actions, horizon, reward_thr, reward_extra,
                             effort_work, exponent, n_trials, thr, states_no):
     """
     function to generate a trajectory of state and action sequences given 
-    parameters and reward, transition models of the convex concave model
+    parameters and reward, transition models of the convex concave model; same
+    as gen_data_basic expect effort scales non-linearly with number of units
     """
 
     # get reward function
@@ -163,7 +166,7 @@ def gen_data_immediate_basic(states, actions, horizon, reward_thr,
     parameters and reward, transition models of the immediate basic model
     """
 
-
+    # reward delivered once a threshold amount of work is completed
     reward_func = task_structure.reward_threshold(
         states, actions, reward_shirk, reward_thr, reward_extra, thr,
         states_no)
@@ -205,7 +208,6 @@ def gen_data_diff_discounts(states, actions, horizon, reward_thr, reward_extra,
     function to generate a trajectory of state and action sequences given 
     parameters and reward, transition models of the diff-disc model
     """
-
 
     reward_func = task_structure.reward_threshold(
         states, actions, reward_shirk, reward_thr, reward_extra, thr,

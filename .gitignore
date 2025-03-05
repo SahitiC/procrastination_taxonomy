@@ -3,3 +3,6 @@ __pycache__/
 schematic.py
 .DS_Store
 .env
+minimal_example.py
+result_recovery_minimal.npy
+inputs_recovery_minimal.npy

@@ -1,6 +1,6 @@
-# Weighting waiting: A decision-theoretic taxonomy of procrastination and delay
+# Weighting waiting: A decision-theoretic taxonomy of delay, pacing and procrastination
 
-This repository contains code and data for the paper 
+This repository contains code and data for the paper [Weighting waiting: A decision-theoretic taxonomy of delay, pacing and procrastination](https://doi.org/10.31234/osf.io/jd4ar)
 
 Authors: [Sahiti Chebolu](https://www.kyb.tuebingen.mpg.de/person/107410/2549) and [Peter Dayan](https://www.mpg.de/12309357/biologische-kybernetik-dayan)
 
@@ -73,7 +73,7 @@ The following scripts implement various steps of the analyses:
 8. data_preprocessing.py - remove unwanted columns, apply exclusion criteria, normalise data
 9. data_clustering.py - apply k-means to cluster trajectories, plot trajectories in each cluster and distance matrix; order of plots not same as in paper
 10. simulations.py - simulate six models that formalise various delay mechanisms, plot delays and completion rates with varying parameters
-11. model_fitting.py - fit models to data using maximum likelihoood estimates
+11. model_fitting.py - fit models to data using maximum likelihoood estimatation
 12. model_fitting_plots.py - plot simulated trajectories from model fits, calculate model fit metrics
 13. recovery.py - parameter and model recovery with randomly chosen parameters
 14. recovery_fit_params.py - parameter and model recovery with fitted parameters
@@ -85,6 +85,18 @@ The following scripts implement various steps of the analyses:
 ## Citation
 
 If you found this code or paper helpful, please cite us as:
+
+Chebolu, S., & Dayan, P. (2025). Weighting waiting: A decision-theoretic taxonomy of delay, pacing and procrastination. PsyArXiv. https://doi.org/10.31234/osf.io/jd4ar
+
+@misc{chebolu_weighting_2025,
+  title={Weighting Waiting: A Decision-Theoretic Taxonomy of Delay, Pacing and Procrastination},
+  author={Chebolu, Sahiti and Dayan, Peter},
+  year={2025},
+  publisher={PsyArXiv},
+  note={Preprint},
+  doi={10.31234/osf.io/jd4ar},
+  url={https://doi.org/10.31234/osf.io/jd4ar}
+}
 
 ## Contact
 

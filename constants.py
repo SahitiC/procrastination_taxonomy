@@ -19,13 +19,13 @@ EFFICACY = 0.8  # self-efficacy (probability of progress for each unit)
 
 # utilities :
 REWARD_THR = 4.0  # reward per unit at threshold (14 units)
-REWARD_THR_DIFF_DISCOUNTS = 1
+REWARD_THR_DIFF_DISCOUNTS = 1  # reward per unit for diff-disc model
 REWARD_EXTRA = REWARD_THR/4  # reward per unit post-threshold upto 22 units
 REWARD_EXTRA_DIFF_DISCOUNTS = REWARD_THR_DIFF_DISCOUNTS/4
 REWARD_SHIRK = 0.0
 EFFORT_WORK = -0.3
-BETA = 5
-BETA_DIFF_DISCOUNTS = 10
+BETA = 5  # softmax beta
+BETA_DIFF_DISCOUNTS = 10  # softmax beta for diff-disc model
 
 THR = 14  # threshold number of units for rewards
 N_TRIALS = 20  # no. of trajectories per dataeset for recovery
