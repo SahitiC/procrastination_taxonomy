@@ -29,7 +29,7 @@ def choose_best_model(fits, free_param_no):
     return [params_recovered, model_recovered]
 
 
-def full_counts(target_numbers, unique_values, counts):
+def full_counts_model(target_numbers, unique_values, counts):
     """
     count number of times each model was recovered
     """
@@ -117,14 +117,14 @@ for i in range(len(models)):
     # for randomly chosen params
     index = np.where(final_inputs[:, 1] == i)[0]
     frequency = np.unique(final_result[index, 1], return_counts=True)
-    freq_recovered.append(full_counts(model_no, frequency[0], frequency[1]))
+    freq_recovered.append(full_counts_model(model_no, frequency[0], frequency[1]))
 
     # for params from model fits
     index_fit_params = np.where(input_recovery_fit_params[:, 1] == i)[0]
     frequency_fit_params = np.unique(
         models_recovered_fit_params[index_fit_params, 1], return_counts=True)
     freq_recovered_fit_params.append(
-        full_counts(model_no, frequency_fit_params[0],
+        full_counts_model(model_no, frequency_fit_params[0],
                     frequency_fit_params[1]))
 
 plt.figure(figsize=(6, 5), dpi=300)

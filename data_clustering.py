@@ -18,7 +18,7 @@ mpl.rcParams['axes.linewidth'] = 2
 # %% functions
 
 
-def plot_clustered_data(data, labels, **kwargs):
+def plot_clustered_data(data, labels):
     """
     plot trajectories in each cluster given data and labels
     """
@@ -26,11 +26,11 @@ def plot_clustered_data(data, labels, **kwargs):
     for label in set(labels):
         plt.figure(figsize=(4, 4), dpi=300)
 
-        for i in range(len(data)):
+        for i, d in enumerate(data):
 
             if labels[i] == label:
 
-                plt.plot(np.array(ast.literal_eval(data[i])) * 2, alpha=0.5)
+                plt.plot(np.array(ast.literal_eval(d)) * 2, alpha=0.5)
 
         sns.despine()
         plt.xticks([0, 7, 15])
