@@ -419,7 +419,7 @@ def maximum_likelihood_estimate_basic(states, actions, horizon, reward_thr,
                                 bounds=((0, 1), (0, 1), (None, 0)))
         nllkhd = likelihood_basic_model(
             final_result.x, states, actions, horizon, reward_thr, reward_extra,
-            reward_shirk, beta, data)
+            reward_shirk, beta, thr, states_no, data)
         if verbose == 1:
             print("with initial point = true param "
                   "current estimate for discount_factor, efficacy,"
