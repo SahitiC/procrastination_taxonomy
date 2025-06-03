@@ -298,7 +298,6 @@ def gen_data_no_commitment(states, actions_base, horizon, reward_thr,
     # tranistion matrix based on efficacy and stay-switch probabilities
     T_partial = task_structure.T_binomial(states[:int(states_no/2)],
                                           actions_base, efficacy)
-
     T_low = []
     for state_current in range(len(states[:int(states_no/2)])):
 
@@ -338,3 +337,107 @@ def gen_data_no_commitment(states, actions_base, horizon, reward_thr,
         data.append(s_unit.astype(int))
 
     return data
+
+
+def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
+                     reward_extra, reward_shirk, beta, p_stay_min,
+                     discount_factor, efficacy, effort_low,
+                     effort_high, n_trials, states_no):
+    """
+    function to generate a trajectory of state and action sequences given 
+    parameters and reward, transition models of the no commitment model
+    """
+
+    states_no = len(states_fatigue)
+
+    # reward for completion
+    reward_func_base = task_structure.reward_immediate(
+        states_fatigue[:int(states_no/2)], actions_base, reward_shirk,
+        reward_unit, reward_extra)
+
+    # effort costs
+    effort_func_low = task_structure.effort(states_fatigue[:int(states_no/2)],
+                                            actions_base, effort_low)
+    effort_func_high = task_structure.effort(states_fatigue[:int(states_no/2)],
+                                             actions_base, effort_high)
+
+    # total reward for low fatigue state = reward_base + effort_low
+    total_reward_func_low = []
+    for state_current in range(len(states_fatigue[:int(states_no/2)])):
+
+        temp = reward_func_base[state_current] + effort_func_low[state_current]
+        # replicate rewards for high reward states
+        total_reward_func_low.append(np.block([temp, temp]))
+
+    # total reward for high fatigue state = reward_base + effort_high
+    total_reward_func_high = []
+    for state_current in range(len(states_fatigue[:int(states_no/2)])):
+
+        temp = reward_func_base[state_current] + \
+            effort_func_high[state_current]
+        # replicate rewards for high reward states
+        total_reward_func_high.append(np.block([temp, temp]))
+
+    total_reward_func = []
+    total_reward_func.extend(total_reward_func_low)
+    total_reward_func.extend(total_reward_func_high)
+
+    total_reward_func_last = np.zeros(len(states_fatigue))
+
+    # transition matrix based on efficacy and stay-switch probabilities
+    T_partial = task_structure.T_binomial(states_fatigue[:int(states_no/2)],
+                                          actions_base, efficacy)
+
+    T_low_fatigue = np.column_stack(
+        (np.linspace(1, 0.2, int(states_no/2)),
+         np.linspace(0, 1 - 0.2, int(states_no/2))))
+
+    T_high_fatigue = np.column_stack(
+        (np.linspace(1 - 0.3, 0, int(states_no/2)),
+         np.linspace(0.3, 1, int(states_no/2))))
+
+    T_low = []
+    for state_current in range(len(states_fatigue[:int(states_no/2)])):
+        temp = np.block(
+            [T_partial[state_current]
+             * T_low_fatigue[:int(states_no/2)-state_current, 0:1],
+             T_partial[state_current]
+             * T_low_fatigue[:int(states_no/2)-state_current, 1:2]])
+        assert (np.round(np.sum(temp, axis=1), 6) == 1).all()
+        T_low.append(temp)
+
+    T_high = []
+    for state_current in range(len(states_fatigue[:int(states_no/2)])):
+        temp = np.block(
+            [T_partial[state_current]
+             * T_high_fatigue[:int(states_no/2)-state_current, 0:1],
+             T_partial[state_current]
+             * T_high_fatigue[:int(states_no/2)-state_current, 1:2]])
+        assert (np.round(np.sum(temp, axis=1), 6) == 1).all()
+        T_high.append(temp)
+
+    T = []
+    T.extend(T_low)
+    T.extend(T_high)
+
+    # optimal policy based on task structure
+    actions_all = actions_base.copy()
+    # same actions available for low and high reward states: so repeat
+    actions_all.extend(actions_base)
+    V_opt, policy_opt, Q_values = mdp_algms.find_optimal_policy_prob_rewards(
+        states_fatigue, actions_all, horizon, discount_factor,
+        total_reward_func, total_reward_func_last, T)
+
+    initial_state = 0
+    data = []
+    for i_trials in range(1):
+
+        s, a = mdp_algms.forward_runs_prob(
+            softmax_policy, Q_values, actions_all, initial_state, horizon,
+            states_fatigue, T, beta)
+        s_unit = np.where(s > states_no/2 - 1, s-states_no/2, s)
+        fatigue = np.where(s > states_no/2 - 1, 1, 0)
+        data.append(s_unit.astype(int))
+    plt.plot(s_unit)
+    plt.plot(a)
+    plt.plot(fatigue)
