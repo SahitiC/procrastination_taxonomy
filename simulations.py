@@ -551,7 +551,7 @@ for i, d in enumerate([0.95, 1.0]):
     plt.title(fr'$\gamma_r$={np.round(discount_factor,2)}',
               fontsize=24)
     plt.savefig(
-        f'plots/vectors/no_commit_ex_{1}.svg',
+        f'plots/vectors/no_commit_ex_{i}.svg',
         format='svg', dpi=300)
     plt.show()
 
