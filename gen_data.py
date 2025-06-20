@@ -292,7 +292,7 @@ def gen_data_no_commitment(states, actions_base, horizon, reward_unit,
 def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
                      reward_shirk, beta, p_low, p_high,
                      discount_factor, efficacy, effort_low,
-                     effort_high, n_trials, states_no):
+                     effort_high, n_trials, initial_state=0):
     """
     function to generate a trajectory of state and action sequences given 
     parameters and reward, transition models of the no commitment model
@@ -378,7 +378,7 @@ def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
         states_fatigue, actions_all, horizon, discount_factor,
         total_reward_func, total_reward_func_last, T)
 
-    initial_state = 0
+    # initial_state = 0
     data = []
     data_s = []
     data_actions = []

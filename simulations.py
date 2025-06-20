@@ -267,9 +267,9 @@ fig2.savefig(
     'plots/vectors/eff_gap_rates.svg',
     format='svg', dpi=300)
 
-for i, ef_a in enumerate([0.3, 0.6, 0.8]):
+for i, ef_a in enumerate([0.3, 0.6, 0.9]):
 
-    efficacy_assumed, efficacy_real = ef_a, 0.9
+    efficacy_assumed, efficacy_real = ef_a, 0.6
 
     trajectories = gen_data.gen_data_efficacy_gap(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
@@ -569,92 +569,98 @@ ax2.set_prop_cycle(cycle_colors)
 
 plt.figure()
 
-for effort_high in effort_highs:
+traj_no = [9, 2]  # which trajectories to plot for each initial state
 
-    delay_mn = []
-    delay_sem = []
-    completion_rate = []
-    for discount_factor in discounts:
+for i, initial_state in enumerate([0, 21]):
+    for effort_high in effort_highs:
 
-        trajectories, _, _ = gen_data.gen_data_fatigue(
-            constants.STATES_FATIGUE, constants.ACTIONS_BASE,
-            constants.HORIZON, constants.REWARD_UNIT, constants.REWARD_SHIRK,
-            constants.BETA, constants.P_LOW, constants.P_HIGH,
-            discount_factor, constants.EFFICACY_FATIGUE,
-            constants.EFFORT_LOW_FATIGUE, effort_high, 1000,
-            constants.STATES_NO_FATIGUE)
+        delay_mn = []
+        delay_sem = []
+        completion_rate = []
+        for discount_factor in discounts:
 
-        delays = time_to_finish(trajectories)
-        delay_mn.append(np.nanmean(delays))
-        delay_sem.append(sem(delays, nan_policy='omit'))
-        completions = did_it_finish(trajectories)
-        completion_rate.append(np.nanmean(completions))
+            trajectories, _, _ = gen_data.gen_data_fatigue(
+                constants.STATES_FATIGUE, constants.ACTIONS_BASE,
+                constants.HORIZON, constants.REWARD_UNIT, constants.REWARD_SHIRK,
+                constants.BETA, constants.P_LOW, constants.P_HIGH,
+                discount_factor, constants.EFFICACY_FATIGUE,
+                constants.EFFORT_LOW_FATIGUE, effort_high, 1000,
+                initial_state=initial_state)
 
-    ax1.errorbar(discounts, delay_mn, yerr=delay_sem, linewidth=3,
-                 marker='o', linestyle='--', label=f'{effort_high}')
+            delays = time_to_finish(trajectories)
+            delay_mn.append(np.nanmean(delays))
+            delay_sem.append(sem(delays, nan_policy='omit'))
+            completions = did_it_finish(trajectories)
+            completion_rate.append(np.nanmean(completions))
 
-    ax2.plot(completion_rate, linewidth=3, marker='o', linestyle='--')
+        ax1.errorbar(discounts, delay_mn, yerr=delay_sem, linewidth=3,
+                     marker='o', linestyle='--', label=f'{effort_high}')
 
-sns.despine(ax=ax1)
-ax1.set_ylabel('Avg. time to \n complete task')
-ax1.set_xlabel(r'$\gamma$')
-ax1.set_yticks([0, 5, 10, 15])
-ax1.legend(bbox_to_anchor=(0.5, 1.25), ncol=4, frameon=False, fontsize=18,
-           loc='upper center', columnspacing=0.5)
-fig1.text(0.05, 1.00, r'$r_{effort, high}$', ha='center', va='center')
-fig1.savefig(
-    'plots/vectors/fatigue_delays.svg',
-    format='svg', dpi=300)
+        ax2.plot(completion_rate, linewidth=3, marker='o', linestyle='--')
 
-sns.despine(ax=ax2)
-ax2.set_ylabel('Completion \n rate', fontsize=20)
-ax2.set_xlabel(r'$\gamma$', fontsize=20)
-ax2.set_yticks([0, 1])
-ax2.set_xticks([])
-fig2.savefig(
-    'plots/vectors/fatigue_rates.svg',
-    format='svg', dpi=300)
+    sns.despine(ax=ax1)
+    ax1.set_ylabel('Avg. time to \n complete task')
+    ax1.set_xlabel(r'$\gamma$')
+    ax1.set_yticks([0, 5, 10, 15])
+    ax1.legend(bbox_to_anchor=(0.5, 1.25), ncol=4, frameon=False, fontsize=18,
+               loc='upper center', columnspacing=0.5)
+    fig1.text(0.05, 1.00, r'$r_{effort, high}$', ha='center', va='center')
+    fig1.savefig(
+        f'plots/vectors/fatigue_delays_{initial_state}.svg',
+        format='svg', dpi=300)
 
-effort_high, discount_factor = -3, 1.0
+    sns.despine(ax=ax2)
+    ax2.set_ylabel('Completion \n rate', fontsize=20)
+    ax2.set_xlabel(r'$\gamma$', fontsize=20)
+    ax2.set_yticks([0, 1])
+    ax2.set_xticks([])
+    fig2.savefig(
+        'plots/vectors/fatigue_rates.svg',
+        format='svg', dpi=300)
 
-trajectories, trajectories_s, trajectories_actions = gen_data.gen_data_fatigue(
-    constants.STATES_FATIGUE, constants.ACTIONS_BASE,
-    constants.HORIZON, constants.REWARD_UNIT, constants.REWARD_SHIRK,
-    constants.BETA, constants.P_LOW, constants.P_HIGH,
-    discount_factor, constants.EFFICACY_FATIGUE,
-    constants.EFFORT_LOW_FATIGUE, effort_high, 1000,
-    constants.STATES_NO_FATIGUE)
+    effort_high, discount_factor = -3, 1.0
 
-plt.figure(figsize=(3, 3), dpi=300)
-plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-plt.title(r'$\gamma_r$=1.0, $r_{effort, high}$=-3.0',
-          fontsize=24)
-plt.savefig(
-    'plots/vectors/fatigue_ex_1.svg',
-    format='svg', dpi=300)
-plt.show()
+    trajectories, trajectories_s, trajectories_actions = gen_data.gen_data_fatigue(
+        constants.STATES_FATIGUE, constants.ACTIONS_BASE,
+        constants.HORIZON, constants.REWARD_UNIT, constants.REWARD_SHIRK,
+        constants.BETA, constants.P_LOW, constants.P_HIGH,
+        discount_factor, constants.EFFICACY_FATIGUE,
+        constants.EFFORT_LOW_FATIGUE, effort_high, 1000,
+        initial_state=initial_state)
 
-trajectory = 9
-plt.figure(figsize=(4, 3), dpi=300)
-t = np.arange(constants.HORIZON)
-fatigue = np.where(trajectories_s[trajectory]
-                   > constants.STATES_NO_FATIGUE/2 - 1, 1, 0)
-low_fatigue = fatigue[:-1] == 0
-high_fatigue = fatigue[:-1] == 1
-plt.plot(trajectories_actions[trajectory], linestyle='dashed', label='actions')
-plt.plot(trajectories[trajectory], linestyle='dashed', label='units completed')
-plt.scatter(t[low_fatigue], trajectories_actions[trajectory][low_fatigue],
-            marker='s', facecolor='none', edgecolor='tab:blue',
-            label='low fatigue')
-plt.scatter(t[high_fatigue], trajectories_actions[trajectory][high_fatigue],
-            marker='s', label='high fatigue')
-sns.despine()
-plt.xlabel('time')
-plt.yticks([0, 10, 20])
-plt.xticks([0, 7, 15])
-plt.legend(bbox_to_anchor=(1.25, 0.75), ncol=1, frameon=False, fontsize=14,
-           loc='upper center', columnspacing=0.5)
-plt.savefig(
-    'plots/vectors/fatigue_ex_actions.svg',
-    format='svg', dpi=300)
-plt.show()
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.title(r'$\gamma_r$=1.0, $r_{effort, high}$=-3.0',
+              fontsize=24)
+    plt.savefig(
+        f'plots/vectors/fatigue_ex_1_{initial_state}.svg',
+        format='svg', dpi=300)
+    plt.show()
+
+    trajectory = traj_no[i]
+    plt.figure(figsize=(4, 3), dpi=300)
+    t = np.arange(constants.HORIZON)
+    fatigue = np.where(trajectories_s[trajectory]
+                       > constants.STATES_NO_FATIGUE/2 - 1, 1, 0)
+    low_fatigue = fatigue[:-1] == 0
+    high_fatigue = fatigue[:-1] == 1
+    plt.plot(trajectories_actions[trajectory],
+             linestyle='dashed', label='actions')
+    plt.plot(trajectories[trajectory],
+             linestyle='dashed', label='units completed')
+    plt.scatter(t[low_fatigue], trajectories_actions[trajectory][low_fatigue],
+                marker='s', facecolor='none', edgecolor='tab:blue',
+                label='low fatigue')
+    plt.scatter(t[high_fatigue],
+                trajectories_actions[trajectory][high_fatigue],
+                marker='s', label='high fatigue')
+    sns.despine()
+    plt.xlabel('time')
+    plt.yticks([0, 10, 20])
+    plt.xticks([0, 7, 15])
+    plt.legend(bbox_to_anchor=(1.25, 0.75), ncol=1, frameon=False, fontsize=14,
+               loc='upper center', columnspacing=0.5)
+    plt.savefig(
+        f'plots/vectors/fatigue_ex_actions_{initial_state}.svg',
+        format='svg', dpi=300)
+    plt.show()
