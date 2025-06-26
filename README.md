@@ -29,7 +29,8 @@ Why do today, what you can fail to do tomorrow? Pacing, postponing, and ultimate
 ## Usage
 
 **Please note that plots in each figure of the paper are generated separately by this code. model_fitting.py, recovery.py and recovery_fit_params.py are parallelised and take a long time to run. The outputs of these scripts are stored in the data/ folder and can be used directly.**
-[1. First, run the data pre-processing script on data from Zhang and Ma 2024:
+<!--
+1. First, run the data pre-processing script on data from Zhang and Ma 2024:
    <code>
    python data_preprocessing.py
    </code>
@@ -57,7 +58,8 @@ Why do today, what you can fail to do tomorrow? Pacing, postponing, and ultimate
 7. Plot results of recovery analysis to reproduce Supplementary Figures 9-10:
    <code>
    python recovery_plots.py
-   </code>]: #
+   </code>
+-->
 
 ## Description
 
