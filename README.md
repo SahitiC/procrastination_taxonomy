@@ -60,6 +60,10 @@ Why do today, what you can fail to do tomorrow? Pacing, postponing, and ultimate
    python recovery_plots.py
    </code>
 -->
+To simulate models and generate plots in Figures 3-6, run the following:
+   <code>
+   python simulations.py
+   </code>
 
 ## Description
 
@@ -71,18 +75,22 @@ The following modules contain some helper functions for further steps:
 5. gen_data.py - functions for simulating trajectories from models
 6. likelihoods.py - functions for calculating and maximising log likelihood (minimising negative log likelihood) of data under different models
 7. constants.py - define few shared constants over all the models (states, actions, horizon, effort, shirk reward)
-The following scripts implement various steps of the analyses:
-8. data_preprocessing.py - remove unwanted columns, apply exclusion criteria, normalise data
-9. data_clustering.py - apply k-means to cluster trajectories, plot trajectories in each cluster and distance matrix; order of plots not same as in paper
-10. simulations.py - simulate six models that formalise various delay mechanisms, plot delays and completion rates with varying parameters
-11. model_fitting.py - fit models to data using maximum likelihoood estimatation
-12. model_fitting_plots.py - plot simulated trajectories from model fits, calculate model fit metrics
-13. recovery.py - parameter and model recovery with randomly chosen parameters
-14. recovery_fit_params.py - parameter and model recovery with fitted parameters
-15. recovery_plots.py - plot results of recovery analysis
-16. .gitignore - tell git to ignore some local files, please change this based on your local repo
-17. requirements.txt - python packages required to run these files
-18. CheboluDayan2024b.pdf - final pdf of the paper
+8. simulations.py - simulate six models that formalise various delay mechanisms, plot delays and completion rates with varying parameters
+9. .gitignore - tell git to ignore some local files, please change this based on your local repo
+10. requirements.txt - python packages required to run these files
+11. CheboluDayan2025.pdf - final pdf of the paper
+
+Additional analyses: The following scripts are for clustering, analysing and fitting some models to data from Zhang and Ma 2023. Multiple models are able to capture patterns in the data
+1. data_preprocessing.py - remove unwanted columns, apply exclusion criteria, normalise data
+2. data_clustering.py - apply k-means to cluster trajectories, plot trajectories in each cluster and distance matrix; order of plots not same as in paper
+3. gen_data_old.py - functions for simulating trajectories from models
+4. constants_old.py - define few shared constants over all the models (states, actions, horizon, effort, shirk reward)
+5. simulations_old.py - simulate six models that formalise various delay mechanisms, plot delays and completion rates with varying parameters
+6. model_fitting.py - fit models to data using maximum likelihoood estimatation
+7. model_fitting_plots.py - plot simulated trajectories from model fits, calculate model fit metrics
+8. recovery.py - parameter and model recovery with randomly chosen parameters
+9. recovery_fit_params.py - parameter and model recovery with fitted parameters
+10. recovery_plots.py - plot results of recovery analysis
 
 ## Citation
 
