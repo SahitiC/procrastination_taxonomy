@@ -1,3 +1,4 @@
+# %%
 import constants
 import gen_data
 import task_structure
@@ -147,7 +148,7 @@ for i, d in enumerate(discounts[1:]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-    plt.title(fr'$\gamma$={np.round(d,2)}',
+    plt.title(fr'$\gamma$={np.round(d, 2)}',
               fontsize=24)
     plt.savefig(
         f'plots/vectors/basic_efficacies_ex_{i}.svg',
@@ -279,7 +280,7 @@ for i, ef_a in enumerate([0.3, 0.6, 0.9]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-    plt.title(fr'$\eta$={np.round(efficacy_assumed,2)}',
+    plt.title(fr'$\eta$={np.round(efficacy_assumed, 2)}',
               fontsize=24)
     plt.savefig(
         f'plots/vectors/eff_gap_ex_{i}.svg',
@@ -356,7 +357,7 @@ for i, e in enumerate([1.0, 1.2, 2.2]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-    plt.title(fr'$k$={np.round(exponent,2)}',
+    plt.title(fr'$k$={np.round(exponent, 2)}',
               fontsize=24)
     plt.savefig(
         f'plots/vectors/conv_conc_ex_{i}.svg',
@@ -470,7 +471,7 @@ for i, d_c in enumerate([0.3, 0.5, 0.6, 0.75]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-    plt.title(fr'$\gamma_c$={np.round(discount_factor_cost,2)}',
+    plt.title(fr'$\gamma_c$={np.round(discount_factor_cost, 2)}',
               fontsize=24)
     plt.savefig(
         f'plots/vectors/diff_disc_ex_{i}.svg',
@@ -548,7 +549,7 @@ for i, d in enumerate([0.95, 1.0]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-    plt.title(fr'$\gamma_r$={np.round(discount_factor,2)}',
+    plt.title(fr'$\gamma_r$={np.round(discount_factor, 2)}',
               fontsize=24)
     plt.savefig(
         f'plots/vectors/no_commit_ex_{i}.svg',
