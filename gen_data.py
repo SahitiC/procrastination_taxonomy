@@ -393,3 +393,43 @@ def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
         data_actions.append(a)
 
     return data, data_s, data_actions
+
+
+def gen_data_self_handicap(states, actions, horizon, reward_unit, reward_shirk,
+                           beta, discount_factor, efficacy, effort_work,
+                           fear_cost, n_trials, states_no):
+
+   # reward delivered immediately after finishing each unit
+    reward_func = task_structure.reward_immediate(
+        states, actions, reward_shirk, reward_unit)
+
+    effort_func = task_structure.effort(states, actions, effort_work)
+
+    # reward delivered at the end of the semester
+    total_reward_func_last = np.zeros(len(states))
+
+    total_reward_func = []
+    for state_current in range(len(states)):
+
+        total_reward_func.append(reward_func[state_current]
+                                 + effort_func[state_current])
+
+    # get tranistions
+    T = task_structure.T_binomial(states, actions, efficacy)
+
+    # get policy
+    V_opt, policy_opt, Q_values = mdp_algms.find_optimal_policy_prob_rewards(
+        states, actions, horizon, discount_factor,
+        total_reward_func, total_reward_func_last, T)
+
+    # generate data - forward runs
+    initial_state = 0
+    data = []
+    for i_trials in range(n_trials):
+
+        s, a = mdp_algms.forward_runs_prob(
+            softmax_policy, Q_values, actions, initial_state, horizon, states,
+            T, beta)
+        data.append(s)
+
+    return data

@@ -31,56 +31,42 @@ def reward_threshold(states, actions, reward_shirk, reward_thr,
         each state
 
     """
-
     reward_func = []
     for state_current in range(len(states)):
-
         reward_temp = np.zeros((len(actions[state_current]), len(states)))
-
         # rewards for shirk based on the action
         for action in range(len(actions[state_current])):
-
             reward_temp[action, state_current:state_current+action+1] = (
                 (len(states)-1-action) * reward_shirk)
-
         # if less than thr credits have been completed, then thresholded reward
         # at thr units, flatter extra rewards till states_no and then flat
         if state_current < thr:
-
             for i, action in enumerate(
                     actions[state_current][thr-state_current:
                                            states_no-state_current]):
-
                 reward_temp[action, thr:action+state_current+1] += (
                     thr*reward_thr
                     + np.arange(0, action+state_current+1-thr, step=1)
                     * reward_extra)
-
             for i, action in enumerate(actions[state_current]
                                        [states_no-state_current:]):
-
                 reward_temp[action, thr:states_no] += np.arange(
                     thr*reward_thr,
                     thr*reward_thr + (states_no-thr)*reward_extra,
                     step=reward_extra)
                 reward_temp[action, states_no:action+state_current+1] += (
                     thr*reward_thr + (states_no-1-thr)*reward_extra)
-
         # if more than 14 units completed, extra reward until 22 is reached
         # and then nothing
         elif state_current >= thr and state_current < states_no-1:
-
             for i, action in enumerate(actions[state_current]
                                        [:states_no-state_current]):
-
                 reward_temp[action, state_current+1:
                             action+state_current+1] += (
                                 np.arange(1, action+1)*reward_extra)
-
             # reward_temp[states_no-state_current:, :] = reward_temp[
             # states_no-1-state_current, :]
         reward_func.append(reward_temp)
-
     return reward_func
 
 
@@ -101,27 +87,18 @@ def reward_immediate(states, actions, reward_shirk, reward_unit):
         each state
 
     """
-
     reward_func = []
-
     for state_current in range(len(states)):
-
         reward_temp = np.zeros((len(actions[state_current]), len(states)))
-
         # rewards for shirk based on the action
         for action in range(len(actions[state_current])):
-
             reward_temp[action, state_current:state_current+action+1] = (
                 (len(states)-1-action) * reward_shirk)
-
         # immediate rewards for units completed
         for action in range(len(actions[state_current])):
-
             reward_temp[action, state_current:state_current+action+1] += (
                 np.arange(0, action+1) * reward_unit)
-
         reward_func.append(reward_temp)
-
     return reward_func
 
 
@@ -142,28 +119,18 @@ def reward_immediate_thr(states, actions, reward_shirk, reward_unit):
         each state
 
     """
-
     reward_func = []
-
     for state_current in range(len(states)):
-
         reward_temp = np.zeros((len(actions[state_current]), len(states)))
-
         # rewards for shirk based on the action
         for action in range(len(actions[state_current])):
-
             reward_temp[action, state_current:state_current+action+1] = (
                 (len(states)-1-action) * reward_shirk)
-
         # immediate rewards for units completed
         for action in range(len(actions[state_current])):
-
             reward_temp[action, state_current:state_current+action+1] += (
-                np.arange(0, action+1) * reward_unit
-            )
-
+                np.arange(0, action+1) * reward_unit)
         reward_func.append(reward_temp)
-
     return reward_func
 
 
@@ -182,27 +149,19 @@ def reward_no_immediate(states, actions, reward_shirk):
         each state
 
     """
-
     reward_func = []
     for state_current in range(len(states)):
-
         reward_temp = np.zeros((len(actions[state_current]), len(states)))
-
         # rewards for shirk based on the action
         for action in range(len(actions[state_current])):
-
             reward_temp[action, state_current:state_current+action+1] = (
                 (len(states)-1-action) * reward_shirk)
-
         reward_func.append(reward_temp)
-
     return reward_func
 
 
 def reward_final_no_thr(states, reward_unit, states_no):
-
     total_reward_func_last = np.arange(0, states_no, 1)*reward_unit
-
     return total_reward_func_last
 
 
@@ -230,7 +189,6 @@ def reward_final(states, reward_thr, reward_extra, thr, states_no):
         thr*reward_thr + np.arange(0, states_no-thr)*reward_extra)
     total_reward_func_last[states_no:] = (
         thr*reward_thr + (states_no-1-thr)*reward_extra)
-
     return total_reward_func_last
 
 
