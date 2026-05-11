@@ -129,7 +129,66 @@ def find_optimal_policy_prob_rewards(states, actions, horizon, discount_factor,
     return V_opt, policy_opt, Q_values
 
 
-# my algorithm!!! for finding optimal policy with different discount factors
+def find_optimal_policy_self_handicap(
+        states, actions, horizon, discount_factor, reward_func,
+        reward_func_last, T):
+    """
+    Find optimal policy for an MDP with finite horizon, 2D discrete
+    state space, using dynamic programming.
+    Reward received depends on the next state as well.
+
+    (states (ndarray): 2D grid of states, shape (n_rows, n_cols)
+    actions (list): actions available in each state,
+                    indexed as actions[r][c])
+    """
+
+    n_rows, n_cols = states.shape
+
+    # infer max number of actions (for pre-allocation; may vary per state)
+    n_actions = max(len(actions[r][c]) for r in range(n_rows)
+                    for c in range(n_cols))
+
+    # arrays for optimal values, policy, Q-values
+    V_opt = np.full((n_rows, n_cols, horizon + 1), np.nan)
+    policy_opt = np.full((n_rows, n_cols, horizon), np.nan)
+    Q_values = np.full((n_rows, n_cols, n_actions, horizon), np.nan)
+
+    # V_opt for last timestep
+    V_opt[:, :, -1] = reward_func_last
+
+    # backward induction to derive optimal policy
+    for i_timestep in range(horizon - 1, -1, -1):
+
+        for r in range(n_rows):
+            for c in range(n_cols-len(actions[r][0])):
+
+                n_actions_state = len(actions[r][c])
+                Q = np.full(n_actions_state, np.nan)
+
+                for i_action in range(n_actions_state):
+
+                    # T[r][c][i_action] and reward_func[r][c][i_action]
+                    # both have shape (n_rows * n_cols,)
+                    # transition probs to all next states
+                    t = T[r, c][i_action]
+                    # rewards for each next state
+                    rew = reward_func[r, c][i_action]
+
+                    # Bellman equation: expected reward + discounted expected future value
+                    Q[i_action] = (np.sum(t * rew)
+                                   + discount_factor
+                                   * np.nansum(
+                                       t * V_opt[:, :, i_timestep + 1]))
+
+                # store optimal value, action, and all Q-values
+                V_opt[r, c, i_timestep] = np.max(Q)
+                policy_opt[r, c, i_timestep] = np.argmax(Q)
+                Q_values[r, c, :n_actions_state, i_timestep] = Q
+
+    return V_opt, policy_opt, Q_values
+
+
+# for finding optimal policy with different discount factors
 # for positive and negative rewards
 def find_optimal_policy_diff_discount_factors(
         states, actions, horizon, discount_factor_reward, discount_factor_cost,
@@ -307,3 +366,32 @@ def forward_runs_prob(policy, Q_values, actions, initial_state, horizon,
         )
 
     return states_forward, actions_forward
+
+
+def forward_runs_self_handicap(
+        policy, Q_values, actions, initial_progress, initial_failures, horizon,
+        states, T, *args):
+
+    # arrays to store states, actions taken and values of actions in time
+    progress_forward = np.full(horizon+1, 100)
+    failures_forward = np.full(horizon+1, 100)
+    actions_forward = np.full(horizon, 100)
+    progress_forward[0] = initial_progress
+    failures_forward[0] = initial_failures
+    # sample action from probabilistic policy
+    for i_timestep in range(horizon):
+        actions_forward[i_timestep] = np.random.choice(
+            actions[progress_forward[i_timestep],
+                    failures_forward[i_timestep]],
+            p=policy(Q_values[progress_forward[i_timestep],
+                              failures_forward[i_timestep]][:, i_timestep],
+                     args))
+        # sample next state from transition probabilities
+        progress_forward[i_timestep+1] = np.random.choice(
+            len(states),
+            p=T[progress_forward[i_timestep], failures_forward[i_timestep]]
+            [actions_forward[i_timestep]])
+        failures_forward[i_timestep+1] = (
+            failures_forward[i_timestep] + actions_forward[i_timestep]
+            - (progress_forward[i_timestep+1] - progress_forward[i_timestep]))
+    return progress_forward, failures_forward, actions_forward

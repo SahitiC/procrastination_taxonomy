@@ -160,6 +160,22 @@ def reward_no_immediate(states, actions, reward_shirk):
     return reward_func
 
 
+def reward_self_handicap(states, actions, reward_shirk, reward_unit):
+    n_rows, n_cols = states.shape
+    reward_func = np.full((n_rows, n_cols), np.nan, dtype=object)
+    for r in range(n_rows):
+        for c in range(n_cols-len(actions[r][0])):
+            reward_temp = np.zeros((len(actions[r][c]), n_rows, n_cols))
+            for _, action in enumerate(actions[r][c]):
+                rows = np.arange(r, r + action + 1)
+                cols = c + action - np.arange(action + 1)
+                reward_temp[action, rows, cols] = (
+                    (n_rows-1-action) * reward_shirk
+                    + np.arange(0, action+1) * reward_unit)
+            reward_func[r, c] = reward_temp
+    return reward_func
+
+
 def reward_final_no_thr(states, reward_unit, states_no):
     total_reward_func_last = np.arange(0, states_no, 1)*reward_unit
     return total_reward_func_last
@@ -205,19 +221,13 @@ def effort(states, actions, effort_work):
         effort_func (list): effort at each time point on taking each action at
         each state
     """
-
     effort_func = []
     for state_current in range(len(states)):
-
         effort_temp = np.zeros((len(actions[state_current]), len(states)))
-
-        for i, action in enumerate(actions[state_current]):
-
+        for _, action in enumerate(actions[state_current]):
             effort_temp[action, state_current:state_current +
                         action+1] = action * effort_work
-
         effort_func.append(effort_temp)
-
     return effort_func
 
 
@@ -239,17 +249,42 @@ def effort_convex_concave(states, actions, effort_work, exponent):
 
     effort_func = []
     for state_current in range(len(states)):
-
         effort_temp = np.zeros((len(actions[state_current]), len(states)))
-
         for i, action in enumerate(actions[state_current]):
-
             effort_temp[action, state_current:state_current +
                         action+1] = (action**exponent) * effort_work
-
         effort_func.append(effort_temp)
-
     return effort_func
+
+
+def effort_self_handicap(states, actions, effort_work):
+    n_rows, n_cols = states.shape
+    effort_func = np.full((n_rows, n_cols), np.nan, dtype=object)
+    for r in range(n_rows):
+        for c in range(n_cols-len(actions[r][0])):
+            effort_temp = np.zeros((len(actions[r][c]), n_rows, n_cols))
+            for _, action in enumerate(actions[r][c]):
+                rows = np.arange(r, r + action + 1)
+                cols = c + action - np.arange(action + 1)
+                effort_temp[action, rows, cols] = (
+                    action * effort_work)
+            effort_func[r, c] = effort_temp
+    return effort_func
+
+
+def cost_self_handicap(states, actions, fear_cost):
+    n_rows, n_cols = states.shape
+    cost_func = np.full((n_rows, n_cols), np.nan, dtype=object)
+    for r in range(n_rows):
+        for c in range(n_cols-len(actions[r][0])):
+            cost_temp = np.zeros((len(actions[r][c]), n_rows, n_cols))
+            for _, action in enumerate(actions[r][c]):
+                rows = np.arange(r, r + action + 1)
+                cols = c + action - np.arange(action + 1)
+                cost_temp[action, rows, cols] = (np.arange(
+                    c+action, c-1, -1) * fear_cost)
+            cost_func[r, c] = cost_temp
+    return cost_func
 
 
 def T_uniform(states, actions):
@@ -267,15 +302,10 @@ def T_uniform(states, actions):
 
     T = []
     for state_current in range(len(states)):
-
         T_temp = np.zeros((len(actions[state_current]), len(states)))
-
         for i, action in enumerate(actions[state_current]):
-
             T_temp[action, state_current:state_current+action+1] = (
-                np.full((action+1,), 1/(action+1))
-            )
-
+                np.full((action+1,), 1/(action+1)))
         T.append(T_temp)
 
     return T
@@ -296,9 +326,7 @@ def binomial_pmf(n, p, k):
 
     if not isinstance(n, (int, np.int32, np.int64)):
         raise TypeError("Input must be an integer.")
-
     binomial_prob = comb(n, k) * p**k * (1-p)**(n-k)
-
     return binomial_prob
 
 
@@ -319,19 +347,31 @@ def T_binomial(states, actions, efficacy):
 
     T = []
     for state_current in range(len(states)):
-
         T_temp = np.zeros((len(actions[state_current]), len(states)))
-
         for i, action in enumerate(actions[state_current]):
-
             # T_temp[action, state_current:state_current+action+1] = (
             #     binom(action, efficacy).pmf(np.arange(action+1)))
             T_temp[action, state_current:state_current+action+1] = (
-                binomial_pmf(action, efficacy, np.arange(action+1))
-            )
-
+                binomial_pmf(action, efficacy, np.arange(action+1)))
         T.append(T_temp)
+    return T
 
+
+def T_self_handicap(states, actions, efficacy):
+    """
+    transisiotn probability while representing number of successes and failures
+    """
+    n_rows, n_cols = states.shape
+    T = np.full((n_rows, n_cols), np.nan, dtype=object)
+    for r in range(n_rows):
+        for c in range(n_cols-len(actions[r][0])):
+            T_temp = np.zeros((len(actions[r][c]), n_rows, n_cols))
+            for _, action in enumerate(actions[r][c]):
+                rows = np.arange(r, r + action + 1)
+                cols = c + action - np.arange(action + 1)
+                T_temp[action, rows, cols] = binomial_pmf(
+                    action, efficacy, np.arange(action+1))
+            T[r, c] = T_temp
     return T
 
 
