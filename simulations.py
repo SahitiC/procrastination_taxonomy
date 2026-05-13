@@ -18,7 +18,7 @@ mpl.rcParams['axes.linewidth'] = 2
 
 def time_to_finish(trajectories):
     """
-    find when all units arre completed for each trajectory
+    find when all units are completed for each trajectory
     (of work) inputted; if threshold is never reached, returns NaN
     """
 
