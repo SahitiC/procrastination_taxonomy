@@ -77,6 +77,7 @@ cmap_blues = plt.get_cmap('Blues')
 cmap_greens = plt.get_cmap('Greens')
 cmap_RdPu = plt.get_cmap('RdPu')
 cmap_oranges = plt.get_cmap('Oranges')
+cmap_purples = plt.get_cmap('Purples')
 np.random.seed(0)
 
 # %% discounting
@@ -665,3 +666,63 @@ for i, initial_state in enumerate([0, 21]):
         f'plots/vectors/fatigue_ex_actions_{initial_state}.svg',
         format='svg', dpi=300)
     plt.show()
+
+# %%  self-handicap
+
+r = np.arange(0, constants.STATES_NO)
+c = np.arange(0, constants.STATES_NO*constants.HORIZON)
+states = np.array(np.meshgrid(r, c, indexing='ij')[0])
+actions = np.empty((constants.STATES_NO,
+                   constants.STATES_NO*constants.HORIZON),
+                   dtype=object)
+for r in range(constants.STATES_NO):
+    actions[r, :] = [np.arange(constants.STATES_NO - r)] * constants.STATES_NO * constants.HORIZON
+
+efficacys = [0.5, 0.7, 0.9]
+fear_costs = np.linspace(-0.5, -3, 10)
+cycle_colors = cycler('color',
+                      cmap_greens(np.linspace(0.3, 1, 4)))
+
+fig1, ax1 = plt.subplots(figsize=(6, 4), dpi=300)
+fig2, ax2 = plt.subplots(figsize=(4, 3), dpi=300)
+ax1.set_prop_cycle(cycle_colors)
+ax2.set_prop_cycle(cycle_colors)
+
+plt.figure()
+for efficacy in efficacys:
+
+    delay_mn = []
+    delay_sem = []
+    completion_rate = []
+    for fear_cost in fear_costs:
+
+        traj_s, traj_f = gen_data.gen_data_self_handicap(
+        states, actions, constants.HORIZON, constants.REWARD_UNIT,
+        constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
+        efficacy, constants.EFFORT_WORK, fear_cost, 1000)
+
+        delays = time_to_finish(traj_s)
+        delay_mn.append(np.nanmean(delays))
+        delay_sem.append(sem(delays, nan_policy='omit'))
+        completions = did_it_finish(traj_s)
+        completion_rate.append(np.nanmean(completions))
+
+    ax1.errorbar(fear_costs, delay_mn, yerr=delay_sem, linewidth=3,
+                 marker='o', linestyle='--', label=f'{efficacy}')
+
+    ax2.plot(completion_rate, linewidth=3, marker='o', linestyle='--')
+
+sns.despine(ax=ax1)
+ax1.set_ylabel('Avg. time to \n complete task')
+ax1.set_xlabel(r'fear cost')
+ax1.set_yticks([0, 5, 10, 15])
+ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
+           loc='upper center', columnspacing=0.5)
+
+# traj_s, traj_f = gen_data.gen_data_self_handicap(
+#     states, actions, constants.HORIZON, constants.REWARD_UNIT, constants.REWARD_SHIRK,
+#     constants.BETA, constants.DISCOUNT_FACTOR, 0.7, constants.EFFORT_WORK,
+#     -2, 1000)
+# plt.figure(figsize=(3, 3), dpi=300)
+# plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
+# %%

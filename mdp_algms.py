@@ -380,17 +380,22 @@ def forward_runs_self_handicap(
     failures_forward[0] = initial_failures
     # sample action from probabilistic policy
     for i_timestep in range(horizon):
-        actions_forward[i_timestep] = np.random.choice(
-            actions[progress_forward[i_timestep],
-                    failures_forward[i_timestep]],
-            p=policy(Q_values[progress_forward[i_timestep],
-                              failures_forward[i_timestep]][:, i_timestep],
-                     args))
+        acs = actions[progress_forward[i_timestep], failures_forward[i_timestep]]
+        p_a = policy(Q_values[progress_forward[i_timestep],
+                              failures_forward[i_timestep]][:len(acs), i_timestep],
+                              args)
+        actions_forward[i_timestep] = np.random.choice(acs, p=p_a)
         # sample next state from transition probabilities
+        rows = np.arange(progress_forward[i_timestep],
+                         progress_forward[i_timestep] + actions_forward[i_timestep] + 1)
+        cols = failures_forward[i_timestep] + actions_forward[i_timestep] - np.arange(
+            actions_forward[i_timestep] + 1)
+        p = T[progress_forward[i_timestep],
+              failures_forward[i_timestep]][
+                  actions_forward[i_timestep], rows, cols]
         progress_forward[i_timestep+1] = np.random.choice(
-            len(states),
-            p=T[progress_forward[i_timestep], failures_forward[i_timestep]]
-            [actions_forward[i_timestep]])
+            rows, p=p)
+         # np.random.choice(len(p), p=p)
         failures_forward[i_timestep+1] = (
             failures_forward[i_timestep] + actions_forward[i_timestep]
             - (progress_forward[i_timestep+1] - progress_forward[i_timestep]))
