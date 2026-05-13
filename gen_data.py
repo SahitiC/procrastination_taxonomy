@@ -397,7 +397,7 @@ def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
 
 def gen_data_self_handicap(states, actions, horizon, reward_unit, reward_shirk,
                            beta, discount_factor, efficacy, effort_work,
-                           fear_cost, n_trials):
+                           fear_cost, n_trials, initial_progress=0, initial_failures=0):
 
    # reward delivered immediately after finishing each unit
     reward_func = task_structure.reward_self_handicap(
@@ -423,10 +423,12 @@ def gen_data_self_handicap(states, actions, horizon, reward_unit, reward_shirk,
     # generate data - forward runs
     initial_progress = 0
     initial_failures = 0
-    data = []
-    for i_trials in range(n_trials):
+    data_s = []
+    data_f = []
+    for _ in range(n_trials):
         s, f, a = mdp_algms.forward_runs_self_handicap(
             softmax_policy, Q_values, actions, initial_progress,
             initial_failures, horizon, states, T, beta)
-        data.append([s, f])
-    return data
+        data_s.append(s)
+        data_f.append(f)
+    return data_s, data_f
