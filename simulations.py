@@ -18,7 +18,7 @@ mpl.rcParams['axes.linewidth'] = 2
 
 def time_to_finish(trajectories):
     """
-    find when all units arre completed for each trajectory
+    find when all units are completed for each trajectory
     (of work) inputted; if threshold is never reached, returns NaN
     """
 
@@ -78,6 +78,7 @@ cmap_greens = plt.get_cmap('Greens')
 cmap_RdPu = plt.get_cmap('RdPu')
 cmap_oranges = plt.get_cmap('Oranges')
 cmap_purples = plt.get_cmap('Purples')
+SAVE_PLOTS = False
 np.random.seed(0)
 
 # %% discounting
@@ -124,18 +125,20 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.25), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.09, 1.00, r'$\gamma$', ha='center', va='center')
-fig1.savefig(
-    'plots/vectors/basic_efficacies_delays.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig1.savefig(
+        'plots/vectors/basic_efficacies_delays.svg',
+        format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel(r'$\eta$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
-fig2.savefig(
-    'plots/vectors/basic_efficacies_rates.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig2.savefig(
+        'plots/vectors/basic_efficacies_rates.svg',
+        format='svg', dpi=300)
 
 # plot example trajectories
 for i, d in enumerate(discounts[1:]):
@@ -151,9 +154,10 @@ for i, d in enumerate(discounts[1:]):
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.title(fr'$\gamma$={np.round(d, 2)}',
               fontsize=24)
-    plt.savefig(
-        f'plots/vectors/basic_efficacies_ex_{i}.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/basic_efficacies_ex_{i}.svg',
+            format='svg', dpi=300)
     plt.show()
 
 # %% delays with efforts
@@ -199,18 +203,20 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.25), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.09, 1.00, r'$\gamma$', ha='center', va='center')
-fig1.savefig(
-    'plots/vectors/basic_efforts_delays.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig1.savefig(
+        'plots/vectors/basic_efforts_delays.svg',
+        format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel(r'$r_{effort}$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
-fig2.savefig(
-    'plots/vectors/basic_efforts_rates.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig2.savefig(
+        'plots/vectors/basic_efforts_rates.svg',
+        format='svg', dpi=300)
 
 # %% gap between real and assumed efficacies
 
@@ -256,18 +262,20 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.25), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.12, 1.00, r'$\eta_{real}$', ha='center', va='center')
-fig1.savefig(
-    'plots/vectors/eff_gap_delays.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig1.savefig(
+        'plots/vectors/eff_gap_delays.svg',
+        format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel(r'$\eta_{assumed}$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
-fig2.savefig(
-    'plots/vectors/eff_gap_rates.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig2.savefig(
+        'plots/vectors/eff_gap_rates.svg',
+        format='svg', dpi=300)
 
 for i, ef_a in enumerate([0.3, 0.6, 0.9]):
 
@@ -283,9 +291,10 @@ for i, ef_a in enumerate([0.3, 0.6, 0.9]):
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.title(fr'$\eta$={np.round(efficacy_assumed, 2)}',
               fontsize=24)
-    plt.savefig(
-        f'plots/vectors/eff_gap_ex_{i}.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/eff_gap_ex_{i}.svg',
+            format='svg', dpi=300)
     plt.show()
 
 # %% immediate reward cases
@@ -333,18 +342,20 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.25), ncol=5, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.08, 1.0, r'$k$', ha='center', va='center')
-fig1.savefig(
-    'plots/vectors/conv_conc_delays.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig1.savefig(
+        'plots/vectors/conv_conc_delays.svg',
+        format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
 ax2.set_xlabel(r'$\gamma$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
-fig2.savefig(
-    'plots/vectors/conv_conc_rates.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig2.savefig(
+        'plots/vectors/conv_conc_rates.svg',
+        format='svg', dpi=300)
 
 # example trajectories
 for i, e in enumerate([1.0, 1.2, 2.2]):
@@ -360,9 +371,10 @@ for i, e in enumerate([1.0, 1.2, 2.2]):
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.title(fr'$k$={np.round(exponent, 2)}',
               fontsize=24)
-    plt.savefig(
-        f'plots/vectors/conv_conc_ex_{i}.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/conv_conc_ex_{i}.svg',
+            format='svg', dpi=300)
     plt.show()
 
 # %% different discount factors for effort and reward
@@ -398,9 +410,10 @@ ax.set_ylabel('horizon')
 ax.tick_params(axis='x', labelrotation=90)
 colorbar = ax.collections[0].colorbar
 colorbar.set_label('actions:\n no. of units', rotation=270, labelpad=45)
-fig.savefig(
-    'plots/vectors/diff_disc_policy.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig.savefig(
+        'plots/vectors/diff_disc_policy.svg',
+        format='svg', dpi=300)
 
 discounts_reward = [0.5, 0.7, 0.8, 0.9]
 discounts_cost = np.linspace(0.2, 1, 10)
@@ -446,18 +459,20 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.25), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.08, 1.00, r'$\gamma_{r}$', ha='center', va='center')
-fig1.savefig(
-    'plots/vectors/diff_disc_delays.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig1.savefig(
+        'plots/vectors/diff_disc_delays.svg',
+        format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion \n rate', fontsize=20)
 ax2.set_xlabel(r'$\gamma_{c}$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
-fig2.savefig(
-    'plots/vectors/diff_disc_rates.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig2.savefig(
+        'plots/vectors/diff_disc_rates.svg',
+        format='svg', dpi=300)
 
 for i, d_c in enumerate([0.3, 0.5, 0.6, 0.75]):
     discount_factor_reward, discount_factor_cost = 0.9, d_c
@@ -474,9 +489,10 @@ for i, d_c in enumerate([0.3, 0.5, 0.6, 0.75]):
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.title(fr'$\gamma_c$={np.round(discount_factor_cost, 2)}',
               fontsize=24)
-    plt.savefig(
-        f'plots/vectors/diff_disc_ex_{i}.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/diff_disc_ex_{i}.svg',
+            format='svg', dpi=300)
     plt.show()
 
 # %% waiting for interesting rewards
@@ -524,18 +540,20 @@ ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
 fig1.text(0.2, 0.95, r'$\gamma$', ha='center', va='center')
-fig1.savefig(
-    'plots/vectors/no_commit_delays.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig1.savefig(
+        'plots/vectors/no_commit_delays.svg',
+        format='svg', dpi=300)
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion \n rate', fontsize=20)
 ax2.set_xlabel(r'$r_{interest}$', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
-fig2.savefig(
-    'plots/vectors/no_commit_rates.svg',
-    format='svg', dpi=300)
+if SAVE_PLOTS:
+    fig2.savefig(
+        'plots/vectors/no_commit_rates.svg',
+        format='svg', dpi=300)
 
 # example trajectories
 for i, d in enumerate([0.95, 1.0]):
@@ -552,9 +570,10 @@ for i, d in enumerate([0.95, 1.0]):
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.title(fr'$\gamma_r$={np.round(discount_factor, 2)}',
               fontsize=24)
-    plt.savefig(
-        f'plots/vectors/no_commit_ex_{i}.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/no_commit_ex_{i}.svg',
+            format='svg', dpi=300)
     plt.show()
 
 # %% fatigue
@@ -562,7 +581,7 @@ for i, d in enumerate([0.95, 1.0]):
 discounts = np.linspace(0.5, 1, 10)
 effort_highs = [-0.7, -1.5, -3]
 cycle_colors = cycler('color',
-                      cmap_blues(np.linspace(0.3, 1, 4)))
+                      cmap_purples(np.linspace(0.3, 1, 4)))
 
 fig1, ax1 = plt.subplots(figsize=(6, 4), dpi=300)
 fig2, ax2 = plt.subplots(figsize=(4, 3), dpi=300)
@@ -607,18 +626,20 @@ for i, initial_state in enumerate([0, 21]):
     ax1.legend(bbox_to_anchor=(0.5, 1.25), ncol=4, frameon=False, fontsize=18,
                loc='upper center', columnspacing=0.5)
     fig1.text(0.05, 1.00, r'$r_{effort, high}$', ha='center', va='center')
-    fig1.savefig(
-        f'plots/vectors/fatigue_delays_{initial_state}.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        fig1.savefig(
+            f'plots/vectors/fatigue_delays_{initial_state}.svg',
+            format='svg', dpi=300)
 
     sns.despine(ax=ax2)
     ax2.set_ylabel('Completion \n rate', fontsize=20)
     ax2.set_xlabel(r'$\gamma$', fontsize=20)
     ax2.set_yticks([0, 1])
     ax2.set_xticks([])
-    fig2.savefig(
-        'plots/vectors/fatigue_rates.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        fig2.savefig(
+            'plots/vectors/fatigue_rates.svg',
+            format='svg', dpi=300)
 
     effort_high, discount_factor = -3, 1.0
 
@@ -634,9 +655,10 @@ for i, initial_state in enumerate([0, 21]):
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.title(r'$\gamma_r$=1.0, $r_{effort, high}$=-3.0',
               fontsize=24)
-    plt.savefig(
-        f'plots/vectors/fatigue_ex_1_{initial_state}.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/fatigue_ex_1_{initial_state}.svg',
+            format='svg', dpi=300)
     plt.show()
 
     trajectory = traj_no[i]
@@ -662,12 +684,13 @@ for i, initial_state in enumerate([0, 21]):
     plt.xticks([0, 7, 15])
     plt.legend(bbox_to_anchor=(1.25, 0.75), ncol=1, frameon=False, fontsize=14,
                loc='upper center', columnspacing=0.5)
-    plt.savefig(
-        f'plots/vectors/fatigue_ex_actions_{initial_state}.svg',
-        format='svg', dpi=300)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/fatigue_ex_actions_{initial_state}.svg',
+            format='svg', dpi=300)
     plt.show()
 
-# %%  self-handicap
+# %%  ego-protection
 
 r = np.arange(0, constants.STATES_NO)
 c = np.arange(0, constants.STATES_NO*constants.HORIZON)
@@ -676,10 +699,11 @@ actions = np.empty((constants.STATES_NO,
                    constants.STATES_NO*constants.HORIZON),
                    dtype=object)
 for r in range(constants.STATES_NO):
-    actions[r, :] = [np.arange(constants.STATES_NO - r)] * constants.STATES_NO * constants.HORIZON
+    actions[r, :] = [np.arange(constants.STATES_NO - r)] * \
+        constants.STATES_NO * constants.HORIZON
 
 efficacys = [0.5, 0.7, 0.9]
-fear_costs = np.linspace(-0.5, -3, 10)
+failure_costs = np.linspace(-0.5, -3, 10)
 cycle_colors = cycler('color',
                       cmap_greens(np.linspace(0.3, 1, 4)))
 
@@ -694,12 +718,12 @@ for efficacy in efficacys:
     delay_mn = []
     delay_sem = []
     completion_rate = []
-    for fear_cost in fear_costs:
+    for failure_cost in failure_costs:
 
         traj_s, traj_f = gen_data.gen_data_self_handicap(
-        states, actions, constants.HORIZON, constants.REWARD_UNIT,
-        constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
-        efficacy, constants.EFFORT_WORK, fear_cost, 1000)
+            states, actions, constants.HORIZON, constants.REWARD_UNIT,
+            constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
+            efficacy, constants.EFFORT_WORK, failure_cost, 1000)
 
         delays = time_to_finish(traj_s)
         delay_mn.append(np.nanmean(delays))
@@ -707,7 +731,7 @@ for efficacy in efficacys:
         completions = did_it_finish(traj_s)
         completion_rate.append(np.nanmean(completions))
 
-    ax1.errorbar(fear_costs, delay_mn, yerr=delay_sem, linewidth=3,
+    ax1.errorbar(failure_costs, delay_mn, yerr=delay_sem, linewidth=3,
                  marker='o', linestyle='--', label=f'{efficacy}')
 
     ax2.plot(completion_rate, linewidth=3, marker='o', linestyle='--')
@@ -718,11 +742,55 @@ ax1.set_xlabel(r'fear cost')
 ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
+fig1.text(0.09, 1.00, r'$\eta$', ha='center', va='center')
+if SAVE_PLOTS:
+    fig1.savefig(
+        'plots/vectors/ego_protection_delays.svg',
+        format='svg', dpi=300)
 
-# traj_s, traj_f = gen_data.gen_data_self_handicap(
-#     states, actions, constants.HORIZON, constants.REWARD_UNIT, constants.REWARD_SHIRK,
-#     constants.BETA, constants.DISCOUNT_FACTOR, 0.7, constants.EFFORT_WORK,
-#     -2, 1000)
+sns.despine(ax=ax2)
+ax2.set_ylabel('Completion rate', fontsize=20)
+ax2.set_xlabel(r'fear cost', fontsize=20)
+ax2.set_yticks([0, 1])
+ax2.set_xticks([])
+if SAVE_PLOTS:
+    fig2.savefig(
+        'plots/vectors/ego_protection_rates.svg',
+        format='svg', dpi=300)
+
+# plot example trajectories
+for i, e in enumerate(efficacys):
+    efficacy, fear_cost = e, failure_costs[4]
+    traj_s, traj_f = gen_data.gen_data_self_handicap(
+        states, actions, constants.HORIZON, constants.REWARD_UNIT,
+        constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
+        efficacy, constants.EFFORT_WORK, failure_cost, 1000)
+
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
+    plt.title(fr'$\eta$={np.round(efficacy, 2)}',
+              fontsize=24)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/ego_protection_efficacies_ex_{i}.svg',
+            format='svg', dpi=300)
+    plt.show()
+
+for i, f in enumerate(failure_costs):
+    efficacy, failure_cost = efficacys[0], f
+    traj_s, traj_f = gen_data.gen_data_self_handicap(
+        states, actions, constants.HORIZON, constants.REWARD_UNIT,
+        constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
+        efficacy, constants.EFFORT_WORK, failure_cost, 1000)
+
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
+    plt.title(f'failure cost={np.round(fear_cost, 2)}',
+              fontsize=24)
+    if SAVE_PLOTS:
+        plt.savefig(
+            f'plots/vectors/ego_protection_failures_ex_{i}.svg',
+            format='svg', dpi=300)
+    plt.show()
 # plt.figure(figsize=(3, 3), dpi=300)
 # plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
-# %%
