@@ -734,7 +734,8 @@ for efficacy in efficacys:
     ax1.errorbar(failure_costs, delay_mn, yerr=delay_sem, linewidth=3,
                  marker='o', linestyle='--', label=f'{efficacy}')
 
-    ax2.plot(failure_costs, completion_rate, linewidth=3, marker='o', linestyle='--')
+    ax2.plot(failure_costs, completion_rate,
+             linewidth=3, marker='o', linestyle='--')
 
 sns.despine(ax=ax1)
 ax1.set_ylabel('Avg. time to \n complete task')
@@ -761,7 +762,7 @@ if SAVE_PLOTS:
 plt.show()
 
 # plot example trajectories
-i=0
+i = 0
 for _, e in enumerate([0.7, 0.9]):
     for _, f in enumerate([failure_costs[1], failure_costs[6]]):
         efficacy, failure_cost = e, f
@@ -773,12 +774,12 @@ for _, e in enumerate([0.7, 0.9]):
         plt.figure(figsize=(3, 3), dpi=300)
         plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
         plt.title(fr'$\eta$={np.round(efficacy, 2)}, failure cost={np.round(failure_cost, 2)}',
-                fontsize=24)
+                  fontsize=24)
         if SAVE_PLOTS:
             plt.savefig(
                 f'plots/vectors/ego_protection_ex_{i}.svg',
                 format='svg', dpi=300)
         plt.show()
-        i+=1
+        i += 1
 
 # %%
