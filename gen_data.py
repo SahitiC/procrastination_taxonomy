@@ -395,16 +395,16 @@ def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
     return data, data_s, data_actions
 
 
-def gen_data_self_handicap(states, actions, horizon, reward_unit, reward_shirk,
+def gen_data_ego_protection(states, actions, horizon, reward_unit, reward_shirk,
                            beta, discount_factor, efficacy, effort_work,
                            failure_cost, n_trials, initial_progress=0, initial_failures=0):
 
     # reward delivered immediately after finishing each unit
-    reward_func = task_structure.reward_self_handicap(
+    reward_func = task_structure.reward_ego_protection(
         states, actions, reward_shirk, reward_unit)
-    effort_func = task_structure.effort_self_handicap(
+    effort_func = task_structure.effort_ego_protection(
         states, actions, effort_work)
-    cost_func = task_structure.cost_self_handicap(
+    cost_func = task_structure.cost_ego_protection(
         states, actions, failure_cost)
     n_rows, n_cols = states.shape
     total_reward_func = np.full((n_rows, n_cols), np.nan, dtype=object)
@@ -414,10 +414,10 @@ def gen_data_self_handicap(states, actions, horizon, reward_unit, reward_shirk,
                                        + cost_func[r, c])
     total_reward_func_last = np.zeros((n_rows, n_cols))
 
-    T = task_structure.T_self_handicap(states, actions, efficacy)
+    T = task_structure.T_ego_protection(states, actions, efficacy)
 
     # get policy
-    V_opt, policy_opt, Q_values = mdp_algms.find_optimal_policy_self_handicap(
+    V_opt, policy_opt, Q_values = mdp_algms.find_optimal_policy_ego_protection(
         states, actions, horizon, discount_factor,
         total_reward_func, total_reward_func_last, T)
 
@@ -427,7 +427,7 @@ def gen_data_self_handicap(states, actions, horizon, reward_unit, reward_shirk,
     data_s = []
     data_f = []
     for _ in range(n_trials):
-        s, f, a = mdp_algms.forward_runs_self_handicap(
+        s, f, a = mdp_algms.forward_runs_ego_protection(
             softmax_policy, Q_values, actions, initial_progress,
             initial_failures, horizon, states, T, beta)
         data_s.append(s)

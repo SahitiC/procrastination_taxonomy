@@ -703,7 +703,7 @@ for r in range(constants.STATES_NO):
         constants.STATES_NO * constants.HORIZON
 
 efficacys = [0.5, 0.7, 0.9]
-failure_costs = np.linspace(-0.5, -3, 10)
+failure_costs = np.linspace(-0.5, -2, 10)
 cycle_colors = cycler('color',
                       cmap_greens(np.linspace(0.3, 1, 4)))
 
@@ -720,7 +720,7 @@ for efficacy in efficacys:
     completion_rate = []
     for failure_cost in failure_costs:
 
-        traj_s, traj_f = gen_data.gen_data_self_handicap(
+        traj_s, traj_f = gen_data.gen_data_ego_protection(
             states, actions, constants.HORIZON, constants.REWARD_UNIT,
             constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
             efficacy, constants.EFFORT_WORK, failure_cost, 1000)
@@ -734,11 +734,11 @@ for efficacy in efficacys:
     ax1.errorbar(failure_costs, delay_mn, yerr=delay_sem, linewidth=3,
                  marker='o', linestyle='--', label=f'{efficacy}')
 
-    ax2.plot(completion_rate, linewidth=3, marker='o', linestyle='--')
+    ax2.plot(failure_costs, completion_rate, linewidth=3, marker='o', linestyle='--')
 
 sns.despine(ax=ax1)
 ax1.set_ylabel('Avg. time to \n complete task')
-ax1.set_xlabel(r'fear cost')
+ax1.set_xlabel(r'failure cost')
 ax1.set_yticks([0, 5, 10, 15])
 ax1.legend(bbox_to_anchor=(0.5, 1.2), ncol=4, frameon=False, fontsize=18,
            loc='upper center', columnspacing=0.5)
@@ -747,50 +747,38 @@ if SAVE_PLOTS:
     fig1.savefig(
         'plots/vectors/ego_protection_delays.svg',
         format='svg', dpi=300)
+plt.show()
 
 sns.despine(ax=ax2)
 ax2.set_ylabel('Completion rate', fontsize=20)
-ax2.set_xlabel(r'fear cost', fontsize=20)
+ax2.set_xlabel(r'failure cost', fontsize=20)
 ax2.set_yticks([0, 1])
 ax2.set_xticks([])
 if SAVE_PLOTS:
     fig2.savefig(
         'plots/vectors/ego_protection_rates.svg',
         format='svg', dpi=300)
+plt.show()
 
 # plot example trajectories
-for i, e in enumerate(efficacys):
-    efficacy, fear_cost = e, failure_costs[4]
-    traj_s, traj_f = gen_data.gen_data_self_handicap(
-        states, actions, constants.HORIZON, constants.REWARD_UNIT,
-        constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
-        efficacy, constants.EFFORT_WORK, failure_cost, 1000)
+i=0
+for _, e in enumerate([0.7, 0.9]):
+    for _, f in enumerate([failure_costs[1], failure_costs[6]]):
+        efficacy, failure_cost = e, f
+        traj_s, _ = gen_data.gen_data_ego_protection(
+            states, actions, constants.HORIZON, constants.REWARD_UNIT,
+            constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
+            efficacy, constants.EFFORT_WORK, failure_cost, 1000)
 
-    plt.figure(figsize=(3, 3), dpi=300)
-    plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
-    plt.title(fr'$\eta$={np.round(efficacy, 2)}',
-              fontsize=24)
-    if SAVE_PLOTS:
-        plt.savefig(
-            f'plots/vectors/ego_protection_efficacies_ex_{i}.svg',
-            format='svg', dpi=300)
-    plt.show()
+        plt.figure(figsize=(3, 3), dpi=300)
+        plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
+        plt.title(fr'$\eta$={np.round(efficacy, 2)}, failure cost={np.round(failure_cost, 2)}',
+                fontsize=24)
+        if SAVE_PLOTS:
+            plt.savefig(
+                f'plots/vectors/ego_protection_ex_{i}.svg',
+                format='svg', dpi=300)
+        plt.show()
+        i+=1
 
-for i, f in enumerate(failure_costs):
-    efficacy, failure_cost = efficacys[0], f
-    traj_s, traj_f = gen_data.gen_data_self_handicap(
-        states, actions, constants.HORIZON, constants.REWARD_UNIT,
-        constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
-        efficacy, constants.EFFORT_WORK, failure_cost, 1000)
-
-    plt.figure(figsize=(3, 3), dpi=300)
-    plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
-    plt.title(f'failure cost={np.round(fear_cost, 2)}',
-              fontsize=24)
-    if SAVE_PLOTS:
-        plt.savefig(
-            f'plots/vectors/ego_protection_failures_ex_{i}.svg',
-            format='svg', dpi=300)
-    plt.show()
-# plt.figure(figsize=(3, 3), dpi=300)
-# plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
+# %%

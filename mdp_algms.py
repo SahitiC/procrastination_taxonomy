@@ -129,7 +129,7 @@ def find_optimal_policy_prob_rewards(states, actions, horizon, discount_factor,
     return V_opt, policy_opt, Q_values
 
 
-def find_optimal_policy_self_handicap(
+def find_optimal_policy_ego_protection(
         states, actions, horizon, discount_factor, reward_func,
         reward_func_last, T):
     """
@@ -368,7 +368,7 @@ def forward_runs_prob(policy, Q_values, actions, initial_state, horizon,
     return states_forward, actions_forward
 
 
-def forward_runs_self_handicap(
+def forward_runs_ego_protection(
         policy, Q_values, actions, initial_progress, initial_failures, horizon,
         states, T, *args):
 
