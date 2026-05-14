@@ -160,7 +160,7 @@ def reward_no_immediate(states, actions, reward_shirk):
     return reward_func
 
 
-def reward_self_handicap(states, actions, reward_shirk, reward_unit):
+def reward_ego_protection(states, actions, reward_shirk, reward_unit):
     n_rows, n_cols = states.shape
     reward_func = np.full((n_rows, n_cols), np.nan, dtype=object)
     for r in range(n_rows):
@@ -257,7 +257,7 @@ def effort_convex_concave(states, actions, effort_work, exponent):
     return effort_func
 
 
-def effort_self_handicap(states, actions, effort_work):
+def effort_ego_protection(states, actions, effort_work):
     n_rows, n_cols = states.shape
     effort_func = np.full((n_rows, n_cols), np.nan, dtype=object)
     for r in range(n_rows):
@@ -272,7 +272,7 @@ def effort_self_handicap(states, actions, effort_work):
     return effort_func
 
 
-def cost_self_handicap(states, actions, fear_cost):
+def cost_ego_protection(states, actions, fear_cost):
     n_rows, n_cols = states.shape
     cost_func = np.full((n_rows, n_cols), np.nan, dtype=object)
     for r in range(n_rows):
@@ -357,7 +357,7 @@ def T_binomial(states, actions, efficacy):
     return T
 
 
-def T_self_handicap(states, actions, efficacy):
+def T_ego_protection(states, actions, efficacy):
     """
     transisiotn probability while representing number of successes and failures
     """
