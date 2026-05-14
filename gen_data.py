@@ -397,14 +397,15 @@ def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
 
 def gen_data_self_handicap(states, actions, horizon, reward_unit, reward_shirk,
                            beta, discount_factor, efficacy, effort_work,
-                           fear_cost, n_trials, initial_progress=0, initial_failures=0):
+                           failure_cost, n_trials, initial_progress=0, initial_failures=0):
 
-   # reward delivered immediately after finishing each unit
+    # reward delivered immediately after finishing each unit
     reward_func = task_structure.reward_self_handicap(
         states, actions, reward_shirk, reward_unit)
     effort_func = task_structure.effort_self_handicap(
         states, actions, effort_work)
-    cost_func = task_structure.cost_self_handicap(states, actions, fear_cost)
+    cost_func = task_structure.cost_self_handicap(
+        states, actions, failure_cost)
     n_rows, n_cols = states.shape
     total_reward_func = np.full((n_rows, n_cols), np.nan, dtype=object)
     for r in range(n_rows):
