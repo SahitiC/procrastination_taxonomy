@@ -54,7 +54,8 @@ def did_it_finish(trajectories):
 
 
 def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample,
-                      number_samples):
+                      number_samples,
+                      ylabel='Cum. no. units of work \n completed'):
     """
     plot input trajectories
     """
@@ -68,7 +69,7 @@ def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample,
     plt.yticks([0, 10, 20])
     plt.ylim(-1, 21)
     plt.xlabel('time')
-    plt.ylabel('Units of work \n completed')
+    plt.ylabel(ylabel)
     sns.despine()
 
 
@@ -88,7 +89,7 @@ def plot_trajectories_delta(trajectories, color, lwidth_mean, lwidth_sample,
     plt.yticks([0, 10, 20])
     plt.ylim(-1, 21)
     plt.xlabel('time')
-    plt.ylabel('Units of work \n completed')
+    plt.ylabel('No. units of work \n completed')
     sns.despine()
 
 
@@ -121,7 +122,7 @@ for discount_factor in discounts:
     completion_rate = []
     for efficacy in efficacies:
 
-        trajectories = gen_data.gen_data_basic(
+        trajectories, _ = gen_data.gen_data_basic(
             constants.STATES, constants.ACTIONS, constants.HORIZON,
             constants.REWARD_UNIT, constants.REWARD_SHIRK, constants.BETA,
             discount_factor, efficacy, constants.EFFORT_WORK, 1000,
@@ -164,7 +165,7 @@ if SAVE_PLOTS:
 for i, d in enumerate(discounts[1:]):
     discount_factor, efficacy = d, constants.EFFICACY
 
-    trajectories = gen_data.gen_data_basic(
+    trajectories, acs = gen_data.gen_data_basic(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
         constants.REWARD_UNIT, constants.REWARD_SHIRK, constants.BETA,
         discount_factor, efficacy, constants.EFFORT_WORK, 1000,
@@ -172,6 +173,11 @@ for i, d in enumerate(discounts[1:]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
+                      ylabel='amount of effort exerted')
     plt.title(fr'$\gamma$={np.round(d, 2)}',
               fontsize=24)
     if SAVE_PLOTS:
@@ -199,7 +205,7 @@ for discount_factor in discounts:
     completion_rate = []
     for effort_work in efforts:
 
-        trajectories = gen_data.gen_data_basic(
+        trajectories, _ = gen_data.gen_data_basic(
             constants.STATES, constants.ACTIONS, constants.HORIZON,
             constants.REWARD_UNIT, constants.REWARD_SHIRK, constants.BETA,
             discount_factor, constants.EFFICACY, effort_work, 1000,
@@ -258,7 +264,7 @@ for efficacy_real in efficacys_real:
     completion_rate = []
     for efficacy_assumed in efficacys_assumed:
 
-        trajectories = gen_data.gen_data_efficacy_gap(
+        trajectories, _ = gen_data.gen_data_efficacy_gap(
             constants.STATES, constants.ACTIONS, constants.HORIZON,
             constants.REWARD_UNIT, constants.REWARD_SHIRK, constants.BETA,
             discount_factor, efficacy_assumed, efficacy_real,
@@ -301,7 +307,7 @@ for i, ef_a in enumerate([0.3, 0.6, 0.9]):
 
     efficacy_assumed, efficacy_real = ef_a, 0.6
 
-    trajectories = gen_data.gen_data_efficacy_gap(
+    trajectories, acs = gen_data.gen_data_efficacy_gap(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
         constants.REWARD_UNIT, constants.REWARD_SHIRK, constants.BETA,
         discount_factor, efficacy_assumed, efficacy_real,
@@ -311,6 +317,11 @@ for i, ef_a in enumerate([0.3, 0.6, 0.9]):
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.title(fr'$\eta$={np.round(efficacy_assumed, 2)}',
               fontsize=24)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
+                      ylabel='amount of effort exerted')
     if SAVE_PLOTS:
         plt.savefig(
             f'plots/vectors/eff_gap_ex_{i}.svg',
@@ -338,7 +349,7 @@ for exponent in nonlinearitys:
     completion_rate = []
     for discount_factor in discounts:
 
-        trajectories = gen_data.gen_data_convex_concave(
+        trajectories, _ = gen_data.gen_data_convex_concave(
             constants.STATES, constants.ACTIONS, constants.HORIZON,
             constants.REWARD_UNIT, constants.REWARD_SHIRK, constants.BETA,
             discount_factor, constants.EFFICACY, constants.EFFORT_WORK,
@@ -381,7 +392,7 @@ if SAVE_PLOTS:
 for i, e in enumerate([1.0, 1.2, 2.2]):
     discount_factor, exponent = discounts[-1], e
 
-    trajectories = gen_data.gen_data_convex_concave(
+    trajectories, acs = gen_data.gen_data_convex_concave(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
         constants.REWARD_UNIT, constants.REWARD_SHIRK, constants.BETA,
         discount_factor, constants.EFFICACY, constants.EFFORT_WORK,
@@ -389,6 +400,11 @@ for i, e in enumerate([1.0, 1.2, 2.2]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
+                      ylabel='amount of effort exerted')
     plt.title(fr'$k$={np.round(exponent, 2)}',
               fontsize=24)
     if SAVE_PLOTS:
@@ -453,7 +469,7 @@ for discount_factor_reward in discounts_reward:
     completion_rate = []
     for discount_factor_cost in discounts_cost:
 
-        trajectories = gen_data.gen_data_diff_discounts(
+        trajectories, _ = gen_data.gen_data_diff_discounts(
             constants.STATES, constants.ACTIONS, constants.HORIZON,
             constants.REWARD_UNIT_DIFF_DISCOUNTS,
             constants.REWARD_SHIRK,
@@ -497,7 +513,7 @@ if SAVE_PLOTS:
 for i, d_c in enumerate([0.3, 0.5, 0.6, 0.75]):
     discount_factor_reward, discount_factor_cost = 0.9, d_c
 
-    trajectories = gen_data.gen_data_diff_discounts(
+    trajectories, acs = gen_data.gen_data_diff_discounts(
         constants.STATES, constants.ACTIONS, constants.HORIZON,
         constants.REWARD_UNIT_DIFF_DISCOUNTS,
         constants.REWARD_SHIRK,
@@ -507,6 +523,11 @@ for i, d_c in enumerate([0.3, 0.5, 0.6, 0.75]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
+                      ylabel='amount of effort exerted')
     plt.title(fr'$\gamma_c$={np.round(discount_factor_cost, 2)}',
               fontsize=24)
     if SAVE_PLOTS:
@@ -535,7 +556,7 @@ for discount_factor in discounts:
     completion_rate = []
     for reward_interest in rewards_interest:
 
-        trajectories = gen_data.gen_data_no_commitment(
+        trajectories, _ = gen_data.gen_data_no_commitment(
             constants.STATES_NO_COMMIT, constants.ACTIONS_BASE,
             constants.HORIZON, constants.REWARD_UNIT, constants.REWARD_SHIRK,
             constants.BETA, constants.P_STAY_LOW, constants.P_STAY_HIGH,
@@ -579,7 +600,7 @@ if SAVE_PLOTS:
 for i, d in enumerate([0.95, 1.0]):
     reward_interest, discount_factor = rewards_interest[4], d
 
-    trajectories = gen_data.gen_data_no_commitment(
+    trajectories, acs = gen_data.gen_data_no_commitment(
         constants.STATES_NO_COMMIT, constants.ACTIONS_BASE,
         constants.HORIZON, constants.REWARD_UNIT, constants.REWARD_SHIRK,
         constants.BETA, constants.P_STAY_LOW, constants.P_STAY_HIGH,
@@ -588,6 +609,11 @@ for i, d in enumerate([0.95, 1.0]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
+                      ylabel='amount of effort exerted')
     plt.title(fr'$\gamma_r$={np.round(discount_factor, 2)}',
               fontsize=24)
     if SAVE_PLOTS:
@@ -673,6 +699,11 @@ for i, initial_state in enumerate([0, 21]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
+    plt.figure(figsize=(3, 3), dpi=300)
+    plot_trajectories(trajectories_actions, 'black', 2, 0.5, number_samples=10,
+                      ylabel='amount of effort exerted')
     plt.title(r'$\gamma_r$=1.0, $r_{effort, high}$=-3.0',
               fontsize=24)
     if SAVE_PLOTS:
@@ -740,7 +771,7 @@ for efficacy in efficacys:
     completion_rate = []
     for failure_cost in failure_costs:
 
-        traj_s, traj_f = gen_data.gen_data_ego_protection(
+        traj_s, traj_f, _ = gen_data.gen_data_ego_protection(
             states, actions, constants.HORIZON, constants.REWARD_UNIT,
             constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
             efficacy, constants.EFFORT_WORK, failure_cost, 1000)
@@ -786,13 +817,19 @@ i = 0
 for _, e in enumerate([0.7, 0.9]):
     for _, f in enumerate([failure_costs[1], failure_costs[6]]):
         efficacy, failure_cost = e, f
-        traj_s, _ = gen_data.gen_data_ego_protection(
+        traj_s, _, acs = gen_data.gen_data_ego_protection(
             states, actions, constants.HORIZON, constants.REWARD_UNIT,
             constants.REWARD_SHIRK, constants.BETA, constants.DISCOUNT_FACTOR,
             efficacy, constants.EFFORT_WORK, failure_cost, 1000)
 
         plt.figure(figsize=(3, 3), dpi=300)
         plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
+        plt.figure(figsize=(3, 3), dpi=300)
+        plot_trajectories_delta(trajectories, 'black', 2, 0.5,
+                                number_samples=10)
+        plt.figure(figsize=(3, 3), dpi=300)
+        plot_trajectories(trajectories_actions, 'black', 2, 0.5,
+                          number_samples=10, ylabel='amount of effort exerted')
         plt.title(fr'$\eta$={np.round(efficacy, 2)}, failure cost={np.round(failure_cost, 2)}',
                   fontsize=24)
         if SAVE_PLOTS:
