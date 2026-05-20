@@ -49,14 +49,16 @@ def gen_data_basic(states, actions, horizon, reward_unit, reward_shirk, beta,
     # generate data - forward runs
     initial_state = 0
     data = []
+    acs = []
     for i_trials in range(n_trials):
 
         s, a = mdp_algms.forward_runs_prob(
             softmax_policy, Q_values, actions, initial_state, horizon, states,
             T, beta)
         data.append(s)
+        acs.append(a)
 
-    return data
+    return data, acs
 
 
 # function to generate a trajctory given parameters using efficacy-gap model
@@ -98,14 +100,16 @@ def gen_data_efficacy_gap(states, actions, horizon, reward_unit, reward_shirk,
     # generate data - forward runs based on actual tranistion prob
     initial_state = 0
     data = []
+    acs = []
     for i_trials in range(n_trials):
 
         s, a = mdp_algms.forward_runs_prob(
             softmax_policy, Q_values, actions, initial_state, horizon, states,
             T_actual, beta)
         data.append(s)
+        acs.append(a)
 
-    return data
+    return data, acs
 
 
 # function to generate trajectory with non-linear costs (delayed rewards)
@@ -143,14 +147,16 @@ def gen_data_convex_concave(states, actions, horizon, reward_unit,
 
     initial_state = 0
     data = []
+    acs = []
     for i_trials in range(n_trials):
 
         s, a = mdp_algms.forward_runs_prob(
             softmax_policy, Q_values, actions, initial_state, horizon, states,
             T, beta)
         data.append(s)
+        acs.append(a)
 
-    return data
+    return data, acs
 
 
 def gen_data_diff_discounts(states, actions, horizon, reward_unit,
@@ -189,14 +195,16 @@ def gen_data_diff_discounts(states, actions, horizon, reward_unit,
 
     initial_state = 0
     data = []
+    acs = []
     for i_trials in range(n_trials):
 
         s, a = mdp_algms.forward_runs_prob(
             softmax_policy, effective_Q, actions, initial_state, horizon,
             states, T, beta)
         data.append(s)
+        acs.append(a)
 
-    return data
+    return data, acs
 
 
 def gen_data_no_commitment(states, actions_base, horizon, reward_unit,
@@ -278,6 +286,7 @@ def gen_data_no_commitment(states, actions_base, horizon, reward_unit,
 
     initial_state = 0
     data = []
+    acs = []
     for i_trials in range(n_trials):
 
         s, a = mdp_algms.forward_runs_prob(
@@ -285,8 +294,9 @@ def gen_data_no_commitment(states, actions_base, horizon, reward_unit,
             states, T, beta)
         s_unit = np.where(s > states_no/2 - 1, s-states_no/2, s)
         data.append(s_unit.astype(int))
+        acs.append(a)
 
-    return data
+    return data, acs
 
 
 def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
@@ -396,8 +406,8 @@ def gen_data_fatigue(states_fatigue, actions_base, horizon, reward_unit,
 
 
 def gen_data_ego_protection(states, actions, horizon, reward_unit, reward_shirk,
-                           beta, discount_factor, efficacy, effort_work,
-                           failure_cost, n_trials, initial_progress=0, initial_failures=0):
+                            beta, discount_factor, efficacy, effort_work,
+                            failure_cost, n_trials, initial_progress=0, initial_failures=0):
 
     # reward delivered immediately after finishing each unit
     reward_func = task_structure.reward_ego_protection(
@@ -426,10 +436,12 @@ def gen_data_ego_protection(states, actions, horizon, reward_unit, reward_shirk,
     initial_failures = 0
     data_s = []
     data_f = []
+    acs = []
     for _ in range(n_trials):
         s, f, a = mdp_algms.forward_runs_ego_protection(
             softmax_policy, Q_values, actions, initial_progress,
             initial_failures, horizon, states, T, beta)
         data_s.append(s)
         data_f.append(f)
-    return data_s, data_f
+        acs.append(a)
+    return data_s, data_f, acs
