@@ -72,6 +72,26 @@ def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample,
     sns.despine()
 
 
+def plot_trajectories_delta(trajectories, color, lwidth_mean, lwidth_sample,
+                            number_samples):
+    """
+    get delta progress from cumulative trajectories; plot delta trajectories
+    """
+    delta = np.diff(trajectories, axis=1)
+    mean = np.mean(delta, axis=0)
+
+    plt.plot(mean, color=color, linewidth=lwidth_mean)
+    for i in range(number_samples):
+        plt.plot(delta[i], color=color,
+                 linewidth=lwidth_sample, linestyle='dashed')
+    plt.xticks([0, 7, 15])
+    plt.yticks([0, 10, 20])
+    plt.ylim(-1, 21)
+    plt.xlabel('time')
+    plt.ylabel('Units of work \n completed')
+    sns.despine()
+
+
 # %% set seed, define color maps
 cmap_blues = plt.get_cmap('Blues')
 cmap_greens = plt.get_cmap('Greens')
