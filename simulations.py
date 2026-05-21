@@ -825,10 +825,10 @@ for _, e in enumerate([0.7, 0.9]):
         plt.figure(figsize=(3, 3), dpi=300)
         plot_trajectories(traj_s, 'black', 2, 0.5, number_samples=10)
         plt.figure(figsize=(3, 3), dpi=300)
-        plot_trajectories_delta(trajectories, 'black', 2, 0.5,
+        plot_trajectories_delta(traj_s, 'black', 2, 0.5,
                                 number_samples=10)
         plt.figure(figsize=(3, 3), dpi=300)
-        plot_trajectories(trajectories_actions, 'black', 2, 0.5,
+        plot_trajectories(acs, 'black', 2, 0.5,
                           number_samples=10, ylabel='amount of effort exerted')
         plt.title(fr'$\eta$={np.round(efficacy, 2)}, failure cost={np.round(failure_cost, 2)}',
                   fontsize=24)
