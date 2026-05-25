@@ -55,7 +55,7 @@ def did_it_finish(trajectories):
 
 def plot_trajectories(trajectories, color, lwidth_mean, lwidth_sample,
                       number_samples,
-                      ylabel='Cum. no. units of work \n completed'):
+                      ylabel='Cum. no. units of \n  work completed'):
     """
     plot input trajectories
     """
