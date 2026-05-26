@@ -99,7 +99,7 @@ cmap_greens = plt.get_cmap('Greens')
 cmap_RdPu = plt.get_cmap('RdPu')
 cmap_oranges = plt.get_cmap('Oranges')
 cmap_purples = plt.get_cmap('Purples')
-SAVE_PLOTS = False
+SAVE_PLOTS = True
 np.random.seed(0)
 
 # %% discounting
@@ -177,7 +177,7 @@ for i, d in enumerate(discounts[1:]):
     plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
-                      ylabel='amount of effort exerted')
+                      ylabel='amount of effort \n exerted')
     plt.title(fr'$\gamma$={np.round(d, 2)}',
               fontsize=24)
     if SAVE_PLOTS:
@@ -315,13 +315,13 @@ for i, ef_a in enumerate([0.3, 0.6, 0.9]):
 
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories, 'black', 2, 0.5, number_samples=10)
-    plt.title(fr'$\eta$={np.round(efficacy_assumed, 2)}',
-              fontsize=24)
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
-                      ylabel='amount of effort exerted')
+                      ylabel='amount of effort \n exerted')
+    plt.title(fr'$\eta$={np.round(efficacy_assumed, 2)}',
+            fontsize=24)
     if SAVE_PLOTS:
         plt.savefig(
             f'plots/vectors/eff_gap_ex_{i}.svg',
@@ -404,7 +404,7 @@ for i, e in enumerate([1.0, 1.2, 2.2]):
     plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
-                      ylabel='amount of effort exerted')
+                      ylabel='amount of effort \n exerted')
     plt.title(fr'$k$={np.round(exponent, 2)}',
               fontsize=24)
     if SAVE_PLOTS:
@@ -527,7 +527,7 @@ for i, d_c in enumerate([0.3, 0.5, 0.6, 0.75]):
     plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
-                      ylabel='amount of effort exerted')
+                      ylabel='amount of effort \n exerted')
     plt.title(fr'$\gamma_c$={np.round(discount_factor_cost, 2)}',
               fontsize=24)
     if SAVE_PLOTS:
@@ -613,7 +613,7 @@ for i, d in enumerate([0.95, 1.0]):
     plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(acs, 'black', 2, 0.5, number_samples=10,
-                      ylabel='amount of effort exerted')
+                      ylabel='amount of effort \n exerted')
     plt.title(fr'$\gamma_r$={np.round(discount_factor, 2)}',
               fontsize=24)
     if SAVE_PLOTS:
@@ -703,7 +703,7 @@ for i, initial_state in enumerate([0, 21]):
     plot_trajectories_delta(trajectories, 'black', 2, 0.5, number_samples=10)
     plt.figure(figsize=(3, 3), dpi=300)
     plot_trajectories(trajectories_actions, 'black', 2, 0.5, number_samples=10,
-                      ylabel='amount of effort exerted')
+                      ylabel='amount of effort \n exerted')
     plt.title(r'$\gamma_r$=1.0, $r_{effort, high}$=-3.0',
               fontsize=24)
     if SAVE_PLOTS:
@@ -829,7 +829,7 @@ for _, e in enumerate([0.7, 0.9]):
                                 number_samples=10)
         plt.figure(figsize=(3, 3), dpi=300)
         plot_trajectories(acs, 'black', 2, 0.5,
-                          number_samples=10, ylabel='amount of effort exerted')
+                          number_samples=10, ylabel='amount of effort \n exerted')
         plt.title(fr'$\eta$={np.round(efficacy, 2)}, failure cost={np.round(failure_cost, 2)}',
                   fontsize=24)
         if SAVE_PLOTS:
