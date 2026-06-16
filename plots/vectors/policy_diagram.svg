@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="178.62502mm"
+   height="51.265209mm"
+   viewBox="0 0 178.62502 51.265209"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   sodipodi:docname="policy_diagram.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="1.2485557"
+     inkscape:cx="334.38635"
+     inkscape:cy="100.11568"
+     inkscape:window-width="1512"
+     inkscape:window-height="835"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="-29.485301"
+       originy="-64.047752"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect24"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect23"
+       is_visible="true"
+       lpeversion="1" />
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="2"
+       markerHeight="2"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <rect
+       x="128.41229"
+       y="397.40869"
+       width="121.10923"
+       height="26.169331"
+       id="rect8" />
+    <marker
+       style="overflow:visible"
+       id="Triangle-9"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="2"
+       markerHeight="2"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-0"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="2"
+       markerHeight="2"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-9-3"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="2"
+       markerHeight="2"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-1-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-9-3-0"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="2"
+       markerHeight="2"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-1-4-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Triangle-3"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="2"
+       markerHeight="2"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-7" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-29.4853,-64.047752)">
+    <rect
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.611934;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect1"
+       width="33.134533"
+       height="20.020485"
+       x="96.221748"
+       y="80.974892"
+       ry="3.8134258" />
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;stroke-width:0.0557771"
+       x="99.547958"
+       y="91.909386">decision-maker</text>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text8"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;font-family:calibri;-inkscape-font-specification:calibri;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect8);fill:#808080;fill-opacity:1;stroke:#727272;stroke-width:0;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers" />
+    <rect
+       style="fill:#396fc7;fill-opacity:0.307692;stroke:#727272;stroke-width:0;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect16"
+       width="55.253139"
+       height="20.839418"
+       x="29.531639"
+       y="64.047752"
+       ry="0" />
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3-3"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;white-space:pre;inline-size:58.1283;stroke-width:0.0557771"
+       x="30.928207"
+       y="73.578514"
+       transform="translate(-0.05039386,1.0917524)"
+       xml:space="preserve"><tspan
+         x="30.928207"
+         y="73.578514"
+         id="tspan8"><tspan
+           style="fill:#666666;stroke:#727272"
+           id="tspan2">task reward, discounting,    </tspan></tspan><tspan
+         x="30.928207"
+         y="77.988229"
+         id="tspan10"><tspan
+           style="fill:#666666;stroke:#727272"
+           id="tspan9">differential discounting, effort </tspan></tspan><tspan
+         x="30.928207"
+         y="82.397943"
+         id="tspan14"><tspan
+           style="fill:#666666;stroke:#727272"
+           id="tspan12">function, fatigue, failure costs</tspan></tspan></text>
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3-0"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;stroke-width:0.0557771"
+       x="44.393261"
+       y="69.107918">utility function</text>
+    <path
+       style="fill:#030303;fill-opacity:1;stroke:#000000;stroke-width:0.198567;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       d="m 29.658565,70.230172 54.811199,-0.01918"
+       id="path1" />
+    <rect
+       style="fill:#396fc7;fill-opacity:0.307692;stroke:#727272;stroke-width:0;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect16-6"
+       width="55.253139"
+       height="16.163128"
+       x="29.4853"
+       y="99.149834"
+       ry="0" />
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3-3-9"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;stroke-width:0.0557771"
+       x="30.661743"
+       y="109.19234"><tspan
+         x="30.661743"
+         y="109.19234"
+         style="fill:#666666;stroke:#727272;stroke-opacity:1"
+         id="tspan11"
+         sodipodi:role="line">skill, task difficulty, efficacy</tspan><tspan
+         x="30.661743"
+         y="113.60205"
+         style="fill:#808080;stroke:#727272;stroke-opacity:1"
+         sodipodi:role="line"
+         id="tspan13"><tspan
+   style="fill:#666666"
+   id="tspan18">efficacy bias, context switche</tspan>s</tspan></text>
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3-0-2"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;stroke-width:0.0557771"
+       x="41.29269"
+       y="103.74848">transition function</text>
+    <path
+       style="fill:#030303;fill-opacity:1;stroke:#000000;stroke-width:0.198917;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       d="m 29.790769,105.00827 55.005965,-0.0192"
+       id="path1-3" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#020202;stroke-width:0.1;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Triangle);paint-order:stroke fill markers"
+       d="M 84.996146,74.954518 C 95.991594,81.55179 95.991594,81.55179 95.991594,81.55179"
+       id="path17" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#020202;stroke-width:0.1;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 91.381454,72.887905 Z"
+       id="path18" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#020202;stroke-width:0.1;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Triangle-9);paint-order:stroke fill markers"
+       d="m 85.326814,107.97758 c 10.224083,-7.73899 10.224083,-7.73899 10.224083,-7.73899"
+       id="path17-9" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#020202;stroke-width:0.0960292;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Triangle-0);paint-order:stroke fill markers"
+       d="m 129.85365,91.830875 c 10.56111,-0.03173 10.56111,-0.03173 10.56111,-0.03173"
+       id="path17-2" />
+    <rect
+       style="fill:#396fc7;fill-opacity:0.307692;stroke:#727272;stroke-width:0;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect16-6-0"
+       width="13.970842"
+       height="5.769866"
+       x="141.22153"
+       y="88.799232"
+       ry="0" />
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3-0-2-8"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;stroke-width:0.0557771"
+       x="143.29733"
+       y="92.655838">policy</text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#020202;stroke-width:0.107288;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Triangle-9-3);paint-order:stroke fill markers"
+       d="m 155.17402,89.536479 c 12.95733,-4.607313 12.95733,-4.607313 12.95733,-4.607313"
+       id="path17-9-7" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#020202;stroke-width:0.103559;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Triangle-9-3-0);paint-order:stroke fill markers"
+       d="m 155.16951,93.897386 c 12.64767,4.114093 12.64767,4.114093 12.64767,4.114093"
+       id="path17-9-7-2" />
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3-0-2-8-2"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;stroke-width:0.0557771"
+       x="169.43475"
+       y="82.841072"><tspan
+         sodipodi:role="line"
+         x="169.43475"
+         y="82.841072"
+         id="tspan21">when &amp; how much</tspan><tspan
+         sodipodi:role="line"
+         x="169.43475"
+         y="87.250786"
+         id="tspan22">effort to exert</tspan></text>
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3-0-2-8-2-6"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;stroke-width:0.0557771"
+       x="169.29106"
+       y="96.614479"><tspan
+         sodipodi:role="line"
+         x="169.29106"
+         y="96.614479"
+         id="tspan22-1">plan for contingencies</tspan><tspan
+         sodipodi:role="line"
+         x="169.29106"
+         y="101.02419"
+         id="tspan23">(closed-loop)</tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#020202;stroke-width:0.0901868;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Triangle-3);paint-order:stroke fill markers"
+       d="m 147.96238,76.973874 c 0.1111,10.532754 0.1111,10.532754 0.1111,10.532754"
+       id="path17-3" />
+    <text
+       fill="#000000"
+       fill-opacity="1"
+       font-family="Calibri, Calibri_MSFontService, sans-serif"
+       font-style="normal"
+       font-variant="normal"
+       font-weight="400"
+       font-stretch="normal"
+       font-size="11.5946px"
+       text-anchor="start"
+       direction="ltr"
+       writing-mode="lr-tb"
+       unicode-bidi="normal"
+       text-decoration="none"
+       id="text88-3-0-2-8-4"
+       style="font-size:3.52777px;text-decoration:none;text-decoration-line:none;stroke-width:0.0557771"
+       x="140.23416"
+       y="71.582779"><tspan
+         sodipodi:role="line"
+         id="tspan25"
+         x="140.23416"
+         y="71.582779">execution &amp;</tspan><tspan
+         sodipodi:role="line"
+         id="tspan26"
+         x="140.23416"
+         y="75.992493">defection</tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#020202;stroke-width:0.1;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Triangle);paint-order:stroke fill markers"
+       d="m 84.973626,74.803547 c 53.331514,-0.0703 53.331514,-0.0703 53.331514,-0.0703"
+       id="path17-30" />
+  </g>
+</svg>
