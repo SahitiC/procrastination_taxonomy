@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="164.00153mm"
-   height="55.416557mm"
+   width="166.23375mm"
+   height="58.695461mm"
    overflow="hidden"
    version="1.1"
    id="svg52"
@@ -96,22 +96,22 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="2.02"
-     inkscape:cx="322.27723"
-     inkscape:cy="113.11881"
-     inkscape:window-width="2560"
-     inkscape:window-height="1369"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
+     inkscape:zoom="1.1963035"
+     inkscape:cx="349.82762"
+     inkscape:cy="175.12279"
+     inkscape:window-width="1512"
+     inkscape:window-height="832"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="0"
      inkscape:current-layer="g10"
      showgrid="true"
      inkscape:document-units="mm">
     <inkscape:grid
        id="grid63"
        units="px"
-       originx="14.343764"
-       originy="-62.06078"
+       originx="12.670497"
+       originy="-61.761819"
        spacingx="1"
        spacingy="1"
        empcolor="#0099e5"
@@ -126,9 +126,12 @@
   </sodipodi:namedview>
   <g
      id="g10"
-     transform="translate(-37.309412,-5.9899796)">
+     transform="translate(-38.98268,-5.6910194)">
     <g
-       id="g12">
+       id="g16"
+       inkscape:export-filename="../figure1.png"
+       inkscape:export-xdpi="500"
+       inkscape:export-ydpi="500">
       <text
          xml:space="preserve"
          id="text53"
@@ -140,7 +143,7 @@
          style="writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect5);display:inline;fill:#165016;fill-opacity:0;stroke:#737373;stroke-width:1.45512;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
          transform="matrix(1.0385848,0,0,1.0385848,-23.967969,-4.1492996)" />
       <path
-         d="m 433.12054,50.827694 h 84.41708"
+         d="m 447.12054,68.827694 h 84.41708"
          stroke="#000000"
          stroke-width="1.34237"
          stroke-linecap="butt"
@@ -151,8 +154,8 @@
          fill-rule="evenodd"
          id="path66-9-8" />
       <rect
-         x="441.436"
-         y="48.44548"
+         x="455.436"
+         y="66.44548"
          width="42.055183"
          height="4.8499007"
          stroke="#414656"
@@ -166,7 +169,7 @@
          id="rect66-4-2"
          style="fill:#0095cc;fill-opacity:1" />
       <path
-         d="m 433.95311,200.40697 h 137.1525"
+         d="m 435.95311,212.40697 h 137.1525"
          stroke="#000000"
          stroke-width="1.71103"
          stroke-linecap="butt"
@@ -177,8 +180,8 @@
          fill-rule="evenodd"
          id="path66-9-52" />
       <rect
-         x="456.88321"
-         y="197.15616"
+         x="440.88321"
+         y="209.15616"
          width="40.927422"
          height="5.0990109"
          stroke="#414656"
@@ -192,8 +195,8 @@
          id="rect81-2-1"
          style="fill:#0092cc;fill-opacity:1" />
       <rect
-         x="527.18781"
-         y="197.82761"
+         x="511.18781"
+         y="209.82761"
          width="28.851246"
          height="5.2272482"
          stroke="#414656"
@@ -206,122 +209,126 @@
          fill-opacity="1"
          id="rect81-2-1-3"
          style="fill:#0092cc;fill-opacity:1" />
-      <g
-         id="g11"
-         transform="translate(-11.386139,2.970297)">
-        <rect
-           x="585.58154"
-           y="56.557625"
-           width="32.628738"
-           height="3.9791677"
-           stroke="#414656"
-           stroke-width="1.5198"
-           stroke-linecap="butt"
-           stroke-linejoin="round"
-           stroke-miterlimit="10"
-           stroke-opacity="1"
-           fill="#a0abcf"
-           fill-opacity="1"
-           id="rect88"
-           style="fill:#0092cc;fill-opacity:1" />
-        <text
-           fill="#000000"
-           fill-opacity="1"
-           font-family="Calibri, Calibri_MSFontService, sans-serif"
-           font-style="normal"
-           font-variant="normal"
-           font-weight="400"
-           font-stretch="normal"
-           font-size="13.0332px"
-           text-anchor="start"
-           direction="ltr"
-           writing-mode="lr-tb"
-           unicode-bidi="normal"
-           text-decoration="none"
-           id="text89"
-           style="font-size:16px;text-decoration:none;text-decoration-line:none;stroke-width:0.265274"
-           x="622.38879"
-           y="72.404289">effort</text>
-        <text
-           fill="#000000"
-           fill-opacity="1"
-           font-family="Calibri, Calibri_MSFontService, sans-serif"
-           font-style="normal"
-           font-variant="normal"
-           font-weight="400"
-           font-stretch="normal"
-           font-size="13.0332px"
-           text-anchor="start"
-           direction="ltr"
-           writing-mode="lr-tb"
-           unicode-bidi="normal"
-           text-decoration="none"
-           id="text90"
-           style="font-size:16px;text-decoration:none;text-decoration-line:none;stroke-width:0.265274"
-           x="623.99664"
-           y="57.353462">max</text>
-        <rect
-           x="585.76917"
-           y="95.067085"
-           width="32.628738"
-           height="3.9791677"
-           stroke="#414656"
-           stroke-width="1.5198"
-           stroke-linecap="butt"
-           stroke-linejoin="round"
-           stroke-miterlimit="10"
-           stroke-opacity="1"
-           fill="#a0abcf"
-           fill-opacity="1"
-           id="rect88-3"
-           style="fill:#bdecff;fill-opacity:1" />
-        <text
-           fill="#000000"
-           fill-opacity="1"
-           font-family="Calibri, Calibri_MSFontService, sans-serif"
-           font-style="normal"
-           font-variant="normal"
-           font-weight="400"
-           font-stretch="normal"
-           font-size="13.0332px"
-           text-anchor="start"
-           direction="ltr"
-           writing-mode="lr-tb"
-           unicode-bidi="normal"
-           text-decoration="none"
-           id="text89-9"
-           style="font-size:16px;text-decoration:none;text-decoration-line:none;stroke-width:0.265274"
-           x="623.94293"
-           y="109.51987">effort</text>
-        <text
-           fill="#000000"
-           fill-opacity="1"
-           font-family="Calibri, Calibri_MSFontService, sans-serif"
-           font-style="normal"
-           font-variant="normal"
-           font-weight="400"
-           font-stretch="normal"
-           font-size="13.0332px"
-           text-anchor="start"
-           direction="ltr"
-           writing-mode="lr-tb"
-           unicode-bidi="normal"
-           text-decoration="none"
-           id="text90-4"
-           style="font-size:16px;text-decoration:none;text-decoration-line:none;stroke-width:0.265274"
-           x="625.55078"
-           y="94.496353">low</text>
-        <rect
-           style="fill:#165016;fill-opacity:0;stroke:#737373;stroke-width:0.898182;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-           id="rect113"
-           width="89.915398"
-           height="76.719337"
-           x="578.17932"
-           y="40.127953" />
-      </g>
+      <rect
+         x="579.66461"
+         y="102.38683"
+         width="30.422852"
+         height="3.7101536"
+         stroke="#414656"
+         stroke-width="1.41705"
+         stroke-linecap="butt"
+         stroke-linejoin="round"
+         stroke-miterlimit="10"
+         stroke-opacity="1"
+         fill="#a0abcf"
+         fill-opacity="1"
+         id="rect88"
+         style="fill:#0092cc;fill-opacity:1" />
+      <text
+         fill="#000000"
+         fill-opacity="1"
+         font-family="Calibri, Calibri_MSFontService, sans-serif"
+         font-style="normal"
+         font-variant="normal"
+         font-weight="400"
+         font-stretch="normal"
+         font-size="13.0332px"
+         text-anchor="start"
+         direction="ltr"
+         writing-mode="lr-tb"
+         unicode-bidi="normal"
+         text-decoration="none"
+         id="text89"
+         style="font-size:14.9183px;text-decoration:none;text-decoration-line:none;stroke-width:0.24734"
+         x="613.98346"
+         y="117.16216"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri;stroke-width:0.24734"
+           id="tspan14">effort</tspan></text>
+      <text
+         fill="#000000"
+         fill-opacity="1"
+         font-family="Calibri, Calibri_MSFontService, sans-serif"
+         font-style="normal"
+         font-variant="normal"
+         font-weight="400"
+         font-stretch="normal"
+         font-size="13.0332px"
+         text-anchor="start"
+         direction="ltr"
+         writing-mode="lr-tb"
+         unicode-bidi="normal"
+         text-decoration="none"
+         id="text90"
+         style="font-size:14.9183px;text-decoration:none;text-decoration-line:none;stroke-width:0.24734"
+         x="615.4826"
+         y="103.12886"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri;stroke-width:0.24734"
+           id="tspan13">max</tspan></text>
+      <rect
+         x="579.83954"
+         y="142.0224"
+         width="30.422852"
+         height="3.7101536"
+         stroke="#414656"
+         stroke-width="1.41705"
+         stroke-linecap="butt"
+         stroke-linejoin="round"
+         stroke-miterlimit="10"
+         stroke-opacity="1"
+         fill="#a0abcf"
+         fill-opacity="1"
+         id="rect88-3"
+         style="fill:#bdecff;fill-opacity:1" />
+      <text
+         fill="#000000"
+         fill-opacity="1"
+         font-family="Calibri, Calibri_MSFontService, sans-serif"
+         font-style="normal"
+         font-variant="normal"
+         font-weight="400"
+         font-stretch="normal"
+         font-size="13.0332px"
+         text-anchor="start"
+         direction="ltr"
+         writing-mode="lr-tb"
+         unicode-bidi="normal"
+         text-decoration="none"
+         id="text89-9"
+         style="font-size:14.9183px;text-decoration:none;text-decoration-line:none;stroke-width:0.24734"
+         x="615.4325"
+         y="155.49811"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri;stroke-width:0.24734"
+           id="tspan16">effort</tspan></text>
+      <text
+         fill="#000000"
+         fill-opacity="1"
+         font-family="Calibri, Calibri_MSFontService, sans-serif"
+         font-style="normal"
+         font-variant="normal"
+         font-weight="400"
+         font-stretch="normal"
+         font-size="13.0332px"
+         text-anchor="start"
+         direction="ltr"
+         writing-mode="lr-tb"
+         unicode-bidi="normal"
+         text-decoration="none"
+         id="text90-4"
+         style="font-size:14.9183px;text-decoration:none;text-decoration-line:none;stroke-width:0.24734"
+         x="615.58948"
+         y="140.44513"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri;stroke-width:0.24734"
+           id="tspan15">partial</tspan></text>
+      <rect
+         style="fill:#165016;fill-opacity:0;stroke:#737373;stroke-width:0.891485;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         id="rect113"
+         width="95.073959"
+         height="71.478653"
+         x="572.78979"
+         y="87.09491" />
       <g
          id="g8"
-         transform="matrix(1.1194584,0,0,1.1194584,-244.73259,35.512166)">
+         transform="matrix(1.1194584,0,0,1.1194584,-260.73259,53.512166)">
         <path
            d="m 435.12388,14.866788 c 0,-5.1559712 4.06368,-9.3358355 9.0765,-9.3358355 5.01283,0 9.07651,4.1798643 9.07651,9.3358355 0,5.155971 -4.06368,9.335835 -9.07651,9.335835 -5.01282,0 -9.0765,-4.179864 -9.0765,-9.335835 z"
            stroke="#ff0000"
@@ -342,7 +349,7 @@
       </g>
       <g
          id="g6"
-         transform="matrix(1.1194584,0,0,1.1194584,-439.76114,28.404851)">
+         transform="matrix(1.1194584,0,0,1.1194584,-455.76114,40.404851)">
         <path
            d="m 609.34577,82.136151 c 0,-5.155971 4.06368,-9.335836 9.0765,-9.335836 5.01283,0 9.07651,4.179865 9.07651,9.335836 0,5.155971 -4.06368,9.335835 -9.07651,9.335835 -5.01282,0 -9.0765,-4.179864 -9.0765,-9.335835 z"
            stroke="#ff0000"
@@ -363,11 +370,11 @@
            xml:space="preserve"><tspan
              x="614.26794"
              y="86.430481"
-             id="tspan4">b</tspan></text>
+             id="tspan20">b</tspan></text>
       </g>
       <g
          id="g7"
-         transform="matrix(1.1194584,0,0,1.1194584,-444.39522,7.22883)">
+         transform="matrix(1.1194584,0,0,1.1194584,-460.39522,19.22883)">
         <path
            d="m 614.52759,165.13616 c 0,-5.15597 4.06368,-9.33584 9.0765,-9.33584 5.01283,0 9.07651,4.17987 9.07651,9.33584 0,5.15597 -4.06368,9.33583 -9.07651,9.33583 -5.01282,0 -9.0765,-4.17986 -9.0765,-9.33583 z"
            stroke="#ff0000"
@@ -387,7 +394,7 @@
            style="font-size:14.2926px;stroke-width:0.624515">c</text>
       </g>
       <path
-         d="M 43.086483,55.256174 H 180.23901"
+         d="M 43.086483,67.256174 H 180.23901"
          stroke="#000000"
          stroke-width="1.71103"
          stroke-linecap="butt"
@@ -399,7 +406,7 @@
          id="path66-9-8-4" />
       <rect
          x="42.386814"
-         y="52.200993"
+         y="64.200989"
          width="13.458139"
          height="5.2002249"
          stroke="#414656"
@@ -413,7 +420,7 @@
          id="rect66-4-2-9"
          style="fill:#0095cc;fill-opacity:1" />
       <path
-         d="M 43.875955,105.01933 H 181.02848"
+         d="M 43.875955,117.01933 H 181.02848"
          stroke="#000000"
          stroke-width="1.71103"
          stroke-linecap="butt"
@@ -425,7 +432,7 @@
          id="path66-9-8-4-8" />
       <rect
          x="74.097336"
-         y="101.96416"
+         y="113.96416"
          width="13.458139"
          height="5.2002249"
          stroke="#414656"
@@ -439,7 +446,7 @@
          id="rect66-4-2-9-8"
          style="fill:#0095cc;fill-opacity:1" />
       <path
-         d="M 43.954903,157.01933 H 181.10743"
+         d="M 43.954903,169.01933 H 181.10743"
          stroke="#000000"
          stroke-width="1.71103"
          stroke-linecap="butt"
@@ -451,7 +458,7 @@
          id="path66-9-8-4-4" />
       <rect
          x="103.12366"
-         y="153.96414"
+         y="165.96414"
          width="13.458139"
          height="5.2002249"
          stroke="#414656"
@@ -465,7 +472,7 @@
          id="rect66-4-2-9-5"
          style="fill:#0095cc;fill-opacity:1" />
       <path
-         d="M 44.744376,211.36143 H 181.8969"
+         d="M 44.744376,223.36143 H 181.8969"
          stroke="#000000"
          stroke-width="1.71103"
          stroke-linecap="butt"
@@ -477,7 +484,7 @@
          id="path66-9-8-4-1" />
       <rect
          x="168.38681"
-         y="208.30624"
+         y="220.30624"
          width="13.458139"
          height="5.2002249"
          stroke="#414656"
@@ -494,19 +501,19 @@
          style="fill:#1a1a1a;stroke:#000000;stroke-width:0.607092;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke fill markers"
          id="path1"
          cx="130.41301"
-         cy="175.43771"
+         cy="187.43771"
          r="1.5851282" />
       <circle
          style="fill:#1a1a1a;stroke:#000000;stroke-width:0.607092;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke fill markers"
          id="path1-6"
          cx="130.45927"
-         cy="185.07237"
+         cy="197.07237"
          r="1.5851282" />
       <circle
          style="fill:#1a1a1a;stroke:#000000;stroke-width:0.607092;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke fill markers"
          id="path1-4"
          cx="130.31114"
-         cy="195.11594"
+         cy="207.11594"
          r="1.5851282" />
       <text
          xml:space="preserve"
@@ -530,10 +537,13 @@
          xml:space="preserve"><tspan
            x="576.24695"
            y="226.14565"
-           id="tspan5">When to start working</tspan></text>
+           id="tspan21">When to start </tspan><tspan
+           x="576.24695"
+           y="244.0114"
+           id="tspan22">working</tspan></text>
       <path
          style="fill:#1a1a1a;stroke:#000000;stroke-width:0.755906;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;marker-start:url(#ArrowWide);marker-end:url(#marker4);paint-order:stroke fill markers"
-         d="m 44.545543,147.05953 c 56.944447,0.46296 56.944447,0.46296 56.944447,0.46296 v 0"
+         d="m 44.545543,159.05953 c 56.944447,0.46296 56.944447,0.46296 56.944447,0.46296 v 0"
          id="path2" />
       <text
          font-family="Calibri, Calibri_MSFontService, sans-serif"
@@ -541,7 +551,7 @@
          font-size="24px"
          id="text29-6-1-16"
          x="47.224022"
-         y="140.82524"
+         y="152.82524"
          style="font-weight:400;font-size:16px;font-family:Calibri, Calibri_MSFontService, sans-serif;stroke-width:0.535848"><tspan
            style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Calibri;-inkscape-font-specification:'Calibri Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.535848"
            id="tspan6-34-8-8">d</tspan></text>
@@ -551,7 +561,7 @@
          font-size="24px"
          id="text29-6-1-7"
          x="55.724022"
-         y="140.38078"
+         y="152.38078"
          style="font-weight:400;font-size:16px;font-family:Calibri, Calibri_MSFontService, sans-serif;stroke-width:0.535848"><tspan
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Calibri;-inkscape-font-specification:Calibri;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.535848"
            id="tspan6-34-8-6">: delay</tspan></text>
@@ -572,9 +582,9 @@
          id="text68-8"
          style="font-size:16px;text-decoration:none;text-decoration-line:none;stroke-width:0.194988"
          x="130.1082"
-         y="76.194206">time</text>
+         y="88.194206">time</text>
       <path
-         d="m 169.28132,70.705266 h 27.46599 v 0.448478 h -27.46599 z m 27.46599,0.224239 -1.78804,-4.469125 5.36213,4.469125 -5.36213,4.469124 z"
+         d="m 169.28132,82.705266 h 27.46599 v 0.448478 h -27.46599 z m 27.46599,0.224239 -1.78804,-4.469125 5.36213,4.469125 -5.36213,4.469124 z"
          fill="#000000"
          fill-rule="nonzero"
          fill-opacity="1"
@@ -588,13 +598,16 @@
          x="576.24695"
          y="226.14565"
          style="font-weight:400;font-size:14.2926px;font-family:Calibri, Calibri_MSFontService, sans-serif;white-space:pre;inline-size:247.721;display:inline;stroke-width:0.478668"
-         transform="matrix(1.1194584,0,0,1.1194584,-379.36825,-235.23527)"
+         transform="matrix(1.1194584,0,0,1.1194584,-395.36825,-235.23527)"
          xml:space="preserve"><tspan
            x="576.24695"
            y="226.14565"
-           id="tspan12">How to distribute effort upon starting</tspan></text>
+           id="tspan23">How to distribute effort upon </tspan><tspan
+           x="576.24695"
+           y="244.0114"
+           id="tspan24">starting</tspan></text>
       <path
-         d="m 433.52968,124.50098 h 84.41708"
+         d="m 445.52968,136.50098 h 84.41708"
          stroke="#000000"
          stroke-width="1.34237"
          stroke-linecap="butt"
@@ -605,8 +618,8 @@
          fill-rule="evenodd"
          id="path66-9-8-43" />
       <rect
-         x="441.2999"
-         y="122.41582"
+         x="453.2999"
+         y="134.41582"
          width="68.754799"
          height="4.5350437"
          stroke="#414656"
@@ -635,16 +648,16 @@
          text-decoration="none"
          id="text90-3"
          style="font-size:16px;text-decoration:none;text-decoration-line:none;stroke-width:0.265274"
-         x="268.5488"
-         y="55.962368"><tspan
+         x="252.5488"
+         y="73.962372"><tspan
            sodipodi:role="line"
            id="tspan6"
-           x="268.5488"
-           y="55.962368"
+           x="252.5488"
+           y="73.962372"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri">apply maximum effort</tspan><tspan
            sodipodi:role="line"
-           x="268.5488"
-           y="75.962372"
+           x="252.5488"
+           y="93.962372"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri"
            id="tspan8">until task completion</tspan></text>
       <text
@@ -663,16 +676,16 @@
          text-decoration="none"
          id="text90-3-3"
          style="font-size:16px;text-decoration:none;text-decoration-line:none;stroke-width:0.265274"
-         x="269.32242"
-         y="125.24043"><tspan
+         x="253.32242"
+         y="137.24043"><tspan
            sodipodi:role="line"
-           x="269.32242"
-           y="125.24043"
+           x="253.32242"
+           y="137.24043"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri"
            id="tspan8-7">spread out effort</tspan><tspan
            sodipodi:role="line"
-           x="269.32242"
-           y="145.24043"
+           x="253.32242"
+           y="157.24043"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri"
            id="tspan9">over time</tspan></text>
       <text
@@ -691,16 +704,16 @@
          text-decoration="none"
          id="text90-3-3-2"
          style="font-size:16px;text-decoration:none;text-decoration-line:none;stroke-width:0.265274"
-         x="268.66574"
-         y="195.28995"><tspan
+         x="252.66574"
+         y="207.28995"><tspan
            sodipodi:role="line"
-           x="268.66574"
-           y="195.28995"
+           x="252.66574"
+           y="207.28995"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri"
            id="tspan10">intermittent pauses</tspan><tspan
            sodipodi:role="line"
-           x="268.66574"
-           y="215.28995"
+           x="252.66574"
+           y="227.28995"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:Calibri"
            id="tspan11">in work</tspan></text>
       <text
@@ -710,19 +723,19 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42.299px;font-family:Arial;-inkscape-font-specification:Arial;white-space:pre;shape-inside:url(#rect207);display:inline;fill:#000000;stroke-width:1.37953;stroke-dasharray:4.13858, 1.37953;stroke-dashoffset:0"><tspan
            x="-224.30469"
            y="212.45648"
-           id="tspan14"><tspan
+           id="tspan26"><tspan
              style="font-weight:bold;-inkscape-font-specification:'Arial Bold'"
-             id="tspan13">A</tspan></tspan></text>
+             id="tspan25">A</tspan></tspan></text>
       <text
          xml:space="preserve"
-         transform="matrix(0.41410548,0,0,0.41410548,338.31668,-68.965723)"
+         transform="matrix(0.41410548,0,0,0.41410548,322.31668,-68.965723)"
          id="text207-0"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42.299px;font-family:Arial;-inkscape-font-specification:Arial;white-space:pre;shape-inside:url(#rect207-7);display:inline;fill:#000000;stroke-width:1.37953;stroke-dasharray:4.13858, 1.37953;stroke-dashoffset:0"><tspan
            x="-224.30469"
            y="212.45648"
-           id="tspan16"><tspan
+           id="tspan28"><tspan
              style="font-weight:bold;-inkscape-font-specification:'Arial Bold'"
-             id="tspan15">B</tspan></tspan></text>
+             id="tspan27">B</tspan></tspan></text>
     </g>
   </g>
 </svg>
